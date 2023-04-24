@@ -36,3 +36,15 @@ def editar(request,tarea_id):
     context = {"form":form}
     return render(request,"todo/editar.html",context)
 
+def register(request):
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CreateUserForm()
+
+    context = {'form': form}     
+    return render(request, 'todo/userRegister.html', context)
+

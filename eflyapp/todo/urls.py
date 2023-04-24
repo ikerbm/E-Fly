@@ -5,4 +5,5 @@ urlpatterns=[
     path("agregar/",views.agregar, name="agregar"),
     path("eliminar/<int:tarea_id>/",views.eliminar,name="eliminar"),
     path("editar/<int:tarea_id>/",views.editar,name="editar"),
+    path('register/', views.register, name='register'),
 ]
