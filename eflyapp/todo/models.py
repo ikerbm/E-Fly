@@ -12,7 +12,7 @@ class Usuario(models.Model):
     apellido=models.CharField(max_length=100)
     contraseña=models.CharField(max_length=20)
     email=models.EmailField()
-    saldo=models.IntegerField()
+    saldo=models.IntegerField(default=0)
     fechaNaci=models.DateField()
     lugarNaci=models.CharField(max_length=50)
     dirFact=models.CharField(max_length=100)

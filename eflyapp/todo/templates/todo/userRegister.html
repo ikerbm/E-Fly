@@ -150,50 +150,39 @@
                 {% csrf_token %}
                 <div class="form">
                     <div class="input_field">
-                        <label>Usuario</label>
-                        <input type="text" class="input">
-                    </div>
-                    <div class = "input_field">
                         <label>Nombre</label>
-                        <input type="text" class="input">
+                        {{ form.nombre }}
+                        
                     </div>
                     <div class="input_field">
                         <label>Apellido</label>
-                        <input type="text" class="input">
-                    </div>
-                    <div class="input_field">
-                        <label>DNI</label>
-                        <input type="text" class="input">
+                        {{ form.apellido }}
                     </div>
                     <div class="input_field">
                         <label>contraseña</label>
-                        <input type="text" class="input">
+                        {{ form.contraseña }}
                     </div>
+
                     <div class="input_field">
                         <label>Correo</label>
-                        <input type="text" class="input">
+                        {{ form.email }}
                     </div>
                     <div class="input_field">
                         <label>Sexo</label>
-                        <div class="custom_select">
-                            <select>
-                                <option value="">Select</option>
-                                <option value="macho">macho</option>
-                                <option value="Hembra">Hembra</option>
-                            </select>
+                        {{form.sexo}}
                         </div>
                     </div>
                     <div class="input_field">
                         <label>Direccion de facturacion</label>
-                        <input type="text" class="input">
+                        {{ form.dirFact }}
                     </div>
                     <div class="input_field">
                         <label>Lugar de Nacimiento</label>
-                        <input type="text" class="input">
+                        {{ form.lugarNaci }}
                     </div>
                     <div class="input_field">
                         <label>Fecha de Nacimiento</label>
-                        <input type="text" class="input">
+                        {{ form.fechaNaci }}
                     </div>
                     <div class="input_field terms">
                         <label class="check">
