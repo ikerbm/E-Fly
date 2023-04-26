@@ -6,4 +6,5 @@ urlpatterns=[
     path("eliminar/<int:tarea_id>/",views.eliminar,name="eliminar"),
     path("editar/<int:tarea_id>/",views.editar,name="editar"),
     path('register/', views.register, name='register'),
+    path('login/', views.login, name='login'),
 ]

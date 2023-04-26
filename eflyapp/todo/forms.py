@@ -15,5 +15,10 @@ class CreateUserForm(forms.ModelForm):
         model = Usuario
         fields = ['nombre','apellido','contraseña','email',
                   'fechaNaci','lugarNaci','dirFact','sexo',] 
+        
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model=Usuario
+        fields=['email','contraseña']
 
 
