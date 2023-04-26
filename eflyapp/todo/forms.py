@@ -17,9 +17,3 @@ class CreateUserForm(forms.ModelForm):
                   'fechaNaci','lugarNaci','dirFact','sexo',] 
 
 
-'''
-class CreateUserForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['username','email','password1','password2',] 
-'''
