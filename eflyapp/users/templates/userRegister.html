@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            @import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Crimson Text';
+            }
+
+            body{
+                background: #808080;
+                padding: 0 10px;
+            }
+
+            .wrapper{
+                max-width: 500px;
+                width: 100%;
+                background: #fff;
+                margin: 20px auto;
+                padding: 30px;
+                box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+            }
+
+            .wrapper .title{
+                font-size: 24px;
+                font-weight: 700;
+                margin-bottom: 25px;
+                color: #000000;
+                text-transform: uppercase;
+                text-align: center;
+
+            }
+
+            .wrapper .form{
+                width: 100%;
+
+
+            }
+
+            .wrapper .form .input_field{
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+            }
+            .wrapper .form .input_field label{
+                width: 200px;
+                color: #757575;
+                margin-right: 10px;
+                font-size: 14px;
+            }
+
+            .wrapper .form .input_field .input{
+                width: 100%;
+                outline: none;
+                border: 1px solid #d5dbd9;
+                font-size: 15px;
+                padding: 8px 10px;
+                border-radius: 3px;
+                transition: all 0.3s ease;
+            }
+
+            .wrapper .form .input_field .custom_select select{
+                border: 1px solid #d5dbd9;
+                width: 200%;
+                height: 100%;
+                padding: 8px 10px;
+                border-radius: 3px;
+                outline: none;
+            }
+
+            .wrapper .form .input_field .input:focus,
+            .wrapper .form .input_field select:focus,
+            .wrapper .form .input_field .check input:focus{
+                border: 1px solid #fec107;
+            }
+            
+            .wrapper .form .input_field p{
+                font-size: 14px;
+                color: #757575;
+
+            }
+
+            .wrapper .form .input_field .check{
+                width: 15px;
+                height: 15px;
+                position: relative;
+                display: block;
+                cursor: pointer;
+            }
+
+            .wrapper .form .input_field .check input[type="checkbox"]{
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 1;
+            }
+
+            .wrapper .form .input_field .btn{
+                width: 100%;
+                padding: 8px 10px;
+                font-size: 15px;
+                border: 0;
+                background: #fec107;
+                color: #000000;
+                cursor: pointer;
+                border-radius: 3px;
+                outline: none;
+            }
+
+            .wrapper .form .input_field:last-child{
+                margin-bottom: 0;
+            } 
+
+            .wrapper .form .input_field .btn:hover{
+                background: #ffd658;
+            }
+
+            @media (max-width:420px){
+                .wrapper .form .input_field{
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .wrapper .form .input_field label{
+                    margin-bottom: 5px;
+                }
+                .wrapper .form .input_field.terms{
+                    flex-direction: row;
+                }
+            }
+
+
+
+
+
+        </style>
+        <title>Formulario de Registro</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="title">
+                Registro
+            </div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form">
+                    <div class="input_field">
+                        <label>Usuario</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class = "input_field">
+                        <label>Nombre</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class="input_field">
+                        <label>Apellido</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class="input_field">
+                        <label>DNI</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class="input_field">
+                        <label>contraseña</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class="input_field">
+                        <label>Confirmar contraseña</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class="input_field">
+                        <label>Correo</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class="input_field">
+                        <label>Sexo</label>
+                        <div class="custom_select">
+                            <select>
+                                <option value="">Select</option>
+                                <option value="macho">macho</option>
+                                <option value="Hembra">Hembra</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input_field">
+                        <label>Direccion de facturacion</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class="input_field">
+                        <label>Lugar de Nacimiento</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class="input_field">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="text" class="input">
+                    </div>
+                    <div class="input_field terms">
+                        <label class="check">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <p>Deacuerdo con los terminos y condiciones</p>
+                    </div>
+                    <div class="input_field">
+                    <input type="submit" value="Registrarse" class="btn">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
+
+
+<!----<h3>Registro<h3>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {%for field in form%}
+        {{field.label}}
+        {{field}}
+    {%endfor%}
+
+    <input type="submit", name="Registrarse">
+</form>
+----->

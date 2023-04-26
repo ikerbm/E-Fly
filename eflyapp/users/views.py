@@ -11,7 +11,11 @@ def register(request):
         form = CreateUserForm()
 
     context = {'form': form}     
-    return render(request, 'vuelos/userRegister.html', context)
+    return render(request, 'userRegister.html', context)
+
+def login(request):
+    context = {'variable': 'valor'}
+    return render(request, 'login.html', context)
 
 # Create your views here.
 from django.http import HttpResponse
