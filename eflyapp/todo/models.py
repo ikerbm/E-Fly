@@ -1,12 +1,23 @@
 from django.db import models
 from .choices import *
+from django.contrib.auth.models import User
+#Pruebas
 
-class Tarea(models.Model):
-    tarea=models.CharField(max_length=100)
+
+class Profile(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    
+    saldo=models.IntegerField(default=0)
+    fechaNaci=models.DateField()
+    lugarNaci=models.CharField(max_length=50)
+    dirFact=models.CharField(max_length=100)
+    sexo=models.CharField(max_length=20,choices=genero,default='N')
+    
 
     def __str__(self):
-        return self.tarea
-
+        return self.user.username
+  
+#Tablas BD
 class Usuario(models.Model):
     nombre=models.CharField(max_length=100)
     apellido=models.CharField(max_length=100)

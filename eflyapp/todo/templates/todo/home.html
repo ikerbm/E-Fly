@@ -16,16 +16,6 @@
       </tr>
     </thead>
     <tbody>
-        {% for tarea in tareas %}
-      <tr>
-        <th scope="row">{{ tarea.id }}</th>
-        <td>{{ tarea }}</td>
-        <td>
-            <a class="btn btn-warning btn-sm" href="{% url 'eliminar' tarea.id %}">eliminar</a>
-            <a class="btn btn-light btn-sm" href="{% url 'editar' tarea.id %}">editar</a>
-        </td>
-      </tr>
-      {% endfor %}
     </tbody>
   </table>
 </div>

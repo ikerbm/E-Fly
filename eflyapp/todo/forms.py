@@ -4,11 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import *
 
-class TareaForm(forms.ModelForm):
-    
-    class Meta:
-        model= Tarea
-        fields=['tarea']
+
 
 class CreateUserForm(forms.ModelForm):
     class Meta:
@@ -20,5 +16,13 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model=Usuario
         fields=['email','contraseña']
+
+
+class CreateProfileForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['nombre','apellido','contraseña','email',
+                  'fechaNaci','lugarNaci','dirFact','sexo',] 
+        
 
 
