@@ -1,17 +1,15 @@
 from django.db import models
 from .choices import *
+from django.contrib.auth.models import User
 
-class Tarea(models.Model):
-    tarea=models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.tarea
 
-class Usuario(models.Model):
+class Usuario(models.Model): 
+    usuario = models.OneToOneField(User,on_delete=models.CASCADE)
     nombre=models.CharField(max_length=100)
     apellido=models.CharField(max_length=100)
     contraseña=models.CharField(max_length=20)
-    email=models.EmailField()
+    correo=models.EmailField()
     saldo=models.IntegerField(default=0)
     fechaNaci=models.DateField()
     lugarNaci=models.CharField(max_length=50)
@@ -20,17 +18,17 @@ class Usuario(models.Model):
     tipoUsuario=models.CharField(max_length=20)
 
     def __str__(self):
-        return self.nombre
+        return self.usuario.username
 
 
 class Ciudad(models.Model):
-    nombre=models.CharField(max_length=100)
+    nombreCiudad=models.CharField(max_length=100)
     pais=models.CharField(max_length=100)
     hora=models.TimeField()
 
     def __str__(self):
         return self.nombre
-
+    
 class Vuelo(models.Model):
     origen=models.ForeignKey(Ciudad,on_delete=models.CASCADE,related_name="origenes")
     destino=models.ForeignKey(Ciudad,on_delete=models.CASCADE,related_name="destinos")
