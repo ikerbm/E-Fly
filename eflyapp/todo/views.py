@@ -4,39 +4,10 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 
 
-def home(request):
-    tareas = Tarea.objects.all()
-    context = {'tareas':tareas}
+'''def home(request):
+    usuarios = Usuario.objects.all()
+    context = {'usuarios':usuarios}
     return render(request,'todo/home.html',context)
-
-def agregar(request):
-    if request.method == "POST":
-        form=TareaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form=TareaForm()
-    context={'form':form}
-    return render(request,'todo/agregar.html',context)
-
-def eliminar(request,tarea_id):
-    tarea=Tarea.objects.get(id=tarea_id)
-    tarea.delete()
-    return redirect("home")
-
-def editar(request,tarea_id):
-    tarea=Tarea.objects.get(id=tarea_id)
-    if request.method =="POST":
-        form=TareaForm(request.POST,instance=tarea)
-        if form.is_valid():
-            form.save()
-            return redirect("home")
-    else:
-        form=TareaForm(instance=tarea)
-
-    context = {"form":form}
-    return render(request,"todo/editar.html",context)
 
 def register(request):
     if request.method == 'POST':
@@ -48,7 +19,7 @@ def register(request):
         form = CreateUserForm()
 
     context = {'form': form}     
-    return render(request, 'todo/userRegister.html', context)
+    return render(request, 'todo/userRegister.html', context)'''
 
 
 def login(request):

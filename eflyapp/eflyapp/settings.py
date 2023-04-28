@@ -79,7 +79,10 @@ WSGI_APPLICATION = 'eflyapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'E-Fly',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        },
+        'NAME': 'e-fly',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
