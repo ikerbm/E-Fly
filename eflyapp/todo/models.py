@@ -1,27 +1,14 @@
 from django.db import models
 from .choices import *
 from django.contrib.auth.models import User
-#Pruebas
-
-
-class Profile(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
-    
-    saldo=models.IntegerField(default=0)
-    fechaNaci=models.DateField()
-    lugarNaci=models.CharField(max_length=50)
-    dirFact=models.CharField(max_length=100)
-    sexo=models.CharField(max_length=20,choices=genero,default='N')
-    
-
-    def __str__(self):
-        return self.user.username
+import uuid
   
 #Tablas BD
 class Usuario(models.Model):
-    nombre=models.CharField(max_length=100)
+    DNI = models.IntegerField(primary_key=True)
+    nombre=models.CharField(max_length=50)
     apellido=models.CharField(max_length=100)
-    contraseña=models.CharField(max_length=20)
+    contraseña=models.CharField(max_length=30)
     email=models.EmailField()
     saldo=models.IntegerField(default=0)
     fechaNaci=models.DateField()
@@ -29,17 +16,18 @@ class Usuario(models.Model):
     dirFact=models.CharField(max_length=100)
     sexo=models.CharField(max_length=20,choices=genero,default='N')
     tipoUsuario=models.CharField(max_length=20)
+    USERNAME_FIELD = "usuario"
 
     def __str__(self):
-        return self.nombre
+        return self.usuario.username
 
 class Ciudad(models.Model):
-    nombre=models.CharField(max_length=100)
+    nombreCiudad=models.CharField(max_length=100)
     pais=models.CharField(max_length=100)
     hora=models.TimeField()
 
     def __str__(self):
-        return self.nombre
+        return self.nombreCiudad
 
 class Vuelo(models.Model):
     origen=models.ForeignKey(Ciudad,on_delete=models.CASCADE,related_name="origenes")

@@ -2,17 +2,22 @@
 
 {%block content%}
 <div class="jumbotron jumbotron-fluid bg-white">
-  <div class="container text-center">
-    <h1 class="display-4">E-FLY</h1>
+  
+  <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+    <h1>Bienvenido a E-FLY</h1>
   </div>
+
 </div>
 <div class="container text-center">
 <table class="table table-warning">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Tarea</th>
-        <th scope="col">Accion</th>
+        <div class="container">
+        <a href="{% url 'home' %}" class="btn btn-warning btn-lg btn-block" role="button">INICO</a>
+        <a href="{% url 'register' %}" class="btn btn-warning btn-lg btn-block" role="button">REGISTRARSE</a>
+        <a href="{% url 'ChangePassword' %}" class="btn btn-warning btn-lg btn-block" role="button">CAMBIAR CONTRASEÑA</a>
+        <a href="{% url 'Edit' %}" class="btn btn-warning btn-lg btn-block" role="button">EDITAR PERFIL</a>
+        </div>
       </tr>
     </thead>
     <tbody>

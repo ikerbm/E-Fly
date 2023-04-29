@@ -1,52 +1,69 @@
 {%extends 'todo/layout.html' %}
 
-        {% block content %}
-        <div class="container text-center">
-            
+    {% block content %}
+    <div class="container text-center">
+        
         <div class="wrapper">
             <div class="jumbotron jumbotron-fluid bg-white">
-                <div class="container text-center">
-                  <h1 class="display-8">REGISTRO</h1>
+                <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                    <h1>REGISTRARSE</h1>
                 </div>
-              </div>
+            </div>
+
             <form method="POST" action="">
                 {% csrf_token %}
                 <div class="form">
                     <div class="input-wrapper">
-                        <label>Nombre</label>
+                        <label>Nombre De Usuario</label>
+                        {{ form.username }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>Nombre </label>
                         {{ form.nombre }}
-                        
-                     </div>
-                    <div class="input_field">
+                    </div>
+
+                    <div class="input-wrapper">
                         <label>Apellido</label>
                         {{ form.apellido }}
                     </div>
+
+                    <div class="input-wrapper">
+                        <label>Correo</label>
+                        {{ form.email }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>DNI</label>
+                        {{ form.DNI }}
+                    </div>
+
                     <div class="input_field">
                         <label>contraseña</label>
                         {{ form.contraseña }}
                     </div>
 
-                    <div class="input_field">
-                        <label>Correo</label>
-                        {{ form.email }}
-                    </div>
-                    <div class="input_field">
-                        <label>Sexo</label>
-                        {{form.sexo}}
-                        </div>
-                    </div>
-                    <div class="input_field">
-                        <label>Direccion de facturacion</label>
-                        {{ form.dirFact }}
-                    </div>
-                    <div class="input_field">
-                        <label>Lugar de Nacimiento</label>
-                        {{ form.lugarNaci }}
-                    </div>
-                    <div class="input_field">
-                        <label>Fecha de Nacimiento</label>
+
+                    <div class="input-wrapper">
+                        <label>feccha de nacimiento</label>
                         {{ form.fechaNaci }}
                     </div>
+                    
+                    <div class="input-wrapper">
+                        <label>lugar de nacimiento</label>
+                        {{ form.lugarNaci }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>direccion de facturacion</label>
+                        {{ form.dirFact }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>sexo</label>
+                        {{ form.sexo }}
+                    </div>
+
                     <div class="input_field terms">
                         <label class="check">
                             <input type="checkbox">
@@ -61,4 +78,4 @@
             </form>
         </div>
     </div>
-        {% endblock %}
+{% endblock %}
