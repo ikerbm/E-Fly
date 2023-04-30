@@ -1,26 +1,21 @@
 from django.db import models
 from .choices import *
-from django.contrib.auth.models import User
-import uuid
+from django.contrib.auth.models import AbstractUser
+
+#Pruebas
+
+class CustomUser(AbstractUser):
+    DNI=models.IntegerField(primary_key=True, default=0)
+    saldo=models.IntegerField(default=0)
+    fechaNaci=models.DateField(null=True)
+    lugarNaci=models.CharField(max_length=50,null=True)
+    dirFact=models.CharField(max_length=100,null=True)
+    sexo=models.CharField(max_length=20,choices=genero,default='N')
+    tipoUsuario=models.CharField(max_length=20,null=True)
+    picture=models.ImageField(default='profile_default.png',upload_to='users/')
+
   
 #Tablas BD
-class Usuario(models.Model):
-    DNI = models.IntegerField(primary_key=True)
-    nombre=models.CharField(max_length=50)
-    apellido=models.CharField(max_length=100)
-    contraseña=models.CharField(max_length=30)
-    email=models.EmailField()
-    saldo=models.IntegerField(default=0)
-    fechaNaci=models.DateField()
-    lugarNaci=models.CharField(max_length=50)
-    dirFact=models.CharField(max_length=100)
-    sexo=models.CharField(max_length=20,choices=genero,default='N')
-    tipoUsuario=models.CharField(max_length=20)
-    USERNAME_FIELD = "usuario"
-
-    def __str__(self):
-        return self.usuario.username
-
 class Ciudad(models.Model):
     nombreCiudad=models.CharField(max_length=100)
     pais=models.CharField(max_length=100)
@@ -56,7 +51,7 @@ class Noticia(models.Model):
     texto=models.CharField(max_length=300)
 
 class Tarjeta(models.Model):
-    clienteid=models.ForeignKey(Usuario,on_delete=models.CASCADE,null=True)
+    clienteid=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     tipo=models.CharField(choices=tipoTarjeta,max_length=20)
     disponible=models.IntegerField(default=200000)
     numero=models.CharField(null=False,max_length=16)

@@ -1,0 +1,53 @@
+{% extends 'todo/layout.html' %}
+
+{% block content %}
+
+{%load crispy_forms_tags %}
+
+<div class="container" id="container">
+	<div class="form-container sign-in-container">
+		<form method="POST" action="">
+			{% csrf_token %}
+
+			<div class="container" id="container" style="text-align: center;">
+				<div class="p-3 mb-2 bg-warning text-dark">
+					<h2>Inicio de sesion de prueba</h2>
+				</div>
+
+				<div class="card mx-auto" style="width: 38rem;">
+					<div class="card-body">
+					  <h5 class="card-title">Ingrese sus Credenciales</h5>
+					  {{form | crispy}}
+					  <a href="{% url 'home'%}" class="card-link">Inicio</a>
+					  <a href="#" class="card-link">Registrarse</a>
+					  <button class= "btn btn-bg btn-warning float-end",type="submit">Iniciar Sesion</button>
+					</div>
+				  </div>
+				<!---
+				<input type="text" name="username" id="" placeholder="Nombre de usuario">
+				<br>
+				<input type="password" name="password" id="" placeholder="contraseña">
+				<br>
+				--->
+				
+
+
+				
+
+			</div>
+
+		</form>
+	</div>
+	
+	
+	
+	<div class="footer">
+		<p class="text-dark">¿Aún no estás registrado?</p>
+		<p class="text-dark">Registrate ahora, reserva y compra tiquetes de vuelos al mejor precio con E-Fly</p>
+		
+		<a class="btn btn-warning btn-sm" href="{% url 'register' %}">Registrarse</a> 
+	</div>
+		
+	
+</div>
+{% endblock %}

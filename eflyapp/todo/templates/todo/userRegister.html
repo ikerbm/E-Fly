@@ -20,12 +20,12 @@
 
                     <div class="input-wrapper">
                         <label>Nombre </label>
-                        {{ form.nombre }}
+                        {{ form.first_name }}
                     </div>
 
                     <div class="input-wrapper">
                         <label>Apellido</label>
-                        {{ form.apellido }}
+                        {{ form.last_name }}
                     </div>
 
                     <div class="input-wrapper">
@@ -40,9 +40,12 @@
 
                     <div class="input_field">
                         <label>contraseña</label>
-                        {{ form.contraseña }}
+                        {{ form.password1 }}
                     </div>
-
+                    <div class="input_field">
+                        <label>confirmar contraseña</label>
+                        {{ form.password2 }}
+                    </div>
 
                     <div class="input-wrapper">
                         <label>feccha de nacimiento</label>

@@ -1,10 +1,11 @@
 from django.contrib import admin
 from .models import *
-from django.contrib.auth.models import User
-from django.contrib.auth.admin import UserAdmin
+
 # Register your models here.
 
-admin.site.register(Usuario)
+admin.site.register(CustomUser)
+
+#admin.site.register(Usuario)
 admin.site.register(Ciudad)
 admin.site.register(Vuelo)
 admin.site.register(Compra)

@@ -1,31 +1,34 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from django.contrib.auth.models import User
 from .models import *
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
-class CreateUsuarioForm(forms.ModelForm):
+
+
+class CreateUsuarioForm(UserCreationForm):
     class Meta:
-        model = Usuario
-        fields = ['nombre','apellido','contraseña','email',
+        model = CustomUser
+        fields = ['username','first_name','last_name','password1','password2','email',
                   'DNI','fechaNaci',
                   'lugarNaci','dirFact','sexo',] 
 
-
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model=Usuario
-        fields=['email','contraseña']
-
 class ChangePasswordForm(forms.ModelForm):
     class Meta:
-        model=Usuario
-        fields=['contraseña']
+        model=CustomUser
+        fields=['password']
 
 class EditForm(forms.ModelForm):
     class Meta:
-        model=Usuario
-        fields=['nombre','apellido','contraseña',
+        model=CustomUser
+        fields=['first_name','last_name','password',
                 'lugarNaci','dirFact','sexo',]
 
+#creacion del video
+class CustomUserCreationForm(UserCreationForm):
+    class meta:
+        model=CustomUser
+        fields=['first_name','last_name','email',]
 

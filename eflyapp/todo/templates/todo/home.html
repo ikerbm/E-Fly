@@ -1,10 +1,16 @@
 {%extends 'todo/layout.html' %}
 
 {%block content%}
+
 <div class="jumbotron jumbotron-fluid bg-white">
   
   <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
-    <h1>Bienvenido a E-FLY</h1>
+    {% if request.user.is_authenticated %}
+
+      <h1>Bienvenido {{ user.username | upper }} a E-FLY</h1>
+      {%else%}
+      <h1>Bienvenido a E-FLY</h1>
+    {%endif%}
   </div>
 
 </div>
@@ -26,3 +32,5 @@
 </div>
 
 {% endblock %}
+
+
