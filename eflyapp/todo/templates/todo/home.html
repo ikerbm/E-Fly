@@ -22,7 +22,7 @@
         <a href="{% url 'home' %}" class="btn btn-warning btn-lg btn-block" role="button">INICO</a>
         <a href="{% url 'register' %}" class="btn btn-warning btn-lg btn-block" role="button">REGISTRARSE</a>
         <a href="{% url 'ChangePassword' %}" class="btn btn-warning btn-lg btn-block" role="button">CAMBIAR CONTRASEÑA</a>
-        <a href="{% url 'Edit' %}" class="btn btn-warning btn-lg btn-block" role="button">EDITAR PERFIL</a>
+        <a href="Edit/{{user.DNI}}"  class="btn btn-warning btn-lg btn-block" role="button">EDITAR PERFIL</a>
         </div>
       </tr>
     </thead>

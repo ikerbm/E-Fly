@@ -6,23 +6,25 @@
 		<form method="POST">
 			{% csrf_token %}
 
-			<form method="POST">
+			<form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="container" id="container" style="text-align: center;">
                     <div class="p-3 mb-2 bg-warning text-dark">
                         <h2>Editar perfil</h2>
                     </div>
                     <div class="input-wrapper">
-                        <label>Nombre</label>
-                        {{ form.nombre }}
-                    </div>
-                    <div class="input-wrapper">
                         <label for="user-name-id">Username</label>
                         {{ form.username }}
                     </div>
+
+                    <div class="input-wrapper">
+                        <label>Nombre</label>
+                        {{ form.first_name }}
+                    </div>
+                    
                     <div class="input-wrapper">
                         <label>apellido</label>
-                        {{ form.apellido }}
+                        {{ form.last_name }}
                     </div>
                     <div class="input-wrapper">
                         <label>sexo</label>
@@ -37,7 +39,7 @@
                         {{ form.dirFact }}
                     </div>
 
-                    <a class="btn btn-warning btn-sm"  href="{% url 'home' %}">editar</a>
+                    <a type="submit" class="btn btn-warning btn-bg"  href="{% url 'home' %}">editar</a>
                 </div>
             </form>
 

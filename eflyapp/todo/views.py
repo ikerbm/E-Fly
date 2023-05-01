@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
@@ -39,15 +39,17 @@ def ChangePassword(request):
     return render(request, 'todo/changePassword.html', context)
 
 @login_required
-def Edit(request):
+def Edit(request,DNI):
+    perfil=CustomUser.objects.get(DNI=DNI)
+
     if request.method == 'POST':
-        form = EditForm(request.POST)
+        form = EditForm(request.POST, instance=request.user)
         
         if form.is_valid(): 
             form.save()
             return redirect('home')
     else:
-        form = EditForm()
+        form = EditForm(instance=request.user)
 
     context = {'form': form}     
     return render(request, 'todo/Edit.html', context)

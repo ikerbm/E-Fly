@@ -23,12 +23,7 @@ class ChangePasswordForm(forms.ModelForm):
 class EditForm(forms.ModelForm):
     class Meta:
         model=CustomUser
-        fields=['first_name','last_name','password',
-                'lugarNaci','dirFact','sexo',]
+        fields=['username','first_name','last_name',
+                'lugarNaci','dirFact','sexo']
 
-#creacion del video
-class CustomUserCreationForm(UserCreationForm):
-    class meta:
-        model=CustomUser
-        fields=['first_name','last_name','email',]
 
