@@ -1,38 +1,60 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import *
 from .forms import *
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout,authenticate,login
+
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 def home(request):
-    tareas = Tarea.objects.all()
-    context = {'tareas':tareas}
-    return render(request,'todo/home.html',context)
+    return render(request,'todo/home.html')
 
-def agregar(request):
-    if request.method == "POST":
-        form=TareaForm(request.POST)
-        if form.is_valid():
+def register(request):
+    if request.method == 'POST':
+        form = CreateUsuarioForm(request.POST)
+        
+        if form.is_valid(): 
             form.save()
             return redirect('home')
     else:
-        form=TareaForm()
-    context={'form':form}
-    return render(request,'todo/agregar.html',context)
+        form = CreateUsuarioForm()
 
-def eliminar(request,tarea_id):
-    tarea=Tarea.objects.get(id=tarea_id)
-    tarea.delete()
-    return redirect("home")
+    context = {'form': form}     
+    return render(request, 'todo/userRegister.html', context)
 
-def editar(request,tarea_id):
-    tarea=Tarea.objects.get(id=tarea_id)
-    if request.method =="POST":
-        form=TareaForm(request.POST,instance=tarea)
-        if form.is_valid():
+@login_required
+def ChangePassword(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        
+        if form.is_valid(): 
             form.save()
-            return redirect("home")
+            return redirect('home')
     else:
-        form=TareaForm(instance=tarea)
+        form = ChangePasswordForm()
 
-    context = {"form":form}
-    return render(request,"todo/editar.html",context)
+    context = {'form': form}     
+    return render(request, 'todo/changePassword.html', context)
+
+@login_required
+def Edit(request,DNI):
+    perfil=CustomUser.objects.get(DNI=DNI)
+
+    if request.method == 'POST':
+        form = EditForm(request.POST, instance=request.user)
+        
+        if form.is_valid(): 
+            form.save()
+            return redirect('home')
+    else:
+        form = EditForm(instance=request.user)
+
+    context = {'form': form}     
+    return render(request, 'todo/Edit.html', context)
+
+def exit(request):
+    logout(request)
+    return redirect('home')
 

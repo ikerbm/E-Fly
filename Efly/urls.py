@@ -1,4 +1,4 @@
-"""eflyapp URL Configuration
+"""Efly URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -14,19 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
-#añadido
-from django.conf import settings
+from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/',include('django.contrib.auth.urls')), #implementacion sistema de login
-    path("",include("todo.urls")),
-    path("vuelos/",include("vuelos.urls")),
-    path("users/",include("users.urls")),
-    ]
-
-#añadido
-if settings.DEBUG:
-    from django.conf.urls.static import static
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
