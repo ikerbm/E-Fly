@@ -102,5 +102,7 @@ def create_admin(request):
     else:
         form = CreateAdminForm()
 
-    context = {'form': form}     
+    context = {'form': form}   
+    if form.errors:
+        context['errors'] = form.errors  
     return render(request, 'todo/create_admin.html', context)

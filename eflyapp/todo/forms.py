@@ -36,6 +36,13 @@ class CreateAdminForm(UserCreationForm):
         model = User
         fields = ['username','first_name','last_name','password1','password2','email',
                   'DNI','tipoUsuario'] 
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'DNI': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
         
 class ChangePasswordForm(forms.ModelForm):
     class Meta:
