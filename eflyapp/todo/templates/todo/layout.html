@@ -37,17 +37,17 @@
                         {% if request.user.is_authenticated and request.user.username == 'root' %}
                         <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin</a>
                             <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="#">Ver</a>
-                                <a class="dropdown-item" role="presentation" href="#">Crear</a>
+                                <a class="dropdown-item" role="presentation" href="{% url 'user_list' %}">Ver Usuarios</a>
+                                <a class="dropdown-item" role="presentation" href="{% url 'register' %}">Crear Usuarios</a>
                             </div>
                         </li>
                         {% endif %}
                     </ul>
                     <div>
                         {% if request.user.is_authenticated %}
-                        <span class="navbar-text"> <a href={% url 'exit' %} class="logout">Cerrar Sesión</a></span>
+                        <span class="navbar-text"> <a href="{% url 'exit' %}" class="logout">Cerrar Sesión</a></span>
                         {%else%}
-                        <span class="navbar-text"> <a href={% url 'login' %} class="login">Iniciar Sesión</a></span><a class="btn btn-light action-button" role="button" href={% url 'register' %}>Resgistrarse</a></div>
+                        <span class="navbar-text"> <a href="{% url 'login' %}" class="login">Iniciar Sesión</a></span><a class="btn btn-light action-button" role="button" href={% url 'register' %}>Resgistrarse</a></div>
                         {% endif %}
                     </div>
             </div>

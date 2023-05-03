@@ -1,4 +1,9 @@
 from django.shortcuts import render,redirect,get_object_or_404
+
+from django.contrib.auth.decorators import user_passes_test
+from django.views.generic import ListView, DeleteView
+
+from django.urls import reverse_lazy
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
@@ -62,3 +67,14 @@ def exit(request):
     logout(request)
     return redirect('home')
 
+
+#Ver Lista de Usuarios desde Root
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def user_list(request):
+    users = User.objects.all()
+    return render(request, 'todo/user_list.html', {'users': users})
+
+class UserDeleteView(DeleteView):
+    model = User
+    success_url = reverse_lazy('user_list')

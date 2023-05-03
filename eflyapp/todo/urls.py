@@ -6,4 +6,6 @@ urlpatterns=[
     path('ChangePassword/', views.ChangePassword, name='ChangePassword'),
     path("Edit/<int:DNI>", views.Edit, name='Edit'),
     path('logout/',views.exit,name='exit'),
+    path('users/', views.user_list, name='user_list'),
+    path('users/<int:pk>/delete/', views.UserDeleteView.as_view(), name='user_delete'),
 ]
