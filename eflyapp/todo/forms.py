@@ -19,6 +19,17 @@ class CreateUsuarioForm(UserCreationForm, ModelForm):
         fields = ['username','first_name','last_name','password1','password2','email',
                   'DNI','fechaNaci',
                   'lugarNaci','dirFact','sexo','tipoUsuario'] 
+        
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'lugarNaci': forms.TextInput(attrs={'class': 'form-control'}),
+            'dirFact': forms.TextInput(attrs={'class': 'form-control'}),
+            'sexo': forms.Select(attrs={'class': 'form-control'}),
+            'DNI': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
                   
 class CreateAdminForm(UserCreationForm):
     class Meta:
@@ -36,5 +47,13 @@ class EditForm(forms.ModelForm):
         model=CustomUser
         fields=['username','first_name','last_name',
                 'lugarNaci','dirFact','sexo']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'lugarNaci': forms.TextInput(attrs={'class': 'form-control'}),
+            'dirFact': forms.TextInput(attrs={'class': 'form-control'}),
+            'sexo': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 

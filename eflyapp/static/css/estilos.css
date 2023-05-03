@@ -234,3 +234,13 @@ body {
     transform:rotate(-19deg);
     opacity:0.2;
   }
+
+.form-group{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pass-row{
+  flex-direction: column;
+}

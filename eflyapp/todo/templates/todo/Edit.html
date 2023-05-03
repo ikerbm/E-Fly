@@ -1,51 +1,70 @@
 {% extends 'todo/layout.html' %}
 
 {% block content %}
-<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<form method="POST">
-			{% csrf_token %}
+<div class="container text-center">
+        
+    <div class="wrapper">
+        <div class="jumbotron jumbotron-fluid bg-white">
+            <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                <h1>Editar Perfil</h1>
+            </div>
+        </div>
 
-			<form action="" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="container" id="container" style="text-align: center;">
-                    <div class="p-3 mb-2 bg-warning text-dark">
-                        <h2>Editar perfil</h2>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="user-name-id">Username</label>
+        <form method="POST" action="" style="display: flex;justify-content: center;">
+            {% csrf_token %}
+            <div class="form" style="width: 80%;">
+                <div class="form-group">
+                    <label>Nombre De Usuario</label>
+                    <div class="col-sm-10">
                         {{ form.username }}
                     </div>
+                </div>
 
-                    <div class="input-wrapper">
-                        <label>Nombre</label>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>Nombre </label>
+                        <div class="col-sm-10">
                         {{ form.first_name }}
+                        </div>
                     </div>
-                    
-                    <div class="input-wrapper">
-                        <label>apellido</label>
+
+                    <div class="form-group col-sm-6">
+                        <label>Apellido</label>
+                        <div class="col-sm-10">
                         {{ form.last_name }}
+                        </div>
                     </div>
-                    <div class="input-wrapper">
-                        <label>sexo</label>
-                        {{ form.sexo }}
-                    </div>
-                    <div class="input-wrapper">
-                        <label>lugar de nacimiento</label>
+
+                </div>
+                
+                <div class="row">                    
+                    <div class="form-group col-sm-6">
+                        <label>Lugar de Nacimiento</label>
                         {{ form.lugarNaci }}
                     </div>
-                    <div class="input-wrapper">
-                        <label>direccion de facturacion</label>
-                        {{ form.dirFact }}
+                    
+                    <div class="form-group col-sm-6">
+                        <label>Sexo </label>
+                        {{ form.sexo }}
                     </div>
-                    <button type="submit" class="btn btn-warning btn-bg">Actualizar</button>
                 </div>
-            </form>
 
-		</form>
-	</div>		
-	
+                <div class="form-group">
+                    <label>Direccion de Facturacion</label>
+                    <div class="col-sm-10">
+                    {{ form.dirFact }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="hidden" name="tipoUsuario" maxlength="20" required="" id="id_tipoUsuario" value="cliente">
+                </div>
+                <div class="form-group" style="justify-content: center;">
+                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-   
 
 {% endblock content %}

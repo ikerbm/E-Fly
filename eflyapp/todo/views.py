@@ -31,6 +31,8 @@ def register(request):
         form = CreateUsuarioForm()
 
     context = {'form': form}     
+    if form.errors:
+        context['errors'] = form.errors
     return render(request, 'todo/userRegister.html', context)
 
 @login_required
