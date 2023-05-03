@@ -12,13 +12,13 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
   </head>
-  <body>
+  <body style="background: url('/static/img/bg-plane.jpg') no-repeat center center fixed; background-size: auto;background-repeat: inherit;">
     <div class="header-blue">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
             <div class="container"><a class="navbar-brand" href="#">E-Fly</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse"
                     id="navcol-1">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav flex-grow-1">
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Vuelos</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Check-in</a></li>
                         {% if request.user.is_authenticated %}
@@ -43,7 +43,7 @@
                         </li>
                         {% endif %}
                     </ul>
-                    <div>
+                    <div class="text-right">
                         {% if request.user.is_authenticated %}
                         <span class="navbar-text"> <a href="{% url 'exit' %}" class="logout">Cerrar Sesión</a></span>
                         {%else%}
@@ -53,32 +53,21 @@
             </div>
         </nav>
     </div>
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home'%}">E-FLY</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <div class="btn-group" role="group"> 
-                        
-                        {% if request.user.is_authenticated %}
-                        <a href={% url 'exit' %} class="btn btn-outline-warning btn-lg">Cerrar Sesión</a>
-                        {%else%}
-                        <a class="btn btn-outline-warning btn-lg " href={% url 'login' %}>Iniciar Sesion</a>
-                        <a class="btn btn-outline-warning btn-lg " href={% url 'register' %}>Registrarse</a>
-                        {% endif %}
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav> -->
+  
+  <!-- Page Content -->
+  <div class="container main-container">
+    <div class="card border-0 shadow my-5">
+            <!-- <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item" aria-current="page">{{ request.path }}</li>
+                </ol>
+            </nav> -->
 
         
     {% block content %}
     {% endblock %}
+    </div>
+  </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
