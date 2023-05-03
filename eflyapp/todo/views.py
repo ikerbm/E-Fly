@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout,authenticate,login
+from django.contrib.auth import logout,authenticate,login,update_session_auth_hash
 
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
@@ -38,13 +38,14 @@ def register(request):
 @login_required
 def ChangePassword(request):
     if request.method == 'POST':
-        form = ChangePasswordForm(request.POST)
+        form = ChangePasswordForm(request.user,request.POST)
         
         if form.is_valid(): 
-            form.save()
+            user=form.save()
+            update_session_auth_hash(request,user)
             return redirect('home')
     else:
-        form = ChangePasswordForm()
+        form = ChangePasswordForm(request.user)
 
     context = {'form': form}     
     return render(request, 'todo/changePassword.html', context)
