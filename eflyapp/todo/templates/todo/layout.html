@@ -11,6 +11,9 @@
     <!-- E-Fly CSS -->
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/cf924c4f2c.js" crossorigin="anonymous"></script>
   </head>
   <body style="background: url('/static/img/bg-plane.jpg') no-repeat center center fixed; background-size: auto;background-repeat: inherit;">
     <div class="header-blue">
@@ -45,7 +48,15 @@
                     </ul>
                     <div class="text-right">
                         {% if request.user.is_authenticated %}
-                        <span class="navbar-text"> <a href="{% url 'exit' %}" class="logout">Cerrar Sesión</a></span>
+                        <div class="dropdown user-dropdown-toggle"><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fa-solid fa-circle-user"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a class="dropdown-item" role="presentation" href="Edit/{{user.DNI}}">Editar Perfil</a>
+                                {% if not request.user.username == 'root' %}
+                                <a class="dropdown-item" role="presentation" href="{% url 'user_delete' user.pk %}">Eliminar Cuenta</a>
+                                {% endif %}
+                                <a class="dropdown-item" role="presentation" href="{% url 'exit' %}">Cerrar Sesión</a>
+                            </div>
+                        </div>
                         {%else%}
                         <span class="navbar-text"> <a href="{% url 'login' %}" class="login">Iniciar Sesión</a></span><a class="btn btn-light action-button" role="button" href={% url 'register' %}>Resgistrarse</a></div>
                         {% endif %}
