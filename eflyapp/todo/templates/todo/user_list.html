@@ -1,8 +1,13 @@
 {% extends 'todo/layout.html' %}
 
 {% block content %}
-  <h2>Lista de Usuarios</h2>
-  <table>
+<div class="container">
+  <div class="jumbotron jumbotron-fluid bg-white">
+      <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+          <h1>Lista de Administradores</h1>
+      </div>
+  </div>
+  <table class="table">
     <thead>
       <tr>
         <th>Username</th>
@@ -16,7 +21,7 @@
     <tbody>
       {% for user in users %}
         <tr>
-          <td>{{ user.username }}</td>
+          <td scope="row">{{ user.username }}</td>
           <td>{{ user.first_name }}</td>
           <td>{{ user.last_name }}</td>
           <td>{{ user.email }}</td>
@@ -30,4 +35,6 @@
       {% endfor %}
     </tbody>
   </table>
+
+</div>
 {% endblock %}

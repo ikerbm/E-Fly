@@ -42,8 +42,8 @@
                         {% if request.user.is_authenticated %}
                         <div class="dropdown user-dropdown-toggle"><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fa-solid fa-circle-user"></i></a>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <a class="dropdown-item" role="presentation" href="Edit/{{user.DNI}}">Editar Perfil</a>
                                 {% if not request.user.username == 'root' %}
+                                <a class="dropdown-item" role="presentation" href="Edit/{{user.DNI}}">Editar Perfil</a>
                                 <a class="dropdown-item" role="presentation" href="{% url 'user_delete' user.pk %}">Eliminar Cuenta</a>
                                 {% endif %}
                                 <a class="dropdown-item" role="presentation" href="{% url 'exit' %}">Cerrar Sesión</a>
