@@ -13,8 +13,13 @@ class CreateUsuarioForm(UserCreationForm):
         model = User
         fields = ['username','first_name','last_name','password1','password2','email',
                   'DNI','fechaNaci',
-                  'lugarNaci','dirFact','sexo',] 
-
+                  'lugarNaci','dirFact','sexo','tipoUsuario'] 
+class CreateAdminForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name','password1','password2','email',
+                  'DNI','tipoUsuario'] 
+        
 class ChangePasswordForm(forms.ModelForm):
     class Meta:
         model=CustomUser

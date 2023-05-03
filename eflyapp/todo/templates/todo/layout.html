@@ -15,7 +15,7 @@
   <body>
     <div class="header-blue">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-            <div class="container"><a class="navbar-brand" href="#">Company Name</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="container"><a class="navbar-brand" href="#">E-Fly</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse"
                     id="navcol-1">
                     <ul class="nav navbar-nav">
@@ -37,8 +37,8 @@
                         {% if request.user.is_authenticated and request.user.username == 'root' %}
                         <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin</a>
                             <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="{% url 'user_list' %}">Ver Usuarios</a>
-                                <a class="dropdown-item" role="presentation" href="{% url 'register' %}">Crear Usuarios</a>
+                                <a class="dropdown-item" role="presentation" href="{% url 'user_list' %}">Ver Admin's</a>
+                                <a class="dropdown-item" role="presentation" href="{% url 'create_admin' %}">Crear Admin</a>
                             </div>
                         </li>
                         {% endif %}
