@@ -18,6 +18,10 @@ def register(request):
         if form.is_valid(): 
             form.save()
             return redirect('home')
+        else:
+            errors = form.errors.as_data()
+            for field, error in errors.items():
+                print(f"Error en {field}: {error[0].message}")
     else:
         form = CreateUsuarioForm()
 
