@@ -14,7 +14,12 @@ body {
   background-color: rgba(255, 255, 255, 0.5); /* blanco semi-transparente */
   z-index: 999; /* asegura que el overlay aparezca encima de todos los demás elementos */
 }
-
+.user-dropdown-toggle{
+  font-size: 20px;
+}
+.user-dropdown-toggle a{
+  color: #fff;
+}
 .header-blue {
     background-color:#ffc107;
     font-family:'Source Sans Pro', sans-serif;
