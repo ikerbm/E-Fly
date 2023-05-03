@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,PasswordChangeForm
 from django import forms
 from django.forms import ModelForm
 from .models import *
@@ -44,10 +44,9 @@ class CreateAdminForm(UserCreationForm):
             'DNI': forms.NumberInput(attrs={'class': 'form-control'}),
         }
         
-class ChangePasswordForm(forms.ModelForm):
+class ChangePasswordForm(PasswordChangeForm):
     class Meta:
-        model=CustomUser
-        fields=['password']
+        model=User
 
 class EditForm(forms.ModelForm):
     class Meta:
