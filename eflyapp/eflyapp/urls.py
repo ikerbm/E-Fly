@@ -22,7 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('django.contrib.auth.urls')), #implementacion sistema de login
     path("",include("todo.urls")),
-    path("",include("vuelos.urls")),
     ]
 
 #añadido
