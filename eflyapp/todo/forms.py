@@ -12,7 +12,7 @@ User = get_user_model()
 class DateInput(forms.DateInput):
     input_type = 'date'
 
-class CreateUsuarioForm(UserCreationForm, ModelForm):
+class CreateUsuarioForm(UserCreationForm):
     fechaNaci = forms.DateField(widget=DateInput)
     class Meta:
         model = User
