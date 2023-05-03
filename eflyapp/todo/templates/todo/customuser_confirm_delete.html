@@ -1,0 +1,11 @@
+{% extends 'todo/layout.html' %}
+
+{% block content %}
+  
+    
+<form method="post">{% csrf_token %}
+    <p>¿Estás seguro de eliminar "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+</form>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{%extends 'todo/layout.html' %}
+
+    {% block content %}
+    <div class="container text-center">
+        
+        <div class="wrapper">
+            <div class="jumbotron jumbotron-fluid bg-white">
+                <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                    <h1>Crear Administrador</h1>
+                </div>
+            </div>
+
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form">
+                    <div class="input-wrapper">
+                        <label>Nombre De Usuario</label>
+                        {{ form.username }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>Nombre </label>
+                        {{ form.first_name }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>Apellido</label>
+                        {{ form.last_name }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>Correo</label>
+                        {{ form.email }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>DNI</label>
+                        {{ form.DNI }}
+                    </div>
+
+                    <div class="input_field">
+                        <label>contraseña</label>
+                        {{ form.password1 }}
+                    </div>
+                    <div class="input_field">
+                        <label>confirmar contraseña</label>
+                        {{ form.password2 }}
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="hidden" name="tipoUsuario" maxlength="20" required="" id="id_tipoUsuario" value="admin">
+                    </div>
+
+                    <div class="input_field terms">
+                        <label class="check">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <p>Deacuerdo con los terminos y condiciones</p>
+                    </div>
+                    <div class="input_field">
+                        <button type="submit" class="btn btn-warning">Crear</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
