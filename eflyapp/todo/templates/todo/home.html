@@ -1,33 +1,37 @@
 {%extends 'todo/layout.html' %}
 
 {%block content%}
+
 <div class="jumbotron jumbotron-fluid bg-white">
-  <div class="container text-center">
-    <h1 class="display-4">E-FLY</h1>
+  
+  <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+    {% if request.user.is_authenticated %}
+
+      <h1>Bienvenido {{ user.username | upper }} a E-FLY</h1>
+      {%else%}
+      <h1>Bienvenido a E-FLY</h1>
+    {%endif%}
   </div>
+
 </div>
 <div class="container text-center">
 <table class="table table-warning">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Tarea</th>
-        <th scope="col">Accion</th>
+        <div class="container">
+          
+    {% load static %}
+        <img style="max-height: 300px;" src="{% static 'img/logo1.png' %}" alt="logo">
+        <a href="{% url 'home' %}" class="btn btn-warning btn-lg btn-block" role="button">INICO</a>
+        <a href="{% url 'register' %}" class="btn btn-warning btn-lg btn-block" role="button">REGISTRARSE</a>
+        </div>
       </tr>
     </thead>
     <tbody>
-        {% for tarea in tareas %}
-      <tr>
-        <th scope="row">{{ tarea.id }}</th>
-        <td>{{ tarea }}</td>
-        <td>
-            <a class="btn btn-warning btn-sm" href="{% url 'eliminar' tarea.id %}">eliminar</a>
-            <a class="btn btn-light btn-sm" href="{% url 'editar' tarea.id %}">editar</a>
-        </td>
-      </tr>
-      {% endfor %}
     </tbody>
   </table>
 </div>
 
 {% endblock %}
+
+

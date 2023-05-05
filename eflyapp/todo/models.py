@@ -1,33 +1,29 @@
 from django.db import models
 from .choices import *
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
+#Pruebas
 
-
-class Usuario(models.Model): 
-    usuario = models.OneToOneField(User,on_delete=models.CASCADE)
-    nombre=models.CharField(max_length=100)
-    apellido=models.CharField(max_length=100)
-    contraseña=models.CharField(max_length=20)
-    correo=models.EmailField()
+class CustomUser(AbstractUser):
+    DNI=models.IntegerField(primary_key=True, default=0)
     saldo=models.IntegerField(default=0)
-    fechaNaci=models.DateField()
-    lugarNaci=models.CharField(max_length=50)
-    dirFact=models.CharField(max_length=100)
+    fechaNaci=models.DateField(null=True)
+    lugarNaci=models.CharField(max_length=50,null=True)
+    dirFact=models.CharField(max_length=100,null=True)
     sexo=models.CharField(max_length=20,choices=genero,default='N')
-    tipoUsuario=models.CharField(max_length=20)
+    tipoUsuario=models.CharField(max_length=20,null=True)
+    picture=models.ImageField(default='profile_default.png',upload_to='users/')
 
-    def __str__(self):
-        return self.usuario.username
-
+  
+#Tablas BD
 class Ciudad(models.Model):
     nombreCiudad=models.CharField(max_length=100)
     pais=models.CharField(max_length=100)
     hora=models.TimeField()
 
     def __str__(self):
-        return self.nombre
-    
+        return self.nombreCiudad
+
 class Vuelo(models.Model):
     origen=models.ForeignKey(Ciudad,on_delete=models.CASCADE,related_name="origenes")
     destino=models.ForeignKey(Ciudad,on_delete=models.CASCADE,related_name="destinos")
@@ -55,7 +51,7 @@ class Noticia(models.Model):
     texto=models.CharField(max_length=300)
 
 class Tarjeta(models.Model):
-    clienteid=models.ForeignKey(Usuario,on_delete=models.CASCADE,null=True)
+    clienteid=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     tipo=models.CharField(choices=tipoTarjeta,max_length=20)
     disponible=models.IntegerField(default=200000)
     numero=models.CharField(null=False,max_length=16)

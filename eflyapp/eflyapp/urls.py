@@ -15,9 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+#añadido
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/',include('django.contrib.auth.urls')), #implementacion sistema de login
     path("",include("todo.urls")),
-    path("",include("vuelos.urls")),
     ]
+
+#añadido
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
