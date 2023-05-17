@@ -107,3 +107,20 @@ def create_admin(request):
     if form.errors:
         context['errors'] = form.errors  
     return render(request, 'todo/create_admin.html', context)
+
+
+@login_required
+def AddCard(request,DNI):
+    if request.method == 'POST':
+        form = AddCardForm(request.POST)
+        
+        if form.is_valid(): 
+            tarjeta = form.save(commit=False)
+            tarjeta.clienteid = request.user
+            tarjeta=form.save()
+            return redirect('home')
+    else:
+        form = AddCardForm()
+
+    context = {'form': form}     
+    return render(request, 'todo/AddCard.html', context)

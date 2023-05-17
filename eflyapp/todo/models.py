@@ -55,7 +55,7 @@ class Noticia(models.Model):
 
 class Tarjeta(models.Model):
     clienteid=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
-    tipo=models.CharField(choices=tipoTarjeta,max_length=20)
+    tipo=models.CharField(null=False,choices=tipoTarjeta,max_length=16)
     disponible=models.IntegerField(default=200000)
     numero=models.CharField(null=False,max_length=16)
     nombre=models.CharField(null=False,max_length=16)
