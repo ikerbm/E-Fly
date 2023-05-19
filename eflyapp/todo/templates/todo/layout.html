@@ -47,7 +47,7 @@
                                 {% if not request.user.username == 'root' %}
                                 <a class="dropdown-item" role="presentation" href="Edit/{{user.DNI}}">Editar Perfil</a>
                                 <a class="dropdown-item" role="presentation" href="AddCard/{{user.DNI}}">Añadir Tarjeta</a>
-                                <a class="dropdown-item" role="presentation" href="AddSaldo/{{user.DNI}}">Añadir Saldo</a>
+                                <a class="dropdown-item" role="presentation" href="AdministrarTarjetas/{{user.DNI}}">Administrar Tarjetas</a>
                                 {% if not request.user.tipoUsuario == 'admin' %}
                                 <a class="dropdown-item" role="presentation" href="{% url 'user_delete' user.pk %}">Eliminar Cuenta</a>
                                 {% endif %}
