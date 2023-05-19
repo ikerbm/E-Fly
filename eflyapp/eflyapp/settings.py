@@ -84,7 +84,10 @@ WSGI_APPLICATION = 'eflyapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'E-Fly',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        },
+        'NAME': 'e-fly',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
@@ -118,7 +121,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
+
+LANGUAGES = [
+    ('es', 'Español'),
+]
 
 TIME_ZONE = 'UTC'
 

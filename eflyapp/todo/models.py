@@ -1,6 +1,8 @@
 from django.db import models
 from .choices import *
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
+
 
 #Pruebas
 
@@ -12,9 +14,10 @@ class CustomUser(AbstractUser):
     dirFact=models.CharField(max_length=100,null=True)
     sexo=models.CharField(max_length=20,choices=genero,default='N')
     tipoUsuario=models.CharField(max_length=20,null=True)
+    email = models.EmailField(unique=True)
     picture=models.ImageField(default='profile_default.png',upload_to='users/')
 
-  
+    
 #Tablas BD
 class Ciudad(models.Model):
     nombreCiudad=models.CharField(max_length=100)
@@ -52,7 +55,7 @@ class Noticia(models.Model):
 
 class Tarjeta(models.Model):
     clienteid=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
-    tipo=models.CharField(choices=tipoTarjeta,max_length=20)
+    tipo=models.CharField(null=False,choices=tipoTarjeta,max_length=16)
     disponible=models.IntegerField(default=200000)
     numero=models.CharField(null=False,max_length=16)
     nombre=models.CharField(null=False,max_length=16)

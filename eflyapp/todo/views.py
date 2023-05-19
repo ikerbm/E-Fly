@@ -14,7 +14,17 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 def home(request):
-    return render(request,'todo/home.html')
+    if request.user.is_authenticated:
+        if request.user.is_superuser:  # Root
+            return render(request,'todo/homeadministrador.html')
+        elif request.user.is_staff:  # Admin
+            return render(request,'todo/homeadministrador.html')
+        else:  # Usuario normal 
+            return render(request,'todo/home.html')
+    else:
+        return render(request, 'todo/home.html')
+    
+
 
 def register(request):
     if request.method == 'POST':
@@ -107,3 +117,20 @@ def create_admin(request):
     if form.errors:
         context['errors'] = form.errors  
     return render(request, 'todo/create_admin.html', context)
+
+
+@login_required
+def AddCard(request,DNI):
+    if request.method == 'POST':
+        form = AddCardForm(request.POST)
+        
+        if form.is_valid(): 
+            tarjeta = form.save(commit=False)
+            tarjeta.clienteid = request.user
+            tarjeta=form.save()
+            return redirect('home')
+    else:
+        form = AddCardForm()
+
+    context = {'form': form}     
+    return render(request, 'todo/AddCard.html', context)
