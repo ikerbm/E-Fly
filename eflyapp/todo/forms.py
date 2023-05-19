@@ -42,7 +42,7 @@ class CreateUsuarioForm(UserCreationForm):
         if age < 18:
             raise forms.ValidationError('Debes tener al menos 18 años para registrarte.')
         return fechaNaci
-    
+
     class Meta:
         model = User
         fields = ['username','first_name','last_name','password1','password2','email',
@@ -54,7 +54,7 @@ class CreateUsuarioForm(UserCreationForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'lugarNaci': forms.TextInput(attrs={'class': 'form-control'}),
+            'lugarNaci': forms.Select(attrs={'class': 'form-control'}),
             'dirFact': forms.TextInput(attrs={'class': 'form-control'}),
             'sexo': forms.Select(attrs={'class': 'form-control'}),
             'DNI': forms.NumberInput(attrs={'class': 'form-control'}),

@@ -15,7 +15,7 @@ class CustomUser(AbstractUser):
     DNI=models.IntegerField(primary_key=True, default=0)
     saldo=models.IntegerField(default=0)
     fechaNaci=models.DateField(null=True)
-    lugarNaci=models.CharField(max_length=50,null=True)
+    lugarNaci= models.ForeignKey('cities_light.City', on_delete=models.SET_NULL, null=True, blank=True)
     dirFact=models.CharField(max_length=100,null=True)
     sexo=models.CharField(max_length=20,choices=genero,default='N')
     tipoUsuario=models.CharField(max_length=20,null=True)
