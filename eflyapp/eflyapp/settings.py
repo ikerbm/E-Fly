@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cities_light',
     'crispy_forms',
     'crispy_bootstrap5',
     'todo',

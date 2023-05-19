@@ -4,6 +4,11 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 
 
+#Modelo de city-lights
+class Address(models.Model):
+   country = models.ForeignKey('cities_light.Country', on_delete=models.SET_NULL, null=True, blank=True) 
+   city = models.ForeignKey('cities_light.City', on_delete=models.SET_NULL, null=True, blank=True)
+   
 #Pruebas
 
 class CustomUser(AbstractUser):
