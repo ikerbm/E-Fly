@@ -10,4 +10,5 @@ urlpatterns=[
     path('users/', views.user_list, name='user_list'),
     path('users/<int:pk>/delete/', views.UserDeleteView.as_view(), name='user_delete'),
     path("AddCard/<int:DNI>", views.AddCard, name='AddCard'),
+    path("AddSaldo/<int:DNI>", views.AddSaldo, name='AddSaldo'),
 ]

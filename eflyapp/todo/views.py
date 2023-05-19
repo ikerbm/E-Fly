@@ -124,3 +124,29 @@ def AddCard(request,DNI):
 
     context = {'form': form}     
     return render(request, 'todo/AddCard.html', context)
+
+@login_required
+def AddSaldo(request, DNI):
+    cliente = CustomUser.objects.get(DNI=DNI)
+    tarjetas = Tarjeta.objects.filter(clienteid=cliente)
+
+    if request.method == 'POST':
+        form = AddSaldoForm(request.POST)
+        if form.is_valid():
+            saldo = form.cleaned_data['saldo']
+            cliente.saldo += saldo
+            cliente.save()
+            return redirect('home')
+    else:
+        if tarjetas.exists():
+            form = AddSaldoForm()
+        else:
+            return redirect('AddCard.html')
+
+    context = {
+        'form': form,
+        'cliente': cliente,
+        'tarjetas': tarjetas,
+    }
+    return render(request, 'todo/AddSaldo.html', context)
+
