@@ -78,7 +78,7 @@
                             
                             <!-- Menu para cliente -->
                             {% if request.user.tipoUsuario == 'cliente' %}
-                              <a class="dropdown-item" role="presentation" href="Edit/{{user.DNI}}">Editar Perfil</a>
+                              <a class="dropdown-item" role="presentation" href="{% url 'Edit' user.DNI %}">Editar Perfil</a>
                               <a class="dropdown-item" role="presentation" href="AddCard/{{user.DNI}}">Añadir Tarjeta</a>
                               <a class="dropdown-item" role="presentation" href="{% url 'user_delete' user.pk %}">Eliminar Cuenta</a>
                               <a class="dropdown-item" role="presentation" href="{% url 'exit' %}">Cerrar Sesión</a>
@@ -87,7 +87,7 @@
 
                             <!-- Menu para el Administrador -->
                             {% if request.user.tipoUsuario == 'admin' %}
-                              <a class="dropdown-item" role="presentation" href="Edit/{{user.DNI}}">Editar Perfil</a>
+                              <a class="dropdown-item" role="presentation" href="{% url 'Edit' user.DNI %}">Editar Perfil</a>
                               <a class="dropdown-item" role="presentation" href="{% url 'exit' %}">Cerrar Sesión</a>
                             {% endif %}
                             <!-- FIN del Menu para el Administrador !!! -->
