@@ -14,7 +14,17 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 def home(request):
-    return render(request,'todo/home.html')
+    if request.user.is_authenticated:
+        if request.user.is_superuser:  # Root
+            return render(request,'todo/homeadministrador.html')
+        elif request.user.is_staff:  # Admin
+            return render(request,'todo/homeadministrador.html')
+        else:  # Usuario normal 
+            return render(request,'todo/home.html')
+    else:
+        return render(request, 'todo/home.html')
+    
+
 
 def register(request):
     if request.method == 'POST':
