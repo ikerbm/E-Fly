@@ -3,6 +3,7 @@ from . import views
 urlpatterns=[
     path("",views.home,name="home"),
     path("administrador/",views.home,name="homeadministrador"),
+    path("root/",views.home,name="homeroot"),
     path('register/', views.register, name='register'),
     path('ChangePassword/', views.ChangePassword, name='ChangePassword'),
     path("Edit/<int:DNI>", views.Edit, name='Edit'),

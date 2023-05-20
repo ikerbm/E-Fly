@@ -13,15 +13,21 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+#Pagina principal para cada tipo de usuario
 def home(request):
     if request.user.is_authenticated:
-        if request.user.is_superuser:  # Root
+        #El root esta de finido como is_staff en la base de datos
+        #Pagina de inicio para el root
+        if (request.user.is_staff): 
+            return render(request,'todo/homeroot.html')
+        #Pagina de inicio para el administrador
+        elif (request.user.tipoUsuario == 'admin'): 
             return render(request,'todo/homeadministrador.html')
-        elif request.user.is_staff:  # Admin
-            return render(request,'todo/homeadministrador.html')
-        else:  # Usuario normal 
+        else:
+        #Pagina de inicio para el usuario normal
             return render(request,'todo/home.html')
     else:
+        #Pagina de inicio para el visitante
         return render(request, 'todo/home.html')
     
 
