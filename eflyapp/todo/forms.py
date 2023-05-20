@@ -18,6 +18,14 @@ class DateInput(SelectDateWidget):
         kwargs['years'] = years
         super().__init__(*args, **kwargs)
 
+class CardDateInput(SelectDateWidget):
+    def __init__(self, *args, **kwargs):
+        # establece el rango de años disponibles
+        current_year = date.today().year
+        years = range(current_year, current_year+10, -1)
+        kwargs['years'] = years
+        super().__init__(*args, **kwargs)
+
 class CreateUsuarioForm(UserCreationForm):
     fechaNaci = forms.DateField(widget=DateInput)
 
@@ -82,4 +90,50 @@ class EditForm(forms.ModelForm):
             'sexo': forms.Select(attrs={'class': 'form-control'}),
         }
 
+class AddCardForm(forms.ModelForm):
 
+    '''
+    arreglar fecha del mes actual, hasta 10 años, esta aceptando tarjetas vencidas
+    y necesitamos que no solicite el dia, solo mes y año
+    '''
+
+    vencimiento = forms.DateField(widget=CardDateInput)
+
+    def clean_vencimiento(self):
+        vencimiento = self.cleaned_data.get('vencimiento')
+        today = date.today()
+        if vencimiento < today:
+            raise forms.ValidationError('La tarjeta está vencida.')
+        return vencimiento
+    
+    def clean_numero(self):
+        numero = self.cleaned_data.get('numero')
+        if len(numero) != 16:
+            raise forms.ValidationError('El número de tarjeta debe tener 16 dígitos.')
+        return numero
+
+    def clean_cvv(self):
+        cvv = self.cleaned_data.get('cvv')
+        if len(cvv) != 3:
+            raise forms.ValidationError('El CVV debe tener 3 dígitos.')
+        return cvv
+    
+    class Meta:
+        model = Tarjeta
+        fields = ['tipo','numero','nombre','cvv','vencimiento'] 
+        
+    widgets = {
+            'cvv': forms.TextInput(attrs={'class': 'form-control'}),
+            'numero': forms.TextInput(attrs={'class': 'form-control'}),            
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),            
+            'tipo': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+
+class AddSaldoForm(forms.ModelForm):
+    class Meta:
+        model=CustomUser
+        fields=['saldo']
+        widgets = {
+            'saldo': forms.NumberInput(attrs={'class': 'form-control'}),
+        }

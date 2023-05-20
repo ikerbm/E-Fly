@@ -9,4 +9,7 @@ urlpatterns=[
     path('create_admin/', views.create_admin, name='create_admin'),
     path('users/', views.user_list, name='user_list'),
     path('users/<int:pk>/delete/', views.UserDeleteView.as_view(), name='user_delete'),
+    path("AdministrarTarjetas/<int:DNI>",views.AdministrarTarjetas,name="AdministrarTarjetas"),
+    path("AddCard/<int:DNI>", views.AddCard, name='AddCard'),
+    path("AddSaldo/<int:DNI>", views.AddSaldo, name='AddSaldo'),
 ]
