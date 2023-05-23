@@ -33,10 +33,11 @@ class Ciudad(models.Model):
         return self.nombreCiudad
 
 class Vuelo(models.Model):
+    codigo = models.CharField(unique=True, null=True, max_length=10)
     origen = models.ForeignKey('cities_light.City', on_delete=models.CASCADE, related_name="origenes", limit_choices_to={'name__in': ['Pereira', 'Bogotá', 'Medellín']})
     destino= models.ForeignKey('cities_light.City', on_delete=models.CASCADE, related_name="destinos", limit_choices_to={'name__in': ['Pereira', 'Bogotá', 'Medellín']})
-    horaSalida=models.TimeField()
-    horaLlegada=models.TimeField()
+    horaSalida=models.DateTimeField()
+    horaLlegada=models.DateTimeField()
     precioPrimera=models.IntegerField()
     precioEconomica=models.IntegerField()
     precioPrimeraDesc=models.IntegerField()

@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm,PasswordChangeForm
 from django import forms
 from django.forms import ModelForm
 from .models import *
-from django.forms.widgets import DateInput, Select
+from django.forms.widgets import DateInput, Select, DateTimeInput
 from django.forms.widgets import SelectDateWidget
 from cities_light.models import City
 #from django.contrib.auth.models import User
@@ -130,17 +130,18 @@ class AddCardForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),            
             'tipo': forms.Select(attrs={'class': 'form-control'}),
         }
-    
+
 class CreateVueloForm(forms.ModelForm):
     class Meta:
         model = Vuelo
-        fields = ['origen', 'destino', 'horaSalida', 'horaLlegada', 'precioPrimera', 'precioEconomica', 'precioPrimeraDesc', 'precioEconomicaDesc']
+        fields = ['codigo','origen', 'destino', 'horaSalida', 'horaLlegada', 'precioPrimera', 'precioEconomica', 'precioPrimeraDesc', 'precioEconomicaDesc']
         
         widgets = {
+            'codigo': forms.TextInput(attrs={'class': 'form-control'}),
             'origen': forms.Select(attrs={'class': 'form-control'}),
             'destino': forms.Select(attrs={'class': 'form-control'}),
-            'horaSalida': forms.TimeInput(attrs={'class': 'form-control'}),
-            'horaLlegada': forms.TimeInput(attrs={'class': 'form-control'}),
+            'horaLlegada': forms.DateTimeInput(format='%d/%m/%Y %H:%M', attrs={'class': 'form-control datetimepicker-input'}),
+            'horaLlegada': forms.DateTimeInput(format='%d/%m/%Y %H:%M', attrs={'class': 'form-control datetimepicker-input'}),
             'precioPrimera': forms.NumberInput(attrs={'class': 'form-control'}),
             'precioEconomica': forms.NumberInput(attrs={'class': 'form-control'}),
             'precioPrimeraDesc': forms.NumberInput(attrs={'class': 'form-control'}),
