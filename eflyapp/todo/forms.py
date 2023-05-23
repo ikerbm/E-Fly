@@ -5,6 +5,7 @@ from django.forms import ModelForm
 from .models import *
 from django.forms.widgets import DateInput, Select
 from django.forms.widgets import SelectDateWidget
+from cities_light.models import City
 #from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -129,4 +130,30 @@ class AddCardForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),            
             'tipo': forms.Select(attrs={'class': 'form-control'}),
         }
+    
+class CreateVueloForm(forms.ModelForm):
+    class Meta:
+        model = Vuelo
+        fields = ['origen', 'destino', 'horaSalida', 'horaLlegada', 'precioPrimera', 'precioEconomica', 'precioPrimeraDesc', 'precioEconomicaDesc']
+        
+        widgets = {
+            'origen': forms.Select(attrs={'class': 'form-control'}),
+            'destino': forms.Select(attrs={'class': 'form-control'}),
+            'horaSalida': forms.TimeInput(attrs={'class': 'form-control'}),
+            'horaLlegada': forms.TimeInput(attrs={'class': 'form-control'}),
+            'precioPrimera': forms.NumberInput(attrs={'class': 'form-control'}),
+            'precioEconomica': forms.NumberInput(attrs={'class': 'form-control'}),
+            'precioPrimeraDesc': forms.NumberInput(attrs={'class': 'form-control'}),
+            'precioEconomicaDesc': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
 
+    def __init__(self, *args, **kwargs):
+        super(CreateVueloForm, self).__init__(*args, **kwargs)
+        # Obtener la lista de ciudades permitidas
+        ciudades_permitidas = ['Pereira', 'Bogotá', 'Medellín']
+        # Obtener las instancias de las ciudades permitidas
+        ciudades = City.objects.filter(name__in=ciudades_permitidas)
+        # Actualizar las opciones del campo 'origen'
+        self.fields['origen'].queryset = ciudades
+        # Actualizar las opciones del campo 'destino'
+        self.fields['destino'].queryset = ciudades 

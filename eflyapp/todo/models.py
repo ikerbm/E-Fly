@@ -33,8 +33,8 @@ class Ciudad(models.Model):
         return self.nombreCiudad
 
 class Vuelo(models.Model):
-    origen=models.ForeignKey(Ciudad,on_delete=models.CASCADE,related_name="origenes")
-    destino=models.ForeignKey(Ciudad,on_delete=models.CASCADE,related_name="destinos")
+    origen = models.ForeignKey('cities_light.City', on_delete=models.CASCADE, related_name="origenes", limit_choices_to={'name__in': ['Pereira', 'Bogotá', 'Medellín']})
+    destino= models.ForeignKey('cities_light.City', on_delete=models.CASCADE, related_name="destinos", limit_choices_to={'name__in': ['Pereira', 'Bogotá', 'Medellín']})
     horaSalida=models.TimeField()
     horaLlegada=models.TimeField()
     precioPrimera=models.IntegerField()

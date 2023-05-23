@@ -134,3 +134,15 @@ def AddCard(request,DNI):
 
     context = {'form': form}     
     return render(request, 'todo/AddCard.html', context)
+
+
+def crear_vuelo(request):
+    if request.method == 'POST':
+        form = CreateVueloForm(request.POST)
+        if form.is_valid():
+            Vuelo = form.save()
+            # Realiza cualquier otra acción necesaria después de guardar el vuelo
+            return redirect('home')
+    else:
+        form = CreateVueloForm()
+    return render(request, 'vuelos/create_vuelo.html', {'form': form})
