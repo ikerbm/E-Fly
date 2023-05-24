@@ -195,3 +195,12 @@ class FiltroVuelosForm(forms.Form):
     destino = forms.CharField(required=False)
     origen = forms.CharField(required=False)
     fecha_salida = forms.DateField(required=False, widget=forms.DateInput(attrs={'class': 'datepicker'}))
+
+class PromoVueloForm(forms.ModelForm):
+    class Meta:
+        model = Vuelo
+        fields = ['precioPrimeraDesc', 'precioEconomicaDesc']
+        widgets = {
+            'precioPrimeraDesc': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'precioEconomicaDesc': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+        }

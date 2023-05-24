@@ -15,6 +15,7 @@ urlpatterns=[
     path('vuelo/create', views.crear_vuelo, name='crear_vuelo'),
     path('vuelo/', views.ver_vuelos, name='ver_vuelos'),
     path('vuelo/<int:vuelo_id>/delete/', views.borrar_vuelo, name='borrar_vuelo'),
-    path('vuelo/<int:vuelo_id>/edit/', views.edit_vuelo, name='edit_vuelo')
+    path('vuelo/<int:vuelo_id>/edit/', views.edit_vuelo, name='edit_vuelo'),
+    path('vuelo/<int:vuelo_id>/promo/', views.promo_vuelo, name='promo_vuelo'),
     #path('crearvuelo/', views.crearvuelo, name='crearvuelo')
 ]

@@ -211,3 +211,18 @@ def edit_vuelo(request, vuelo_id):
         form = EditVueloForm(instance=vuelo)
 
     return render(request, 'todo/edit_vuelo.html', {'form': form, 'vuelo': vuelo, 'errors': form.errors})
+
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'admin')
+def promo_vuelo(request, vuelo_id):
+    vuelo = get_object_or_404(Vuelo, id=vuelo_id)
+
+    if request.method == 'POST':
+        form = PromoVueloForm(request.POST, instance=vuelo)
+        if form.is_valid():
+            form.save()
+            return redirect('ver_vuelos')  # Redirige a la página deseada después de editar el vuelo
+    else:
+        form = PromoVueloForm(instance=vuelo)
+
+    return render(request, 'todo/promo_vuelo.html', {'form': form, 'vuelo': vuelo, 'errors': form.errors})
