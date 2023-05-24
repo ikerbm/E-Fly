@@ -21,6 +21,57 @@
             </div>
             {% endif %}
             <div class="card">
+                <h5 class="card-header">Buscar Vuelos</h5>
+                <div class="card-body">
+                    <form method="GET" action="">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="origen">Origen:</label>
+                                    <select class="form-control" id="origen" name="origen">
+                                      <option value="">---</option>
+                                      <option value="Pereira" {% if request.GET.origen == "Pereira" %}selected{% endif %}>Pereira</option>
+                                      <option value="Bogotá" {% if request.GET.origen == "Bogotá" %}selected{% endif %}>Bogotá</option>
+                                      <option value="Medellín" {% if request.GET.origen == "Medellín" %}selected{% endif %}>Medellín</option>
+                                      <option value="Cali" {% if request.GET.origen == "Cali" %}selected{% endif %}>Cali</option>
+                                      <option value="Cartagena" {% if request.GET.origen == "Cartagena" %}selected{% endif %}>Cartagena</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="destino">Destino:</label>
+                                    <select class="form-control" id="destino" name="destino">
+                                      <option value="">---</option>
+                                      <option value="Madrid" {% if request.GET.destino == "Madrid" %}selected{% endif %}>Madrid</option>
+                                      <option value="Londres" {% if request.GET.destino == "Londres" %}selected{% endif %}>Londres</option>
+                                      <option value="New York" {% if request.GET.destino == "New York" %}selected{% endif %}>New York</option>
+                                      <option value="Buenos Aires" {% if request.GET.destino == "Buenos Aires" %}selected{% endif %}>Buenos Aires</option>
+                                      <option value="Miami" {% if request.GET.destino == "Miami" %}selected{% endif %}>Miami</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="fecha_salida">Fecha:</label>
+                                    <input type="text" class="form-control" id="id_fechaSalida" name="fecha_salida" {% if request.GET.fecha_salida %}value="{{request.GET.fecha_salida}}"{% endif %}>
+                                    <script>
+                                        $('#id_fechaSalida').datepicker({
+                                            format: "dd-mm-yy",
+                                            startView: 2,
+                                            language: "es"
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Filtrar</button>
+                        <a href="{% url 'ver_vuelos' %}" class="btn btn-secondary">Limpiar Filtros</a>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <div class="card">
                 <div class="card-header">
                     Mostrando {{ page.start_index }} - {{ page.end_index }} de {{ page.paginator.count }} resultados
                 </div>
@@ -64,7 +115,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <h6>Económica</h6>
-                                        <h6>$ $ {{ vuelo.precioEconomica|intcomma }}</h6>
+                                        <h6>$ {{ vuelo.precioEconomica|intcomma }}</h6>
                                     </div>
                                 </div>
                             </div>

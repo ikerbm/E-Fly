@@ -190,3 +190,8 @@ class EditVueloForm(forms.ModelForm):
         ciudades_destino_permitidas = ['Madrid', 'Londres', 'New York', 'Buenos Aires', 'Miami']
         destino_choices = [(ciudad, ciudad) for ciudad in ciudades_destino_permitidas]
         self.fields['destino'].widget.choices = destino_choices
+
+class FiltroVuelosForm(forms.Form):
+    destino = forms.CharField(required=False)
+    origen = forms.CharField(required=False)
+    fecha_salida = forms.DateField(required=False, widget=forms.DateInput(attrs={'class': 'datepicker'}))

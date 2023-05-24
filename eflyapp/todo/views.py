@@ -164,6 +164,19 @@ def crear_vuelo(request):
 def ver_vuelos(request):
     vuelos = Vuelo.objects.all()
 
+    filtro_form = FiltroVuelosForm(request.GET)
+
+    destino = request.GET.get('destino')
+    origen = request.GET.get('origen')
+    fecha_salida = request.GET.get('fecha_salida')
+
+    if destino:
+        vuelos = vuelos.filter(destino=destino)
+    if origen:
+        vuelos = vuelos.filter(origen=origen)
+    if fecha_salida:
+        vuelos = vuelos.filter(fechaSalida=fecha_salida)
+
     # Configura el paginador con 10 elementos por página
     paginator = Paginator(vuelos, 10)
 
@@ -173,7 +186,7 @@ def ver_vuelos(request):
     # Obtiene el objeto Page correspondiente a la página solicitada
     page = paginator.get_page(page_number)
 
-    return render(request, 'todo/ver_vuelos.html', {'page': page})
+    return render(request, 'todo/ver_vuelos.html', {'page': page, 'filtro_form': filtro_form})
 
 @login_required
 @user_passes_test(lambda u: u.tipoUsuario == 'admin')
