@@ -1,7 +1,37 @@
 <!doctype html>
 <html lang="en">
+
+  <style>
+    .jumbotron-container {
+      display: flex;
+      flex: 30%;
+      padding: 20px;
+      margin: 1rem;
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      }
+      .jumbotron-container2 {
+        display: flex;
+        padding: 1rem;
+        margin: 1rem;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex:70%; 
+        align-items: flex-start;
+        }
+        .btn-size {
+          width: 200px;
+        }
+  
+</style>
+
   <head>
-    <!-- Required meta tags -->
+    <!-- Required meta tags 
+    
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -16,6 +46,8 @@
     <script src="https://kit.fontawesome.com/cf924c4f2c.js" crossorigin="anonymous"></script>
     </head>
 <!-- Fondo de la pagina -->
+    <div id="Principal"></div>
+
     <body style="background: url('/static/img/bg-plane.jpg') no-repeat center center fixed; background-size: auto;background-repeat: inherit;">
 <!-- Fin del Fondo de la pagina !!! -->
 
@@ -31,14 +63,26 @@
 <!-- Encabesado de la pagina -->
       <div class="header-blue">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
-          {% if not request.user.tipoUsuario == 'admin' %}
+          {% if request.user.tipoUsuario == 'cliente' %}
             <div class="container"><a class="navbar-brand" href="{% url 'home' %}"><img style="max-height: 100px;" src="{% static 'img/logo2.png' %}" alt="logo" class="img-logo-header"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-              {% endif %}    
-              {% if request.user.tipoUsuario == 'admin' %}  
-              <div class="container"><a class="navbar-brand" href="{% url 'homeadministrador' %}"><img style="max-height: 100px;" src="{% static 'img/logo2.png' %}" alt="logo" class="img-logo-header"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-              {% endif %}
+              
+              {% else %}   
+          {% if request.user.tipoUsuario == 'root' %}
+            <div class="container"><a class="navbar-brand" href="{% url 'home' %}"><img style="max-height: 100px;" src="{% static 'img/logo2.png' %}" alt="logo" class="img-logo-header"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+              
+              {% else %}  
+          {% if request.user.tipoUsuario == 'admin' %}  
+            <div class="container"><a class="navbar-brand" href="{% url 'home' %}"><img style="max-height: 100px;" src="{% static 'img/logo2.png' %}" alt="logo" class="img-logo-header"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+          
+              {%else%}
+          <div class="container"><a class="navbar-brand" href="{% url 'home' %}"><img style="max-height: 100px;" src="{% static 'img/logo2.png' %}" alt="logo" class="img-logo-header"></a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+          
+            {% endif %}
+            {% endif %}
+            {% endif %}
+
               <div class="collapse navbar-collapse" id="navcol-1">
-                    
+            
   <!-- Menu de navegacion -->
                     <ul class="nav navbar-nav flex-grow-1">
                       {% if request.user.is_authenticated%}
@@ -52,7 +96,7 @@
                         {% endif %}
                         <!-- Menu de navegacion para el administrador -->
                         {% if request.user.tipoUsuario == 'admin' %}
-                          <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Administracion</a></li>
+                        <!--<li class="nav-item" role="presentation"><a class="nav-link active" href="#">Administracion</a></li>-->
                         {% endif %}
                         <!-- Menu de navegacion para el root -->
                         {% if request.user.tipoUsuario == 'root' %}
@@ -64,7 +108,7 @@
                       {% endif %}
   <!-- FIN del Menu de navegacion !!! -->
 
-
+<!--
                       {% if request.user.is_authenticated and request.user.username == 'root' %}
                         <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin</a>
                           <div class="dropdown-menu" role="menu">
@@ -73,16 +117,16 @@
                           </div>
                         </li>
                       {% endif %}
+-->
                     </ul>
                     
   <!-- Menu de navegacion propio de cada usuario -->
                     <div class="text-right">
                       {% if request.user.is_authenticated %}
-                        <!-- Menu desplegable -->
+                      <!-- Menu desplegable -->
                         <div class="dropdown user-dropdown-toggle"><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fa-solid fa-circle-user"></i></a>
                           <div class="dropdown-menu dropdown-menu-right" role="menu">
                             
-
                             <a class="dropdown-item" role="presentation" href="{% url 'exit' %}">Cerrar Sesión</a>
                             
                             <!-- Menu para cliente -->
@@ -90,7 +134,6 @@
                               <a class="dropdown-item" role="presentation" href="{% url 'Edit' user.DNI %}">Editar Perfil</a>
                               <a class="dropdown-item" role="presentation" href="AddCard/{{user.DNI}}">Añadir Tarjeta</a>
                               <a class="dropdown-item" role="presentation" href="{% url 'user_delete' user.pk %}">Eliminar Cuenta</a>
-                              <a class="dropdown-item" role="presentation" href="{% url 'exit' %}">Cerrar Sesión</a>
                             {% endif %}
                             <!-- FIN del Menu para cliente !!! -->
 
@@ -102,9 +145,10 @@
                             <!-- FIN del Menu para el Administrador !!! -->
 
                             <!-- Menu para el root -->
-                            {% if request.user.tipoUsuario == 'root' %}
+                            {% if request.user.is_authenticated and request.user.username == 'root' %}
                             {% endif %}
                             <!-- FIN del Menu para el root !!! -->
+
                           </div>
                         </div>
                       <!-- Menu si no inicia secion -->
@@ -113,24 +157,77 @@
                       {% endif %}
                       <!-- FIN del Menu si no inicia secion !!! -->
                     </div>
-    <!-- FIN del Menu desplegable -->
+                    <!-- FIN del Menu desplegable -->
             </div>
         </nav>
     </div>
 <!-- Fin del Encabesado !!! -->
   
-  <!-- Page Content -->
+<!-- Contenido de la pagina-->
   <div class="container main-container">
-    <div class="card border-0 shadow my-5">
+    
+    
+    <div class="card border-2 shadow my-2">
+      <!--<li><a href="#">MAIN</a></li> -->
+      
             <!-- <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item" aria-current="page">{{ request.path }}</li>
                 </ol>
             </nav> -->
 
-        
-    {% block content %}
-    {% endblock %}
+            <!-- Contenedor Base -->
+            {% if request.user.is_authenticated %}
+            <div class="jumbotron-container">
+              
+              <div class="card d-flex flex-column align-items-center" style="border-width: 3px; border-color: black; padding: 15px;">
+
+              <!--<li><a href="#">container</a></li>-->
+              {% if request.user.is_authenticated %}
+                <!--<li><a href="#">MENU</a></li>-->
+
+                {% if request.user.tipoUsuario == 'admin' %}
+                  <br></br>  
+                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="Edit/{{user.DNI}}">EDITAR PERFIL</a>
+                  <br></br>
+                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="">ADMINISTRAR VUELOS</a>
+                  <br></br>
+                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="">ADMINISTRAR NOTICIAS</a>
+                {% else%}
+
+                
+                
+
+                {% if request.user.is_authenticated and request.user.username == 'root' %}
+                  <br></br>
+                  <a id="veradministradores" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="{% url 'user_list' %}">VER ADMINISTRADORES</a>
+                  <br></br>
+                  <a id="creardministradores" class="btn btn-sm btn-warning btn-outline-dark btn-size" role="button" href="{% url 'create_admin' %}">CREAR ADMINISTRADORES</a>
+                  <br></br>
+                {% else%}
+                
+                {% endif %}
+                {% endif %}
+                
+              
+              {% endif %}
+            </div>
+            {% endif %}
+
+
+            <div class="jumbotron-container2 ">
+              {% if not norequest.user.is_authenticated %}
+              {% else %}
+              {% endif %}
+                
+              {% block content %}
+              {% endblock %}
+
+            </div>
+            </div>
+
+    
+    
     </div>
   </div>
     <!-- Optional JavaScript; choose one of the two! -->
