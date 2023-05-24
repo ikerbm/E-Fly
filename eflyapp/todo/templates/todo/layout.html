@@ -87,15 +87,20 @@
             
   <!-- Menu de navegacion -->
                     <ul class="nav navbar-nav flex-grow-1">
+<<<<<<< HEAD
                       {% if request.user.is_authenticated%}
                         <!-- Menu de navegacion para el cliente -->
                         {% if request.user.tipoUsuario == 'cliente' %}
+=======
+                      
+>>>>>>> 790abb63d0edb96fcb375e0dd60e47b0bc27de80
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Vuelos</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Check-in</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Compras</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Reservas</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Noticias</a></li>
                         {% endif %}
+<<<<<<< HEAD
                         <!-- Menu de navegacion para el administrador -->
                         {% if request.user.tipoUsuario == 'admin' %}
                         <!--<li class="nav-item" role="presentation"><a class="nav-link active" href="#">Administracion</a></li>-->
@@ -112,6 +117,10 @@
 
 <!--
                       {% if request.user.is_authenticated and request.user.username == 'root' %}
+=======
+
+                        {% if request.user.is_authenticated and request.user.username == 'root' %}
+>>>>>>> 790abb63d0edb96fcb375e0dd60e47b0bc27de80
                         <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin</a>
                           <div class="dropdown-menu" role="menu">
                               <a class="dropdown-item" role="presentation" href="{% url 'user_list' %}">Ver Admin's</a>
@@ -129,7 +138,6 @@
                         <div class="dropdown user-dropdown-toggle"><a class="" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fa-solid fa-circle-user"></i></a>
                           <div class="dropdown-menu dropdown-menu-right" role="menu">
                             
-                            <a class="dropdown-item" role="presentation" href="{% url 'exit' %}">Cerrar Sesión</a>
                             
                             <!-- Menu para cliente -->
                             {% if request.user.tipoUsuario == 'cliente' %}
@@ -147,10 +155,17 @@
                             <!-- FIN del Menu para el Administrador !!! -->
 
                             <!-- Menu para el root -->
-                            {% if request.user.is_authenticated and request.user.username == 'root' %}
+                            {% if not request.user.username == 'root' %}
+                            <a class="dropdown-item" role="presentation" href="Edit/{{user.DNI}}">Editar Perfil</a>
+                            <a class="dropdown-item" role="presentation" href="AddCard/{{user.DNI}}">Añadir Tarjeta</a>
+                            <a class="dropdown-item" role="presentation" href="AdministrarTarjetas/{{user.DNI}}">Administrar Tarjetas</a>
+                              {% if not request.user.tipoUsuario == 'admin' %}
+                                <a class="dropdown-item" role="presentation" href="{% url 'user_delete' user.pk %}">Eliminar Cuenta</a>
+                              {% endif %}
                             {% endif %}
                             <!-- FIN del Menu para el root !!! -->
 
+                            <a class="dropdown-item" role="presentation" href="{% url 'exit' %}">Cerrar Sesión</a>
                           </div>
                         </div>
                       <!-- Menu si no inicia secion -->

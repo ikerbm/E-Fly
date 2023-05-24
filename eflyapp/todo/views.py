@@ -126,6 +126,15 @@ def create_admin(request):
         context['errors'] = form.errors  
     return render(request, 'todo/create_admin.html', context)
 
+@login_required
+def AdministrarTarjetas(request,DNI):
+    cliente = CustomUser.objects.get(DNI=DNI)
+    tarjetas = Tarjeta.objects.filter(clienteid=cliente)
+    context = {
+        'cliente': cliente,
+        'tarjetas': tarjetas,
+    }
+    return render(request,'todo/AdministrarTarjetas.html',context)
 
 @login_required
 def AddCard(request,DNI):
@@ -226,3 +235,33 @@ def promo_vuelo(request, vuelo_id):
         form = PromoVueloForm(instance=vuelo)
 
     return render(request, 'todo/promo_vuelo.html', {'form': form, 'vuelo': vuelo, 'errors': form.errors})
+def eliminar_tarjeta(request, tarjeta_id):
+    tarjeta = Tarjeta.objects.get(id=tarjeta_id)
+    tarjeta.delete()
+    return redirect('home')
+
+@login_required
+def AddSaldo(request, DNI):
+    cliente = CustomUser.objects.get(DNI=DNI)
+    tarjetas = Tarjeta.objects.filter(clienteid=cliente)
+
+    if request.method == 'POST':
+        form = AddSaldoForm(request.POST)
+        if form.is_valid():
+            saldo = form.cleaned_data['saldo']
+            cliente.saldo += saldo
+            cliente.save()
+            return redirect('home')
+    else:
+        if tarjetas.exists():
+            form = AddSaldoForm()
+        else:
+            return redirect('AddCard.html')
+
+    context = {
+        'form': form,
+        'cliente': cliente,
+        'tarjetas': tarjetas,
+    }
+    return render(request, 'todo/AddSaldo.html', context)
+
