@@ -11,9 +11,9 @@
 {% endfor %}
 
 <!-- Botón para agregar tarjeta -->
-<a href="AddCard/{{user.DNI}}" class="btn btn-primary">Agregar tarjeta</a>
+<a href="{% url 'AddCard' user.DNI%}" class="btn btn-primary">Agregar tarjeta</a>
 
 <!-- Botón para recargar saldo -->
-<a href="AddSaldo/{{user.DNI}}" class="btn btn-success">Recargar saldo</a>
+<a href="{% url 'AddSaldo' user.DNI%}" class="btn btn-success">Recargar saldo</a>
 
 {% endblock content %}
