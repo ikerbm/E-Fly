@@ -190,7 +190,7 @@
 
                 {% if request.user.tipoUsuario == 'admin' %}
                   <br></br>  
-                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="Edit/{{user.DNI}}">EDITAR PERFIL</a>
+                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="{% url 'Edit' user.DNI %}">EDITAR PERFIL</a>
                   <br></br>
                   <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="">ADMINISTRAR VUELOS</a>
                   <br></br>

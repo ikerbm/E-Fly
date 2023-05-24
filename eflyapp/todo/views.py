@@ -141,7 +141,8 @@ def AddCard(request,DNI):
     context = {'form': form}     
     return render(request, 'todo/AddCard.html', context)
 
-
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'admin')
 def crear_vuelo(request):
     if request.method == 'POST':
         form = CreateVueloForm(request.POST)
