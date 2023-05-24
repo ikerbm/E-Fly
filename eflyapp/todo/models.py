@@ -2,6 +2,7 @@ from django.db import models
 from .choices import *
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 #Modelo de city-lights
@@ -36,12 +37,16 @@ class Vuelo(models.Model):
     codigo = models.CharField(unique=True, null=True, max_length=10)
     origen = models.ForeignKey('cities_light.City', on_delete=models.CASCADE, related_name="origenes", limit_choices_to={'name__in': ['Pereira', 'Bogotá', 'Medellín']})
     destino= models.ForeignKey('cities_light.City', on_delete=models.CASCADE, related_name="destinos", limit_choices_to={'name__in': ['Pereira', 'Bogotá', 'Medellín']})
-    horaSalida=models.DateTimeField()
-    horaLlegada=models.DateTimeField()
     precioPrimera=models.IntegerField()
     precioEconomica=models.IntegerField()
-    precioPrimeraDesc=models.IntegerField()
-    precioEconomicaDesc=models.IntegerField()
+    precioPrimeraDesc=models.IntegerField(null=True, validators=[MinValueValidator(0)])
+    precioEconomicaDesc=models.IntegerField(null=True, validators=[MinValueValidator(0)])
+    fechaSalida=models.CharField(null=True, max_length=20)
+    horaSalida=models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(23)],null=True)
+    minutoSalida=models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(59)],null=True)
+    fechaLlegada=models.CharField(null=True, max_length=20)
+    horaLlegada=models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(23)],null=True)
+    minutoLlegada=models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(59)],null=True)
 
 class Compra(models.Model):
     #falta la llave foranea
