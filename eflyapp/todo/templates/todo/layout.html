@@ -91,7 +91,7 @@
                         <!-- Menu de navegacion para el cliente -->
                         {% if request.user.tipoUsuario == 'cliente' %}
                       
-                        <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Vuelos</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'ver_vuelos' %}">Vuelos</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Check-in</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Compras</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Reservas</a></li>
@@ -106,7 +106,7 @@
                         {% endif %}
                         <!-- Menu de navegacion por defecto para el visitante -->
                       {% else %}
-                        <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Vuelos</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'ver_vuelos' %}">Vuelos</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Check-in</a></li>
                       {% endif %}</ul>
                     
@@ -186,7 +186,7 @@
                   <br></br>  
                   <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="{% url 'Edit' user.DNI %}">EDITAR PERFIL</a>
                   <br></br>
-                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="">ADMINISTRAR VUELOS</a>
+                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="{% url 'ver_vuelos' %}">ADMINISTRAR VUELOS</a>
                   <br></br>
                   <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="">ADMINISTRAR NOTICIAS</a>
                 {% else%}
