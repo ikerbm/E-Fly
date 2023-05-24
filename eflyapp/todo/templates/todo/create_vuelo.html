@@ -25,79 +25,107 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="form-group col-sm-4">
-                        <label for="codigo">Código: </label>
-                        {{ form.codigo }}
-                    </div>
-                    
-                    <div class="form-group col-sm-4">
-                        <label>Origen: </label>
-                        {{ form.origen }}
-                    </div>
-                    
-                    <div class="form-group col-sm-4">
-                        <label>Destino: </label>
-                        {{ form.destino }}
+                        <div>
+                            <label for="codigo">Código: </label>
+                        </div>
+                        <div>
+                            {{ form.codigo }}
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-sm-6">
-                        <label>Hora de Salida: </label>
-                        <div class="input-group date" id="horasalidapicker" data-target-input="nearest">
-                            {{ form.horaSalida }}
-                            <div class="input-group-append" data-target="#horasalidapicker" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
+                    <div class="form-group col-sm-4">
+                        <div>
+                            <label>Origen: </label>
                         </div>
+                        <div>
+                            {{ form.origen }}
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Fecha Salida: </label>
+                        {{ form.fechaSalida }}
                         <script>
-                            $(function () {
-                              $("#horasalidapicker").datetimepicker({
-                                format: 'DD/MM/YYYY HH:mm',
-                              });
+                            $('#id_fechaSalida').datepicker({
+                                format: "dd-mm-yy",
+                                startView: 2,
+                                language: "es"
                             });
                         </script>  
                     </div>
-                    <div class="form-group col-sm-6">
-                        <label>Hora de Llegada: </label>
-                        <div class="input-group date" id="horallegadapicker" data-target-input="nearest">
-                            {{ form.horaLlegada }}
-                            <div class="input-group-append" data-target="#horallegadapicker" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
+                    <div class="form-group col-sm-2">
+                        <div>
+                            <label>Hora: </label>
                         </div>
-                        <script>
-                            $(function () {
-                              $("#horallegadapicker").datetimepicker({
-                                format: 'DD/MM/YYYY HH:mm',
-                              });
-                            });
-                        </script> 
+                        <div>
+                            {{ form.horaSalida }}
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <div>
+                            <label>:</label>
+                        </div>
+                        <div>
+                            {{ form.minutoSalida }}
+                        </div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="form-group col-sm-4">
+                        <div>
+                            <label>Destino: </label>
+                        </div>
+                        <div>
+                            {{ form.destino }}
+                        </div>
+                    </div>
                     <div class="form-group col-sm-3">
+                        <label>Fecha Llegada: </label>
+                        {{ form.fechaLlegada }}
+                        <script>
+                            $('#id_fechaLlegada').datepicker({
+                                format: "dd-mm-yy",
+                                startView: 2,
+                                language: "es"
+                            });
+                        </script>  
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <div>
+                            <label>Hora: </label>
+                        </div>
+                        <div>
+                            {{ form.horaLlegada }}
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <div>
+                            <label>:</label>
+                        </div>
+                        <div>
+                            {{ form.minutoLlegada }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
                         <label>Precio Primera Clase: </label>
                         {{ form.precioPrimera }}
                     </div>
                     
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label>Precio Clase Económica: </label>
                         {{ form.precioEconomica }}
                     </div>
+                </div>
                     
-                    <div class="form-group col-sm-3">
-                        <label>Precio Primera Clase (Con Descuento): </label>
-                        {{ form.precioPrimeraDesc }}
-                    </div>
-                    
-                    <div class="form-group col-sm-3">
-                        <label>Precio Clase Económica (Con Descuento): </label>
-                        {{ form.precioEconomicaDesc }}
-                    </div>
-                    <div class="row">
+                <div class="row">
+                    <div class="col">
                         <button type="submit" class="btn btn-warning">Crear Vuelo</button>
                     </div>
                 </div>
-            </form>            
+                <br>
+            </form>  
         </div>
     </div>
 {% endblock %}

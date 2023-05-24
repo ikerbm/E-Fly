@@ -132,20 +132,22 @@ class AddCardForm(forms.ModelForm):
         }
 
 class CreateVueloForm(forms.ModelForm):
+
     class Meta:
         model = Vuelo
-        fields = ['codigo','origen', 'destino', 'horaSalida', 'horaLlegada', 'precioPrimera', 'precioEconomica', 'precioPrimeraDesc', 'precioEconomicaDesc']
-        
+        fields = ['codigo', 'origen', 'destino', 'precioPrimera', 'precioEconomica', 'fechaSalida', 'horaSalida', 'minutoSalida', 'fechaLlegada', 'horaLlegada', 'minutoLlegada']
         widgets = {
             'codigo': forms.TextInput(attrs={'class': 'form-control'}),
             'origen': forms.Select(attrs={'class': 'form-control'}),
             'destino': forms.Select(attrs={'class': 'form-control'}),
-            'horaLlegada': forms.DateTimeInput(format='%d/%m/%Y %H:%M', attrs={'class': 'form-control datetimepicker-input'}),
-            'horaLlegada': forms.DateTimeInput(format='%d/%m/%Y %H:%M', attrs={'class': 'form-control datetimepicker-input'}),
-            'precioPrimera': forms.NumberInput(attrs={'class': 'form-control'}),
-            'precioEconomica': forms.NumberInput(attrs={'class': 'form-control'}),
-            'precioPrimeraDesc': forms.NumberInput(attrs={'class': 'form-control'}),
-            'precioEconomicaDesc': forms.NumberInput(attrs={'class': 'form-control'}),
+            'precioPrimera': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'precioEconomica': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'fechaSalida': forms.TextInput(attrs={'class': 'form-control'}),
+            'horaSalida': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '23'}),
+            'minutoSalida': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '59'}),
+            'fechaLlegada': forms.TextInput(attrs={'class': 'form-control'}),
+            'horaLlegada': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '23'}),
+            'minutoLlegada': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '59'})
         }
 
     def __init__(self, *args, **kwargs):

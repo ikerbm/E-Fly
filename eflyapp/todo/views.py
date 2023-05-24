@@ -142,7 +142,7 @@ def crear_vuelo(request):
         if form.is_valid():
             Vuelo = form.save()
             # Realiza cualquier otra acción necesaria después de guardar el vuelo
-            return redirect('/home')
+            return redirect('home')
         else:
             errors = form.errors.as_data()
             for field, error in errors.items():
@@ -150,4 +150,4 @@ def crear_vuelo(request):
                 print(f"Error en {field}: {error[0].message} (Valor: {field_value})")
     else:
         form = CreateVueloForm()
-    return render(request, 'todo/create_vuelo.html', {'form': form})
+    return render(request, 'todo/create_vuelo.html', {'form': form, 'errors': form.errors})
