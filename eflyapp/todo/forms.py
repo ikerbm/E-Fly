@@ -87,7 +87,7 @@ class EditForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'lugarNaci': forms.TextInput(attrs={'class': 'form-control'}),
+            'lugarNaci': forms.Select(attrs={'class': 'form-control'}),
             'dirFact': forms.TextInput(attrs={'class': 'form-control'}),
             'sexo': forms.Select(attrs={'class': 'form-control'}),
         }
