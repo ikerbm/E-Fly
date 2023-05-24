@@ -26,7 +26,6 @@ class CardDateInput(SelectDateWidget):
         kwargs['years'] = years
         super().__init__(*args, **kwargs)
 
-
 class CreateUsuarioForm(UserCreationForm):
     fechaNaci = forms.DateField(widget=DateInput)
 
@@ -130,3 +129,11 @@ class AddCardForm(forms.ModelForm):
             'tipo': forms.Select(attrs={'class': 'form-control'}),
         }
 
+
+class AddSaldoForm(forms.ModelForm):
+    class Meta:
+        model=CustomUser
+        fields=['saldo']
+        widgets = {
+            'saldo': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
