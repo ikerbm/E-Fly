@@ -19,10 +19,10 @@ def home(request):
         #El root esta de finido como is_staff en la base de datos
         #Pagina de inicio para el root
         if (request.user.is_staff): 
-            return render(request,'todo/homeroot.html')
+            return render(request,'todo/home.html')
         #Pagina de inicio para el administrador
         elif (request.user.tipoUsuario == 'admin'): 
-            return render(request,'todo/homeadministrador.html')
+            return render(request,'todo/home.html')
         else:
         #Pagina de inicio para el usuario normal
             return render(request,'todo/home.html')
