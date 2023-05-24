@@ -9,6 +9,8 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout,authenticate,login,update_session_auth_hash
 
+from django.core.paginator import Paginator
+
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -147,9 +149,8 @@ def crear_vuelo(request):
     if request.method == 'POST':
         form = CreateVueloForm(request.POST)
         if form.is_valid():
-            Vuelo = form.save()
-            # Realiza cualquier otra acción necesaria después de guardar el vuelo
-            return redirect('home')
+            vuelo = form.save()
+            return redirect('ver_vuelos')
         else:
             errors = form.errors.as_data()
             for field, error in errors.items():
@@ -158,3 +159,42 @@ def crear_vuelo(request):
     else:
         form = CreateVueloForm()
     return render(request, 'todo/create_vuelo.html', {'form': form, 'errors': form.errors})
+
+
+def ver_vuelos(request):
+    vuelos = Vuelo.objects.all()
+
+    # Configura el paginador con 10 elementos por página
+    paginator = Paginator(vuelos, 10)
+
+    # Obtiene el número de página de la consulta GET, si no se proporciona, usa el valor 1
+    page_number = request.GET.get('page', 1)
+
+    # Obtiene el objeto Page correspondiente a la página solicitada
+    page = paginator.get_page(page_number)
+
+    return render(request, 'todo/ver_vuelos.html', {'page': page})
+
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'admin')
+def borrar_vuelo(request, vuelo_id):
+    vuelo = get_object_or_404(Vuelo, id=vuelo_id)
+    
+    if request.method == 'POST':
+        vuelo.delete()
+        return redirect('ver_vuelos')  # Reemplaza 'nombre_de_tu_ruta' con el nombre de la ruta a la que deseas redirigir después de borrar el vuelo
+    
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'admin')
+def edit_vuelo(request, vuelo_id):
+    vuelo = get_object_or_404(Vuelo, id=vuelo_id)
+
+    if request.method == 'POST':
+        form = EditVueloForm(request.POST, instance=vuelo)
+        if form.is_valid():
+            form.save()
+            return redirect('ver_vuelos')  # Redirige a la página deseada después de editar el vuelo
+    else:
+        form = EditVueloForm(instance=vuelo)
+
+    return render(request, 'todo/edit_vuelo.html', {'form': form, 'vuelo': vuelo, 'errors': form.errors})

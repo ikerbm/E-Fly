@@ -3,6 +3,7 @@ from .choices import *
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
+from datetime import datetime
 
 
 #Modelo de city-lights
@@ -34,9 +35,21 @@ class Ciudad(models.Model):
         return self.nombreCiudad
 
 class Vuelo(models.Model):
+    CIUDADES_PERMITIDAS = [
+        ('Pereira', 'Pereira'),
+        ('Bogotá', 'Bogotá'),
+        ('Medellín', 'Medellín'),
+        ('Cali', 'Cali'),
+        ('Cartagena', 'Cartagena'),
+        ('Madrid', 'Madrid'),
+        ('Londres', 'Londres'),
+        ('New York', 'New York'),
+        ('Buenos Aires', 'Buenos Aires'),
+        ('Miami', 'Miami'),
+    ]
     codigo = models.CharField(unique=True, null=True, max_length=10)
-    origen = models.ForeignKey('cities_light.City', on_delete=models.CASCADE, related_name="origenes", limit_choices_to={'name__in': ['Pereira', 'Bogotá', 'Medellín']})
-    destino= models.ForeignKey('cities_light.City', on_delete=models.CASCADE, related_name="destinos", limit_choices_to={'name__in': ['Pereira', 'Bogotá', 'Medellín']})
+    origen = models.CharField(max_length=100, choices=CIUDADES_PERMITIDAS)
+    destino = models.CharField(max_length=100, choices=CIUDADES_PERMITIDAS)
     precioPrimera=models.IntegerField()
     precioEconomica=models.IntegerField()
     precioPrimeraDesc=models.IntegerField(null=True, validators=[MinValueValidator(0)])
@@ -47,6 +60,23 @@ class Vuelo(models.Model):
     fechaLlegada=models.CharField(null=True, max_length=20)
     horaLlegada=models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(23)],null=True)
     minutoLlegada=models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(59)],null=True)
+    tiempoVuelo = models.CharField(null=True, max_length=20)
+
+    @property
+    def calcular_tiempo_vuelo(self):
+        # Realiza el cálculo del tiempo de vuelo
+        # utilizando los campos existentes en el modelo
+        # y devuelve el resultado en el formato deseado
+        # Por ejemplo, vamos a asumir que los campos necesarios son 'hora_salida' y 'hora_llegada'
+        if self.fechaLlegada and self.fechaLlegada:
+            return self.fechaLlegada  # Formato de ejemplo
+
+        return None  # En caso de que los campos necesarios no estén completos
+
+    def save(self, *args, **kwargs):
+        # Antes de guardar el objeto Vuelo, actualizamos el campo calculado 'tiempo_vuelo'
+        self.tiempo_vuelo = self.calcular_tiempo_vuelo
+        super(Vuelo, self).save(*args, **kwargs)
 
 class Compra(models.Model):
     #falta la llave foranea

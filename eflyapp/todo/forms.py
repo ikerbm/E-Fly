@@ -152,11 +152,41 @@ class CreateVueloForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CreateVueloForm, self).__init__(*args, **kwargs)
-        # Obtener la lista de ciudades permitidas
-        ciudades_permitidas = ['Pereira', 'Bogotá', 'Medellín']
-        # Obtener las instancias de las ciudades permitidas
-        ciudades = City.objects.filter(name__in=ciudades_permitidas)
-        # Actualizar las opciones del campo 'origen'
-        self.fields['origen'].queryset = ciudades
-        # Actualizar las opciones del campo 'destino'
-        self.fields['destino'].queryset = ciudades 
+        # Obtener las opciones del campo 'origen'
+        ciudades_origen_permitidas = ['Pereira', 'Bogotá', 'Medellín', 'Cali', 'Cartagena']
+        origen_choices = [(ciudad, ciudad) for ciudad in ciudades_origen_permitidas]
+        self.fields['origen'].widget.choices = origen_choices
+
+        # Obtener las opciones del campo 'destino'
+        ciudades_destino_permitidas = ['Madrid', 'Londres', 'New York', 'Buenos Aires', 'Miami']
+        destino_choices = [(ciudad, ciudad) for ciudad in ciudades_destino_permitidas]
+        self.fields['destino'].widget.choices = destino_choices
+
+class EditVueloForm(forms.ModelForm):
+    class Meta:
+        model = Vuelo
+        fields = ['origen', 'destino', 'precioPrimera', 'precioEconomica', 'fechaSalida', 'horaSalida', 'minutoSalida', 'fechaLlegada', 'horaLlegada', 'minutoLlegada']
+        widgets = {
+            'origen': forms.Select(attrs={'class': 'form-control'}),
+            'destino': forms.Select(attrs={'class': 'form-control'}),
+            'precioPrimera': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'precioEconomica': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'fechaSalida': forms.TextInput(attrs={'class': 'form-control'}),
+            'horaSalida': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '23'}),
+            'minutoSalida': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '59'}),
+            'fechaLlegada': forms.TextInput(attrs={'class': 'form-control'}),
+            'horaLlegada': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '23'}),
+            'minutoLlegada': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '59'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(EditVueloForm, self).__init__(*args, **kwargs)
+        # Obtener las opciones del campo 'origen'
+        ciudades_origen_permitidas = ['Pereira', 'Bogotá', 'Medellín', 'Cali', 'Cartagena']
+        origen_choices = [(ciudad, ciudad) for ciudad in ciudades_origen_permitidas]
+        self.fields['origen'].widget.choices = origen_choices
+
+        # Obtener las opciones del campo 'destino'
+        ciudades_destino_permitidas = ['Madrid', 'Londres', 'New York', 'Buenos Aires', 'Miami']
+        destino_choices = [(ciudad, ciudad) for ciudad in ciudades_destino_permitidas]
+        self.fields['destino'].widget.choices = destino_choices

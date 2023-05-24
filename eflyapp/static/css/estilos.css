@@ -244,3 +244,11 @@ body {
 .pass-row{
   flex-direction: column;
 }
+
+.page-link {
+  color: #FFC107;
+}
+
+.jumbotron {
+  padding: 1rem 2rem;
+}
