@@ -1,0 +1,20 @@
+{% extends 'todo/layout.html' %}
+
+{% block content %}
+
+{% for tarjeta in tarjetas %}
+  <div class="tarjeta">
+    <p>Número de tarjeta: {{ tarjeta.numero }}</p>
+    <p>Saldo actual: {{ cliente.saldo }}</p>
+    
+  </div>
+{% endfor %}
+
+<div class="contenido">
+  <!-- Botón para agregar tarjeta -->
+    <a href="{% url 'AddCard' user.DNI %}" class="btn btn-outline-dark" style="border-width: 3px; border-color: black; padding: 15px; margin-right: 20px;"><h1>Agregar tarjeta</h1></a>
+  <!-- Botón para recargar saldo -->
+  <a href="{% url 'AddSaldo' user.DNI %}" class="btn btn-outline-dark" style="border-width: 3px; border-color: black; padding: 15px;"><h1>Recargar saldo</h1></a>
+  
+</div>
+{% endblock content %}

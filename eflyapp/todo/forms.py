@@ -27,7 +27,6 @@ class CardDateInput(SelectDateWidget):
         kwargs['years'] = years
         super().__init__(*args, **kwargs)
 
-
 class CreateUsuarioForm(UserCreationForm):
     fechaNaci = forms.DateField(widget=DateInput)
 
@@ -203,4 +202,12 @@ class PromoVueloForm(forms.ModelForm):
         widgets = {
             'precioPrimeraDesc': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
             'precioEconomicaDesc': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+        }
+
+class AddSaldoForm(forms.ModelForm):
+    class Meta:
+        model=CustomUser
+        fields=['saldo']
+        widgets = {
+            'saldo': forms.NumberInput(attrs={'class': 'form-control'}),
         }
