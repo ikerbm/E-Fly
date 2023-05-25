@@ -38,13 +38,13 @@
 </div>
 -->
 {% if not request.user.is_authenticated %}
-  <div class="btnsuperior">
-    <a id="vuelos" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="#">VUELOS</a>
-    <a id="checkin" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="#">CHECK-IN</a>
+  <div class="btnsuperior p-1">
+    <a id="vuelos" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="#"><h5>VUELOS</h5></a>
+    <a id="checkin" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="#"><h5>CHECK-IN</h5></a>
   </div>
 {%endif%}
 
-<div class = "interface">
+<div class = "interface p-1">
   
   {% if not request.user.tipoUsuario == 'admin'   %}
     {% if not request.user.username == 'root' %}

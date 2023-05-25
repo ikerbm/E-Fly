@@ -265,3 +265,11 @@ def AddSaldo(request, DNI):
     }
     return render(request, 'todo/AddSaldo.html', context)
 
+@login_required
+def administrarcompras(request,DNI):
+    cliente = CustomUser.objects.get(DNI=DNI)
+    tarjetas = Tarjeta.objects.filter(clienteid=cliente)
+    context = {
+        'cliente': cliente,
+    }
+    return render(request,'todo/administrarcompras.html',context)

@@ -1,6 +1,6 @@
 genero=(
-    ('M','Macho'),
-    ('H','Hembra'),
+    ('H','Hombre'),
+    ('M','Mujer'),
     ('N','No Responde')
 )
 

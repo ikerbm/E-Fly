@@ -147,25 +147,25 @@
               {% if request.user.is_authenticated %}
                 <!--<li><a href="#">MENU</a></li>-->
                 {% if request.user.tipoUsuario == 'admin' %}
-                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="{% url 'Edit' user.DNI %}">EDITAR PERFIL</a>
-                  <br></br>
-                  <a id="administrarvuelos" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="">ADMINISTRAR VUELOS</a>
-                  <br></br>
-                  <a id="administrarnoticias" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="">ADMINISTRAR NOTICIAS</a>
+                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;" href="{% url 'Edit' user.DNI %}"><h5>EDITAR PERFIL</h5></a>
+                  
+                  <a id="administrarvuelos" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;" href="#"><h5>ADMINISTRAR VUELOS</h5></a>
+                  
+                  <a id="administrarnoticias" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="#"><h5>ADMINISTRAR NOTICIAS</h5></a>
                 {% else%}
                   {% if request.user.tipoUsuario == 'cliente' %}
                     <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;"  href="{% url 'Edit' user.DNI %}"><h5>EDITAR PERFIL</h5></a>
                     <a id="vuelos" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;" href="#"><h5>VUELOS</h5></a>
                     <a id="reservas" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;" href="#"><h5>RESERVAS</h5></a>
                     <a id="noticias" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;" href="#"><h5>NOTICIAS</h5></a>
-                    <a id="administrarcompras" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;" href="#"><h5>ADMINISTRAR COMPRAS</h5></a>
+                    <a id="administrarcompras" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;" href="{% url 'administrarcompras' user.DNI %}"><h5>ADMINISTRAR COMPRAS</h5></a>
                     <a id="administrarsaldo" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;" href="{% url 'AdministrarTarjetas' user.DNI %}"><h5>ADMINISTRAR SALDO</h5></a>
                     <a id="checkin" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="#"><h5>CHECK-IN</h5></a>
                     {% else%}
                     {% if request.user.is_authenticated and request.user.username == 'root' %}
-                      <a id="veradministradores" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="{% url 'user_list' %}">VER ADMINISTRADORES</a>
-                      <br></br>
-                      <a id="creardministradores" class="btn btn-sm btn-warning btn-outline-dark btn-size" role="button" href="{% url 'create_admin' %}">CREAR ADMINISTRADORES</a>
+                      <a id="veradministradores" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" style="margin-bottom: 10px;" href="{% url 'user_list' %}"><h6>VER ADMINISTRADORES</h6></a>
+                      
+                      <a id="creardministradores" class="btn btn-sm btn-warning btn-outline-dark btn-size" role="button"  href="{% url 'create_admin' %}"><h6>CREAR ADMINISTRADORES</h6></a>
                     {% endif %}
                   {% endif %}
                 {% endif %}
@@ -182,6 +182,7 @@
               </div>
             </div>
           </div>
+        
         
         
       </div>

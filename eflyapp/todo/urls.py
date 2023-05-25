@@ -18,4 +18,5 @@ urlpatterns=[
     path('vuelo/<int:vuelo_id>/promo/', views.promo_vuelo, name='promo_vuelo'),
     #path('crearvuelo/', views.crearvuelo, name='crearvuelo')
     path("AdministrarTarjetas/<int:DNI>/AddSaldo/", views.AddSaldo, name='AddSaldo'),
+    path("administrarcompras/<int:DNI>",views.administrarcompras,name="administrarcompras"),
 ]
