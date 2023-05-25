@@ -4,13 +4,14 @@
 
 <div class="container" id="container">
 	<div class="form-container sign-in-container">
-		<form method="POST">
+		<div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+			<h1>Añadir Tarjeta</h1>
+		</div>
+		<form method="POST" action="" style="display: flex;justify-content: center;">
 			{% csrf_token %}
 
 			<div class="container" id="container" style="text-align: center;">
-				<div class="p-3 mb-2 bg-warning text-dark">
-					<h2>Añadir Tarjeta</h2>
-				</div>
+				
 				{{form.as_p}}
 
 
