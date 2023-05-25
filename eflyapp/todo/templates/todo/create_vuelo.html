@@ -1,0 +1,130 @@
+{%extends '../todo/layout.html' %}
+
+    {% block content %}
+    <div class="container text-center">
+        
+        <div class="wrapper">
+            <div class="jumbotron jumbotron-fluid bg-white">
+                <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                    <h1>Crear Vuelo</h1>
+                </div>
+            </div>
+            {% if errors %}
+            <div class="alert alert-danger" style="text-align: initial;">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>Error: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <div>
+                            <label for="codigo">Código: </label>
+                        </div>
+                        <div>
+                            {{ form.codigo }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <div>
+                            <label>Origen: </label>
+                        </div>
+                        <div>
+                            {{ form.origen }}
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Fecha Salida: </label>
+                        {{ form.fechaSalida }}
+                        <script>
+                            $('#id_fechaSalida').datepicker({
+                                format: "dd-mm-yy",
+                                startView: 2,
+                                language: "es"
+                            });
+                        </script>  
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <div>
+                            <label>Hora: </label>
+                        </div>
+                        <div>
+                            {{ form.horaSalida }}
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <div>
+                            <label>:</label>
+                        </div>
+                        <div>
+                            {{ form.minutoSalida }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <div>
+                            <label>Destino: </label>
+                        </div>
+                        <div>
+                            {{ form.destino }}
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Fecha Llegada: </label>
+                        {{ form.fechaLlegada }}
+                        <script>
+                            $('#id_fechaLlegada').datepicker({
+                                format: "dd-mm-yy",
+                                startView: 2,
+                                language: "es"
+                            });
+                        </script>  
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <div>
+                            <label>Hora: </label>
+                        </div>
+                        <div>
+                            {{ form.horaLlegada }}
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <div>
+                            <label>:</label>
+                        </div>
+                        <div>
+                            {{ form.minutoLlegada }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>Precio Primera Clase: </label>
+                        {{ form.precioPrimera }}
+                    </div>
+                    
+                    <div class="form-group col-sm-6">
+                        <label>Precio Clase Económica: </label>
+                        {{ form.precioEconomica }}
+                    </div>
+                </div>
+                    
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-warning">Crear Vuelo</button>
+                    </div>
+                </div>
+                <br>
+            </form>  
+        </div>
+    </div>
+{% endblock %}

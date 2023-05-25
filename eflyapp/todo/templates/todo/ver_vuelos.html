@@ -1,0 +1,161 @@
+{%extends '../todo/layout.html' %}
+
+    {% block content %}
+    <div class="container text-center">
+        
+        <div class="wrapper">
+            <div class="jumbotron jumbotron-fluid bg-white">
+                <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                    <h1>Vuelos Disponibles</h1>
+                </div>
+            </div>
+            {% if errors %}
+            <div class="alert alert-danger" style="text-align: initial;">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>Error: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <div class="card">
+                <h5 class="card-header">Buscar Vuelos</h5>
+                <div class="card-body">
+                    <form method="GET" action="">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="origen">Origen:</label>
+                                    <select class="form-control" id="origen" name="origen">
+                                      <option value="">---</option>
+                                      <option value="Pereira" {% if request.GET.origen == "Pereira" %}selected{% endif %}>Pereira</option>
+                                      <option value="Bogotá" {% if request.GET.origen == "Bogotá" %}selected{% endif %}>Bogotá</option>
+                                      <option value="Medellín" {% if request.GET.origen == "Medellín" %}selected{% endif %}>Medellín</option>
+                                      <option value="Cali" {% if request.GET.origen == "Cali" %}selected{% endif %}>Cali</option>
+                                      <option value="Cartagena" {% if request.GET.origen == "Cartagena" %}selected{% endif %}>Cartagena</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="destino">Destino:</label>
+                                    <select class="form-control" id="destino" name="destino">
+                                      <option value="">---</option>
+                                      <option value="Madrid" {% if request.GET.destino == "Madrid" %}selected{% endif %}>Madrid</option>
+                                      <option value="Londres" {% if request.GET.destino == "Londres" %}selected{% endif %}>Londres</option>
+                                      <option value="New York" {% if request.GET.destino == "New York" %}selected{% endif %}>New York</option>
+                                      <option value="Buenos Aires" {% if request.GET.destino == "Buenos Aires" %}selected{% endif %}>Buenos Aires</option>
+                                      <option value="Miami" {% if request.GET.destino == "Miami" %}selected{% endif %}>Miami</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="fecha_salida">Fecha:</label>
+                                    <input type="text" class="form-control" id="id_fechaSalida" name="fecha_salida" {% if request.GET.fecha_salida %}value="{{request.GET.fecha_salida}}"{% endif %}>
+                                    <script>
+                                        $('#id_fechaSalida').datepicker({
+                                            format: "dd-mm-yy",
+                                            startView: 2,
+                                            language: "es"
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Filtrar</button>
+                        <a href="{% url 'ver_vuelos' %}" class="btn btn-secondary">Limpiar Filtros</a>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    Mostrando {{ page.start_index }} - {{ page.end_index }} de {{ page.paginator.count }} resultados
+                </div>
+                <div class="card-body">
+                    {% for vuelo in page %}
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="badge badge-secondary">{{ vuelo.codigo }}</span> {{ vuelo.origen }} - {{ vuelo.destino }}</h5>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h6>Salida</h6>
+                                        <i class="fa-solid fa-plane-departure"></i> {{ vuelo.fechaSalida }} {{ vuelo.horaSalida }}:{{ vuelo.minutoSalida }}
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h6>Llegada</h6>
+                                        <i class="fa-solid fa-plane-arrival"></i> {{ vuelo.fechaLlegada }} {{ vuelo.horaLlegada }}:{{ vuelo.minutoLlegada }}
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {% if request.user.tipoUsuario == 'admin' %}
+                                        <h6>Opciones</h6>
+                                        <div class="row" style="display: flex;justify-content: space-around;">
+                                            <a class="btn btn-warning btn-sm" href="{% url 'edit_vuelo' vuelo.id %}" role="button"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <form method="POST" action="{% url 'borrar_vuelo' vuelo.id %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-danger btn-sm" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                            </form>
+                                            <a class="btn btn-primary btn-sm" href="{% url 'promo_vuelo' vuelo.id %}" role="button"><i class="fa-solid fa-percent"></i></a>
+                                        </div>
+                                        {% else %}
+                                        <a class="btn btn-warning btn-block" href="#" role="button">Comprar</a>
+                                        <a class="btn btn-secondary btn-block" href="#" role="button">Reservar</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    {% load humanize %}
+                                    <div class="col-sm-4">
+                                        <h6>Primera Clase</h6>
+                                        {% if vuelo.precioPrimeraDesc %}
+                                            <h6><s class="text-secondary">$ {{ vuelo.precioPrimera|intcomma }}</s></h6>
+                                            <h5>$ {{ vuelo.precioPrimeraDesc|intcomma }}</h5>
+                                        {% else %}
+                                        <h6>$ {{ vuelo.precioPrimera|intcomma }}</h6>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h6>Económica</h6>
+                                        {% if vuelo.precioEconomicaDesc %}
+                                            <h6><s class="text-secondary">$ {{ vuelo.precioEconomica|intcomma }}</s></h6>
+                                            <h5>$ {{ vuelo.precioEconomicaDesc|intcomma }}</h5>
+                                        {% else %}
+                                        <h6>$ {{ vuelo.precioEconomica|intcomma }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    {% endfor %}
+                    <div class="row">
+                    <div class="col">
+                        <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    {% if page.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a></li>
+                                    {% endif %}
+                                    <li class="page-item"><a class="page-link" href="#">Página {{ page.number }} de {{ page.paginator.num_pages }}</a></li>
+                                    {% if page.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}"><span aria-hidden="true">&raquo;</span></a></li>
+                                    {% endif %}
+                                </ul>
+                        </nav>  
+                    </div>
+                    </div>
+                    {% if request.user.tipoUsuario == 'admin' %}
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-light action-button" role="button" href="{% url 'crear_vuelo' %}">Crear Vuelo</a>
+                        </div>
+                    </div>
+                    {% endif %} 
+                </div>
+            </div>              
+        </div>
+    </div>
+{% endblock %}

@@ -42,6 +42,12 @@
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/cf924c4f2c.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+    <!-- Bootstrap Datepicker -->
+    <script src="{% static 'bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker.css' %}">
   </head>
 
   <!-- Fondo de la pagina -->
@@ -82,7 +88,6 @@
                 {%endif%}
               {%else%}
                 <h1>Bienvenido a E-FLY</h1>
-                
               {%endif%}
             </div>
             {% if request.user.is_authenticated%}
@@ -99,19 +104,6 @@
             {% else %}
             {% endif %}
           </ul>
-
-                <!--
-                                      {% if request.user.is_authenticated and request.user.username == 'root' %}
-                                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin</a>
-                                          <div class="dropdown-menu" role="menu">
-                                              <a class="dropdown-item" role="presentation" href="{% url 'user_list' %}">Ver Admin's</a>
-                                              <a class="dropdown-item" role="presentation" href="{% url 'create_admin' %}">Crear Admin</a>
-                                          </div>
-                                        </li>
-                                      {% endif %}
-                -->
-                
-        <!-- Menu de navegacion propio de cada usuario -->
           <div class="text-right">
             {% if request.user.is_authenticated %}
               <!-- Menu desplegable -->
@@ -120,7 +112,7 @@
                   <a class="dropdown-item" role="presentation" href="{% url 'exit' %}">Cerrar Sesión</a>
                   <!-- Menu para cliente -->
                   {% if request.user.tipoUsuario == 'cliente' %}
-                    <a class="dropdown-item" role="presentation" href="Edit/{{user.DNI}}">Editar Perfil</a>
+                    <a class="dropdown-item" role="presentation" href="{% url 'Edit' user.DNI %}">Editar Perfil</a>
                     <a class="dropdown-item" role="presentation" href="AddCard/{{user.DNI}}">Añadir Tarjeta</a>
                     <a class="dropdown-item" role="presentation" href="{% url 'user_delete' user.pk %}">Eliminar Cuenta</a>
                   {% endif %}
@@ -154,7 +146,7 @@
               {% if request.user.is_authenticated %}
                 <!--<li><a href="#">MENU</a></li>-->
                 {% if request.user.tipoUsuario == 'admin' %}
-                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="Edit/{{user.DNI}}">EDITAR PERFIL</a>
+                  <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="{% url 'Edit' user.DNI %}">EDITAR PERFIL</a>
                   <br></br>
                   <a id="editarperfil" class="btn btn-sm btn-warning  btn-outline-dark btn-size" role="button" href="">ADMINISTRAR VUELOS</a>
                   <br></br>

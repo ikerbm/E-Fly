@@ -3,8 +3,9 @@ from django.contrib.auth.forms import UserCreationForm,PasswordChangeForm
 from django import forms
 from django.forms import ModelForm
 from .models import *
-from django.forms.widgets import DateInput, Select
+from django.forms.widgets import DateInput, Select, DateTimeInput
 from django.forms.widgets import SelectDateWidget
+from cities_light.models import City
 #from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -42,7 +43,7 @@ class CreateUsuarioForm(UserCreationForm):
         if age < 18:
             raise forms.ValidationError('Debes tener al menos 18 años para registrarte.')
         return fechaNaci
-    
+
     class Meta:
         model = User
         fields = ['username','first_name','last_name','password1','password2','email',
@@ -54,7 +55,7 @@ class CreateUsuarioForm(UserCreationForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'lugarNaci': forms.TextInput(attrs={'class': 'form-control'}),
+            'lugarNaci': forms.Select(attrs={'class': 'form-control'}),
             'dirFact': forms.TextInput(attrs={'class': 'form-control'}),
             'sexo': forms.Select(attrs={'class': 'form-control'}),
             'DNI': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -86,7 +87,7 @@ class EditForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'lugarNaci': forms.TextInput(attrs={'class': 'form-control'}),
+            'lugarNaci': forms.Select(attrs={'class': 'form-control'}),
             'dirFact': forms.TextInput(attrs={'class': 'form-control'}),
             'sexo': forms.Select(attrs={'class': 'form-control'}),
         }
@@ -130,3 +131,76 @@ class AddCardForm(forms.ModelForm):
             'tipo': forms.Select(attrs={'class': 'form-control'}),
         }
 
+class CreateVueloForm(forms.ModelForm):
+
+    class Meta:
+        model = Vuelo
+        fields = ['codigo', 'origen', 'destino', 'precioPrimera', 'precioEconomica', 'fechaSalida', 'horaSalida', 'minutoSalida', 'fechaLlegada', 'horaLlegada', 'minutoLlegada']
+        widgets = {
+            'codigo': forms.TextInput(attrs={'class': 'form-control'}),
+            'origen': forms.Select(attrs={'class': 'form-control'}),
+            'destino': forms.Select(attrs={'class': 'form-control'}),
+            'precioPrimera': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'precioEconomica': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'fechaSalida': forms.TextInput(attrs={'class': 'form-control'}),
+            'horaSalida': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '23'}),
+            'minutoSalida': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '59'}),
+            'fechaLlegada': forms.TextInput(attrs={'class': 'form-control'}),
+            'horaLlegada': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '23'}),
+            'minutoLlegada': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '59'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CreateVueloForm, self).__init__(*args, **kwargs)
+        # Obtener las opciones del campo 'origen'
+        ciudades_origen_permitidas = ['Pereira', 'Bogotá', 'Medellín', 'Cali', 'Cartagena']
+        origen_choices = [(ciudad, ciudad) for ciudad in ciudades_origen_permitidas]
+        self.fields['origen'].widget.choices = origen_choices
+
+        # Obtener las opciones del campo 'destino'
+        ciudades_destino_permitidas = ['Madrid', 'Londres', 'New York', 'Buenos Aires', 'Miami']
+        destino_choices = [(ciudad, ciudad) for ciudad in ciudades_destino_permitidas]
+        self.fields['destino'].widget.choices = destino_choices
+
+class EditVueloForm(forms.ModelForm):
+    class Meta:
+        model = Vuelo
+        fields = ['origen', 'destino', 'precioPrimera', 'precioEconomica', 'fechaSalida', 'horaSalida', 'minutoSalida', 'fechaLlegada', 'horaLlegada', 'minutoLlegada']
+        widgets = {
+            'origen': forms.Select(attrs={'class': 'form-control'}),
+            'destino': forms.Select(attrs={'class': 'form-control'}),
+            'precioPrimera': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'precioEconomica': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'fechaSalida': forms.TextInput(attrs={'class': 'form-control'}),
+            'horaSalida': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '23'}),
+            'minutoSalida': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '59'}),
+            'fechaLlegada': forms.TextInput(attrs={'class': 'form-control'}),
+            'horaLlegada': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '23'}),
+            'minutoLlegada': forms.NumberInput(attrs={'class': 'form-control', 'min': '0', 'max': '59'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(EditVueloForm, self).__init__(*args, **kwargs)
+        # Obtener las opciones del campo 'origen'
+        ciudades_origen_permitidas = ['Pereira', 'Bogotá', 'Medellín', 'Cali', 'Cartagena']
+        origen_choices = [(ciudad, ciudad) for ciudad in ciudades_origen_permitidas]
+        self.fields['origen'].widget.choices = origen_choices
+
+        # Obtener las opciones del campo 'destino'
+        ciudades_destino_permitidas = ['Madrid', 'Londres', 'New York', 'Buenos Aires', 'Miami']
+        destino_choices = [(ciudad, ciudad) for ciudad in ciudades_destino_permitidas]
+        self.fields['destino'].widget.choices = destino_choices
+
+class FiltroVuelosForm(forms.Form):
+    destino = forms.CharField(required=False)
+    origen = forms.CharField(required=False)
+    fecha_salida = forms.DateField(required=False, widget=forms.DateInput(attrs={'class': 'datepicker'}))
+
+class PromoVueloForm(forms.ModelForm):
+    class Meta:
+        model = Vuelo
+        fields = ['precioPrimeraDesc', 'precioEconomicaDesc']
+        widgets = {
+            'precioPrimeraDesc': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'precioEconomicaDesc': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+        }
