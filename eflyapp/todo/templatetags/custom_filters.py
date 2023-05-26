@@ -15,8 +15,12 @@ def get_clase(clase):
 
 @register.filter
 def get_precio(clase, vuelo):
-    if(clase == 'primera') : return vuelo.precioPrimera
-    else: return vuelo.precioEconomica
+    if(clase == 'primera') : 
+        if(vuelo.precioPrimeraDesc > 0): return vuelo.precioPrimeraDesc
+        else : return vuelo.precioPrimera
+    else: 
+        if(vuelo.precioEconomicaDesc > 0): return vuelo.precioEconomicaDesc
+        else : return vuelo.precioEconomica
 
 
 @register.filter

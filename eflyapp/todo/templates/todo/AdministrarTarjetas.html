@@ -2,10 +2,11 @@
 
 {% block content %}
 
-{% for tarjeta in tarjetas %}
+
 <div class="tarjeta">
   <h1>Saldo actual: {{ cliente.saldo }}</h1>
 </div>
+{% for tarjeta in tarjetas %}
   <div class="tarjeta">
     <p>Número de tarjeta: {{ tarjeta.numero }}</p>
     
