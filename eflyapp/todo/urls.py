@@ -3,7 +3,7 @@ from . import views
 urlpatterns=[
     path("",views.home,name="home"),
     path('register/', views.register, name='register'),
-    path('ChangePassword/', views.ChangePassword, name='ChangePassword'),
+    path('ChangePassword/<int:DNI>/', views.ChangePassword, name='changePassword'),
     path("Edit/<int:DNI>", views.Edit, name='Edit'),
     path('logout/',views.exit,name='exit'),
     path('create_admin/', views.create_admin, name='create_admin'),
@@ -12,6 +12,7 @@ urlpatterns=[
     path("AdministrarTarjetas/<int:DNI>",views.AdministrarTarjetas,name="AdministrarTarjetas"),
     path("AddCard/<int:DNI>", views.AddCard, name='AddCard'),
     path('vuelo/create', views.crear_vuelo, name='crear_vuelo'),
+    path('AdministrarVuelos/', views.administrarvuelos, name='administrarvuelos'),
     path('vuelo/', views.ver_vuelos, name='ver_vuelos'),
     path('vuelo/<int:vuelo_id>/delete/', views.borrar_vuelo, name='borrar_vuelo'),
     path('vuelo/<int:vuelo_id>/edit/', views.edit_vuelo, name='edit_vuelo'),

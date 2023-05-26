@@ -1,4 +1,5 @@
-{%extends '../todo/layout.html' %}
+
+        {% extends 'todo/layout.html' %}
 
     {% block content %}
     <div class="container text-center">
@@ -66,7 +67,11 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-warning">Filtrar</button>
+                        {% if request.user.tipoUsuario == 'cliente' %}
                         <a href="{% url 'ver_vuelos' %}" class="btn btn-secondary">Limpiar Filtros</a>
+                        {%else%}
+                        <a href="{% url 'home' %}" class="btn btn-secondary">Limpiar Filtros</a>
+                        {%endif%}
                     </form>
                 </div>
             </div>
@@ -101,8 +106,8 @@
                                             <a class="btn btn-primary btn-sm" href="{% url 'promo_vuelo' vuelo.id %}" role="button"><i class="fa-solid fa-percent"></i></a>
                                         </div>
                                         {% else %}
-                                        <a class="btn btn-warning btn-block" href="#" role="button">Comprar</a>
-                                        <a class="btn btn-secondary btn-block" href="#" role="button">Reservar</a>
+                                        <a class="btn btn-warning btn-block" href="#" role="button" style="border: 1px solid black;">Comprar</a>
+                                        <a class="btn btn-secondary btn-block" href="#" role="button" style="border: 1px solid black;">Reservar</a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -150,7 +155,7 @@
                     {% if request.user.tipoUsuario == 'admin' %}
                     <div class="row">
                         <div class="col">
-                            <a class="btn btn-light action-button" role="button" href="{% url 'crear_vuelo' %}">Crear Vuelo</a>
+                            <a class="btn btn-light action-button" role="button" href="{% url 'crear_vuelo' %}" style="border: 1px solid black;">Crear Vuelo</a>
                         </div>
                     </div>
                     {% endif %} 

@@ -13,9 +13,9 @@
       <p>¿Estás completamente seguro que deseas eliminar tu cuenta "{{ object }}"? Esta acción es irreversible.</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+      <button type="button" class="btn btn-info" data-dismiss="modal">CANCELAR</button>
         <form method="post">{% csrf_token %}
-            <button type="submit" value="Confirm" class="btn btn-danger">Delete</button>
+            <button type="submit" value="Confirm" class="btn btn-danger">BORRAR</button>
         </form>
     </div>
 </div>

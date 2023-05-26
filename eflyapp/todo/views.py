@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import logout,authenticate,login,update_session_auth_hash
 
 from django.core.paginator import Paginator
@@ -54,7 +55,7 @@ def register(request):
     return render(request, 'todo/userRegister.html', context)
 
 @login_required
-def ChangePassword(request):
+def ChangePassword(request,DNI):
     if request.method == 'POST':
         form = ChangePasswordForm(request.user,request.POST)
         
@@ -65,7 +66,7 @@ def ChangePassword(request):
     else:
         form = ChangePasswordForm(request.user)
 
-    context = {'form': form}     
+    context = {'form': form, 'DNI': DNI}      
     return render(request, 'todo/changePassword.html', context)
 
 @login_required
@@ -268,8 +269,13 @@ def AddSaldo(request, DNI):
 @login_required
 def administrarcompras(request,DNI):
     cliente = CustomUser.objects.get(DNI=DNI)
-    tarjetas = Tarjeta.objects.filter(clienteid=cliente)
     context = {
         'cliente': cliente,
     }
     return render(request,'todo/administrarcompras.html',context)
+
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'admin')
+def administrarvuelos(request):
+
+    return render(request,'todo/administrarvuelos.html')
