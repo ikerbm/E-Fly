@@ -36,16 +36,63 @@
                                     </div>
                                     <div class="col-sm-8">
                                         <h6>Estado</h6>
-                                        {{ compra.estado }}
+                                        {% if compra.estado == 'sin_selec' %}
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <span class="status-icon status-done"><i class="fa-solid fa-calendar"></i></span>
-                                                <span class="status-icon status-todo"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-todo"><i class="fa-solid fa-couch"></i></span>
+                                                <h5><span class="badge badge-secondary badge-status">Seleccionar Asientos</span></h5>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-future"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
                                                 <span class="status-icon status-future"><i class="fa-solid fa-calendar"></i></span>
                                             </div>
                                         </div>
                                         <hr class="line-status">
-                                        <hr class="line-status step1">
+                                        <hr class="line-step step1">
+                                        {% endif %}
+                                        {% if compra.estado == 'Reservada' %}
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-calendar"></i></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-couch"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-todo"><i class="fa-solid fa-calendar"></i></span>
+                                                <h5><span class="badge badge-secondary badge-status">Pagar Tiquetes</span></h5>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-future"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <hr class="line-status">
+                                        <hr class="line-step step2">
+                                        {% endif %}
+                                        {% if compra.estado == 'Pagado' %}
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-couch"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-todo"><i class="fa-solid fa-calendar"></i></span>
+                                                <h5><span class="badge badge-secondary badge-status">Check-in</span></h5>
+                                            </div>
+                                        </div>
+                                        <hr class="line-status">
+                                        <hr class="line-step step3">
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <br>
@@ -77,7 +124,7 @@
                                     </div>
                                     <div class="col-sm-6 d-flex justify-content-end align-items-end">
                                         {% if compra.estado == 'sin_selec' %}
-                                            <a class="btn btn-secondary btn-block btn-options" href="#" role="button">Seleccionar Asientos</a>
+                                            <a class="btn btn-secondary btn-block btn-options" href="{% url 'seleccionar_asiento' compra.id %}" role="button">Seleccionar Asientos</a>
                                             <form method="POST" action="{% url 'cancelar_compra' compra.id %}">
                                                 {% csrf_token %}
                                                 <button class="btn btn-danger btn-block btn-options" type="submit">Cancelar</button>
@@ -101,6 +148,7 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
                     {% endfor %}
                     <div class="row">
                         <div class="col">

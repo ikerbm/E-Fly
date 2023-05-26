@@ -215,8 +215,9 @@ class AddSaldoForm(forms.ModelForm):
         }
 
 class CompraForm(forms.Form):
-    asientos_economica = forms.IntegerField()
-    asientos_primera = forms.IntegerField()
+    CHOICES = [(i, i) for i in range(0, 11)]  # Rango de valores del 1 al 10
+    asientos_economica = forms.ChoiceField(choices=CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    asientos_primera = forms.ChoiceField(choices=CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
 
 class SeatSelectionForm(forms.Form):
     def __init__(self, vuelo, *args, **kwargs):

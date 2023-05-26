@@ -19,12 +19,50 @@
                     {% endfor %}
                 </ul>
             </div>
-            {% endif %}
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Reservar">
-            </form>             
+            {% endif %}      
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                {% load humanize %}
+                                <div class="col">
+                                    <h6>Primera Clase</h6>
+                                    {% if vuelo.precioPrimeraDesc %}
+                                        <h6><s class="text-secondary">$ {{ vuelo.precioPrimera|intcomma }}</s></h6>
+                                        <h5>$ {{ vuelo.precioPrimeraDesc|intcomma }}</h5>
+                                    {% else %}
+                                    <h6>$ {{ vuelo.precioPrimera|intcomma }}</h6>
+                                    {% endif %}
+                                </div>
+                                <div class="col">
+                                    <h6>Económica</h6>
+                                    {% if vuelo.precioEconomicaDesc %}
+                                        <h6><s class="text-secondary">$ {{ vuelo.precioEconomica|intcomma }}</s></h6>
+                                        <h5>$ {{ vuelo.precioEconomicaDesc|intcomma }}</h5>
+                                    {% else %}
+                                    <h6>$ {{ vuelo.precioEconomica|intcomma }}</h6>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <div>
+                                    <label for="codigo">Tiquetes Primera Clase: </label>
+                                    {{ form.asientos_primera }}
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <div>
+                                    <label for="codigo">Tiquetes Clase Económica: </label>
+                                    {{ form.asientos_economica }}
+                                </div>
+                            </div>
+                        </div>
+                        <input class="btn btn-lg btn-secondary" type="submit" value="Reservar">
+                    </form>   
+                </div>
+            </div>    
         </div>
     </div>
 {% endblock %}

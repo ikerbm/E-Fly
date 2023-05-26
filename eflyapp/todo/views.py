@@ -287,7 +287,7 @@ def comprar_vuelo(request, vuelo_id):
             asientos_economica = form.cleaned_data['asientos_economica']
             asientos_primera = form.cleaned_data['asientos_primera']
             
-            precio = (asientos_primera * vuelo.precioPrimera) + (asientos_economica * vuelo.precioEconomica)
+            precio = (int(asientos_primera) * vuelo.precioPrimera) + (int(asientos_economica) * vuelo.precioEconomica)
             usuario = request.user
 
             compra = Compra(vuelo=vuelo, precio = precio, user_id = usuario.DNI, asientos_economica = asientos_economica, asientos_primera = asientos_primera)
