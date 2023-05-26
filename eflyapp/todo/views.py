@@ -206,6 +206,9 @@ def ver_vuelos(request):
     # Obtiene el objeto Page correspondiente a la página solicitada
     page = paginator.get_page(page_number)
 
+    if(request.user.username == 'root'):
+        return redirect('user_list')
+
     return render(request, 'todo/ver_vuelos.html', {'page': page, 'filtro_form': filtro_form})
 
 @login_required
@@ -288,12 +291,12 @@ def comprar_vuelo(request, vuelo_id):
             asientos_economica = form.cleaned_data['asientos_economica']
             asientos_primera = form.cleaned_data['asientos_primera']
 
-            if(vuelo.precioPrimeraDesc > 0):
+            if(vuelo.precioPrimeraDesc and vuelo.precioPrimeraDesc != 0):
                 precioPri = vuelo.precioPrimeraDesc
             else:
                 precioPri = vuelo.precioPrimera
 
-            if(vuelo.precioEconomicaDesc > 0):
+            if(vuelo.precioEconomicaDesc and vuelo.precioEconomicaDesc != 0):
                 precioEco = vuelo.precioEconomicaDesc
             else:
                 precioEco = vuelo.precioEconomica

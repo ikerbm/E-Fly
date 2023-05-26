@@ -21,7 +21,7 @@
 
   {% if tarjetas %}  
   <a href="{% url 'AddSaldo' user.DNI %}" class="btn btn-outline-dark" style="border-width: 3px; border-color: black; padding: 15px; margin-right: 20px;"><h2>RECARGAR SALDO</h2></a>
-  <a href="#" class="btn btn-outline-dark" style="border-width: 3px; border-color: black; padding: 15px;"><h2>ELIMINAR TARJETA</h2></a>
+  {% comment %} <a href="#" class="btn btn-outline-dark" style="border-width: 3px; border-color: black; padding: 15px;"><h2>ELIMINAR TARJETA</h2></a> {% endcomment %}
   {% endif %}
 
 </div>
