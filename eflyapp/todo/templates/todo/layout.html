@@ -108,7 +108,19 @@
                       {% else %}
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'ver_vuelos' %}">Vuelos</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Check-in</a></li>
-                      {% endif %}</ul>
+                      {% endif %}
+  <!-- FIN del Menu de navegacion !!! -->
+
+
+                      {% if request.user.is_authenticated and request.user.username == 'root' %}
+                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Admin</a>
+                          <div class="dropdown-menu" role="menu">
+                              <a class="dropdown-item" role="presentation" href="{% url 'user_list' %}">Ver Admin's</a>
+                              <a class="dropdown-item" role="presentation" href="{% url 'create_admin' %}">Crear Admin</a>
+                          </div>
+                        </li>
+                      {% endif %}
+                    </ul>
                     
   <!-- Menu de navegacion propio de cada usuario -->
                     <div class="text-right">
