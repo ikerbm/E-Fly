@@ -378,27 +378,27 @@ def cancelar_compra(request, compra_id):
 @user_passes_test(lambda u: u.tipoUsuario == 'cliente')
 def pagar_compra(request, compra_id):
     compra = get_object_or_404(Compra, id=compra_id)
-    
-    if request.method == 'POST':
-        form = SeatSelectionForm(vuelo, request.POST)
-        if form.is_valid():
-            for seat in vuelo.seat_set.all():
-                if (form.cleaned_data[f'seat_{seat.code}']): 
-                    seat.estado = 'ocupado'
-                    if(asientos_primera > 0):
-                        clase = 'primera'
-                        asientos_primera -= 1
-                    elif(asientos_economica > 0):
-                        clase = 'economica'
-                        asientos_economica -= 1
+    vuelo = Vuelo.objects.get(id=compra.vuelo_id)
+    tickets = Ticket.objects.filter(Compraid=compra)
 
-                    ticket = Ticket(Compraid=compra,Vueloid=vuelo,asiento=seat,clase=clase)
-                    ticket.save()
+    # Cambiar el estado de las Seats relacionadas a los Tickets
+    seat_codes = [ticket.asiento.code for ticket in tickets]
+    seats = Seat.objects.filter(vuelo=compra.vuelo, code__in=seat_codes)
 
-                seat.save()
 
-            compra.estado = 'Reservada'
-            compra.save()
-            return redirect('ver_compras')
+    return render(request, 'todo/pagar_compra.html', {'compra': compra, 'vuelo': vuelo, 'tickets': tickets, 'seats': seats,})
 
-    return render(request, 'todo/pagar_compra.html', {'compra': compra,})
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'cliente')
+def pay_compra(request, compra_id):
+    compra = Compra.objects.get(id=compra_id)
+    cliente = request.user
+
+    cliente.saldo -= compra.precio
+    cliente.save()
+
+    compra.estado = 'Pagado'
+    compra.save()
+
+
+    return redirect('ver_compras')

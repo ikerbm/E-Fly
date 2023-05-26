@@ -23,6 +23,7 @@ urlpatterns=[
     path('compra/', views.ver_compras, name='ver_compras'),
     path('compra/<int:compra_id>/delete/', views.cancelar_compra, name='cancelar_compra'),
     path('compra/<int:compra_id>/pagar/', views.pagar_compra, name='pagar_compra'),
+    path('compra/<int:compra_id>/pay/', views.pay_compra, name='pay_compra'),
     #path('crearvuelo/', views.crearvuelo, name='crearvuelo')
     path("AddSaldo/<int:DNI>", views.AddSaldo, name='AddSaldo'),
 ]

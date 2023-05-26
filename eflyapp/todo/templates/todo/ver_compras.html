@@ -37,6 +37,15 @@
                                     <div class="col-sm-8">
                                         <h6>Estado</h6>
                                         {{ compra.estado }}
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-calendar"></i></span>
+                                                <span class="status-icon status-todo"><i class="fa-solid fa-calendar"></i></span>
+                                                <span class="status-icon status-future"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <hr class="line-status">
+                                        <hr class="line-status step1">
                                     </div>
                                 </div>
                                 <br>
@@ -75,7 +84,7 @@
                                             </form>
                                         {% endif %}
                                         {% if compra.estado == 'Reservada' %}
-                                            <a class="btn btn-warning btn-block btn-options" href="#" role="button">Pagar</a>
+                                            <a class="btn btn-warning btn-block btn-options" href="{% url 'pagar_compra' compra.id %}" role="button">Pagar</a>
                                             <form method="POST" action="{% url 'cancelar_compra' compra.id %}">
                                                 {% csrf_token %}
                                                 <button class="btn btn-danger btn-block btn-options" type="submit">Cancelar</button>
@@ -83,10 +92,10 @@
                                         {% endif %}
                                         {% if compra.estado == 'Pagado' %}
                                             <a class="btn btn-success btn-block btn-options disabled" href="#" role="button">Pagado</a>
-                                            <form method="POST" action="{% url 'cancelar_compra' compra.id %}">
+                                            <!-- <form method="POST" action="{% url 'cancelar_compra' compra.id %}">
                                                 {% csrf_token %}
-                                                <button class="btn btn-danger btn-block btn-options" type="submit">Cancelar</button>
-                                            </form>
+                                                <button class="btn btn-danger btn-block btn-options" type="submit">Reembolsar</button>
+                                            </form> -->
                                         {% endif %}
                                     </div>
                                 </div>

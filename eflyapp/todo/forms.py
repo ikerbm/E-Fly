@@ -224,7 +224,3 @@ class SeatSelectionForm(forms.Form):
         seats = Seat.objects.filter(vuelo=vuelo)
         for seat in seats:
             self.fields[f'seat_{seat.code}'] = forms.BooleanField(required=False, initial=True)
-
-class PagarForm(forms.Form):
-    asientos_economica = forms.IntegerField()
-    asientos_primera = forms.IntegerField()
