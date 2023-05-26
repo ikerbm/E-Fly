@@ -1,0 +1,95 @@
+{%extends '../todo/layout.html' %}
+
+    {% block content %}
+    <div class="container text-center">
+        
+        <div class="wrapper">
+            <div class="jumbotron jumbotron-fluid bg-white">
+                <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                    <h1>Seleccionar asientos</h1>
+                </div>
+            </div>
+            {% if errors %}
+            <div class="alert alert-danger" style="text-align: initial;">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>Error: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <form method="post">
+                {% csrf_token %}
+
+                <h6>Primera Clase: {{compra.asientos_primera}}</h6>
+                <h6>Clase Económica: {{compra.asientos_economica}}</h6>
+                {% for fila in filas_asientos %}
+                    <div class="row">
+                        {% for asiento in fila %}
+                            {% if asiento.estado == 'ocupado' %}
+                            <div class="col">
+                                <input type="checkbox" class="seat btn-check d-none" name="seat_{{ asiento.code }}" id="id_seat_{{ asiento.code }}" disabled>
+                                <label class="btn btn-danger seat-occupied  " for="id_seat_{{ asiento.code }}">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                          <h5 class="card-title"><i class="fa-solid fa-couch"></i></h5>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            {{ asiento.code }}
+                                        </div>
+                                      </div>
+                                </label>
+                            </div>
+                            {% else %}
+                            <div class="col">
+                                <input type="checkbox" class="seat btn-check d-none" name="seat_{{ asiento.code }}" id="id_seat_{{ asiento.code }}">
+                                <label class="btn btn-outline-primary seat-available " for="id_seat_{{ asiento.code }}">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                          <h5 class="card-title"><i class="fa-solid fa-couch"></i></h5>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            {{ asiento.code }}
+                                        </div>
+                                      </div>
+                                </label>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <input type="submit" value="Guardar Selección" id="send_select">
+                <script>
+                    $('input[type=checkbox]').on('change', function (e) {
+                        if ($('input[type=checkbox]:checked').length > {{compra.asientos_primera|add:compra.asientos_economica}}) {
+                            $(this).prop('checked', false);
+                            alert("Solo puede seleccionar {{compra.asientos_primera|add:compra.asientos_economica}} asientos");
+                        }
+                    });
+                    $('input[type=checkbox]').on('change', function (e) {
+                        if ($(this).is(':checked')) {
+                            $(this).next('label').addClass('seat-selected');
+                        } else {
+                            $(this).next('label').removeClass('seat-selected');
+                        }
+                    });
+
+                    $(document).ready(function () {
+                        $('#send_select').click(function() {
+                            checked = $("input[type=checkbox]:checked").length;
+
+                            console.log(checked);
+                            if(checked < {{compra.asientos_primera|add:compra.asientos_economica}}) {
+                                alert("Debe seleccionar los {{compra.asientos_primera|add:compra.asientos_economica}} asientos");
+                                return false;
+                            }
+                        });
+                    });
+                </script>
+            </form>             
+        </div>
+    </div>
+{% endblock %}

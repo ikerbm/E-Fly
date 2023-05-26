@@ -153,7 +153,7 @@ body {
   }
   
   .header-blue .navbar .form-inline .search-field:focus {
-    border-bottom:1px solid #ccc;
+    border-bottom:1px solid #000000;
   }
   
   .header-blue .hero {
@@ -243,4 +243,75 @@ body {
 
 .pass-row{
   flex-direction: column;
+}
+
+.page-link {
+  color: #FFC107;
+}
+
+.jumbotron {
+  padding: 1rem 2rem;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.seat-available:hover {
+  color: #007bff;
+}
+.seat-occupied, .seat-occupied:hover {
+  color: #dc3545;
+}
+
+.seat-selected {
+  background: #007bff;
+}
+.btn-options{
+  margin: 10px;
+}
+
+.status-icon{
+  border: 3px solid;
+  border-radius: 100px;
+  padding: 10px;
+  font-size: 24px;
+  background: white;
+}
+.status-future{
+  color: grey
+}
+.status-todo{
+  color: #d1bf8a
+}
+.status-done{
+  color: #FFC107;
+}
+
+.line-status{
+  border-top: 5px solid grey;
+  width: 80%;
+  margin-top: -75px;
+}
+.line-step{
+  border-top: 5px solid #FFC107;
+  width: 80%;
+  margin-top: -21px;
+  margin-left: 74px;
+}
+.step1{
+  width: 20%;
+}
+
+.step2{
+  width: 50%;
+}
+.step3{
+  width: 75%;
+}
+
+.badge-status{
+  background-color: #d1bf8a !important;
+  margin-top: 25px;
 }

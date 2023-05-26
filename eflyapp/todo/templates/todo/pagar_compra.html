@@ -1,0 +1,148 @@
+{%extends '../todo/layout.html' %}
+
+    {% block content %}
+    <div class="container text-center">
+        
+        <div class="wrapper">
+            <div class="jumbotron jumbotron-fluid bg-white">
+                <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                    <h1>Historial de Compras y Reservas</h1>
+                </div>
+            </div>
+            {% if errors %}
+            <div class="alert alert-danger" style="text-align: initial;">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>Error: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <div class="card">
+                <div class="card-header">
+                    <h4>Detalles de pago Código: {{ compra.id }}{{ compra.vuelo.codigo }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><span class="badge badge-secondary">{{ vuelo.codigo }}</span> {{ vuelo.origen }} - {{ vuelo.destino }}</h5>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h6>Salida</h6>
+                                    <i class="fa-solid fa-plane-departure"></i> {{ vuelo.fechaSalida }} {{ vuelo.horaSalida }}:{{ vuelo.minutoSalida }}
+                                </div>
+                                <div class="col-sm-4">
+                                    <h6>Llegada</h6>
+                                    <i class="fa-solid fa-plane-arrival"></i> {{ vuelo.fechaLlegada }} {{ vuelo.horaLlegada }}:{{ vuelo.minutoLlegada }}
+                                </div>
+                                <div class="col-sm-3">
+                                    {% if request.user.tipoUsuario == 'admin' %}
+                                    <h6>Opciones</h6>
+                                    <div class="row" style="display: flex;justify-content: space-around;">
+                                        <a class="btn btn-warning btn-sm" href="{% url 'edit_vuelo' vuelo.id %}" role="button"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <form method="POST" action="{% url 'borrar_vuelo' vuelo.id %}">
+                                            {% csrf_token %}
+                                            <button class="btn btn-danger btn-sm" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                        </form>
+                                        <a class="btn btn-primary btn-sm" href="{% url 'promo_vuelo' vuelo.id %}" role="button"><i class="fa-solid fa-percent"></i></a>
+                                    </div>
+                                    {% else %}
+                                        {% if request.user.tipoUsuario == 'cliente' %}
+                                        <a class="btn btn-warning btn-block" href="{% url 'comprar_vuelo' vuelo.id %}" role="button">Comprar</a>
+                                        <a class="btn btn-secondary btn-block" href="{% url 'comprar_vuelo' vuelo.id %}" role="button">Reservar</a>
+                                        {% else %}
+                                        <a class="btn btn-warning btn-block disabled" href="#" role="button">Comprar</a>
+                                        <a class="btn btn-secondary btn-block disabled" href="#" role="button">Reservar</a>
+                                        <span>Para comprar o reservar debes estar registrado.</span>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                {% load humanize %}
+                                <div class="col-sm-4">
+                                    <h6>Primera Clase</h6>
+                                    {% if vuelo.precioPrimeraDesc %}
+                                        <h6><s class="text-secondary">$ {{ vuelo.precioPrimera|intcomma }}</s></h6>
+                                        <h5>$ {{ vuelo.precioPrimeraDesc|intcomma }}</h5>
+                                    {% else %}
+                                    <h6>$ {{ vuelo.precioPrimera|intcomma }}</h6>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4">
+                                    <h6>Económica</h6>
+                                    {% if vuelo.precioEconomicaDesc %}
+                                        <h6><s class="text-secondary">$ {{ vuelo.precioEconomica|intcomma }}</s></h6>
+                                        <h5>$ {{ vuelo.precioEconomicaDesc|intcomma }}</h5>
+                                    {% else %}
+                                    <h6>$ {{ vuelo.precioEconomica|intcomma }}</h6>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">ID Tiquete</th>
+                            <th scope="col">Asiento</th>
+                            <th scope="col">Clase</th>
+                            <th scope="col">Vuelo</th>
+                            <th scope="col">Precio</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% load custom_filters %}
+                            {% for ticket in tickets %}
+                                <tr>
+                                    <th scope="row">{{ ticket.id }}</th>
+                                    <td>{{ ticket.asiento.code }}</td>
+                                    <td>{{ ticket.clase|get_clase }}</td>
+                                    <td>{{ vuelo.codigo }}</td>
+                                    <td>$ {{ ticket.clase|get_precio:vuelo|intcomma }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong> Total:</strong></td>
+                                <td>$ {{ compra.precio|intcomma }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col text-right">
+                                    <span class="text-success">Saldo:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp $ {{ request.user.saldo|intcomma }}</span> 
+                                    <br>
+                                    <span class="text-danger">- $ {{ compra.precio|intcomma }}</span>
+                                    <br>
+                                    <span class="">______________________________________</span>
+                                    <br>
+                                    <span class="text-danger">$ {{ request.user.saldo|substract:compra.precio|intcomma }}</span>
+                                    {% if request.user.saldo > compra.precio %}
+                                    <a class="btn btn-success btn-block btn-options" href="{% url 'pay_compra' compra.id %}" role="button">Pagar</a>
+                                    {% else %}
+                                    <br>
+                                    <br>
+                                    <span class="">No tiene saldo suficiente.</span>
+                                    <br>
+                                    <a class="btn btn-light btn-sm" href="{% url 'AdministrarTarjetas' request.user.DNI %}" role="button">Administrar Tarjetas</a>
+                                    <br>
+                                    <a class="btn btn-success btn-block btn-options disabled" href="#" role="button">Pagar</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>              
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{%extends '../todo/layout.html' %}
+
+    {% block content %}
+    <div class="container text-center">
+        
+        <div class="wrapper">
+            <div class="jumbotron jumbotron-fluid bg-white">
+                <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                    <h1>Añadir Promoción</h1>
+                </div>
+            </div>
+            {% if errors %}
+            <div class="alert alert-danger" style="text-align: initial;">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>Error: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><span class="badge badge-secondary">{{ vuelo.codigo }}</span> {{ vuelo.origen }} - {{ vuelo.destino }}</h5>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6>Salida</h6>
+                                <i class="fa-solid fa-plane-departure"></i> {{ vuelo.fechaSalida }} {{ vuelo.horaSalida }}:{{ vuelo.minutoSalida }}
+                            </div>
+                            <div class="col-sm-6">
+                                <h6>Llegada</h6>
+                                <i class="fa-solid fa-plane-arrival"></i> {{ vuelo.fechaLlegada }} {{ vuelo.horaLlegada }}:{{ vuelo.minutoLlegada }}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            {% load humanize %}
+                            <div class="col-sm-6">
+                                <h6>Primera Clase</h6>
+                                <h6>$ {{ vuelo.precioPrimera|intcomma }}</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6>Económica</h6>
+                                <h6>$ {{ vuelo.precioEconomica|intcomma }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h4>Precios con Descuento</h4>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>Precio Primera Clase: </label>
+                        {{ form.precioPrimeraDesc }}
+                    </div>
+                    
+                    <div class="form-group col-sm-6">
+                        <label>Precio Clase Económica: </label>
+                        {{ form.precioEconomicaDesc }}
+                    </div>
+                </div>
+                    
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-warning">Guardar</button>
+                    </div>
+                </div>
+                <br>
+            </form>  
+        </div>
+    </div>
+{% endblock %}

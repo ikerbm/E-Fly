@@ -1,0 +1,172 @@
+{%extends '../todo/layout.html' %}
+
+    {% block content %}
+    <div class="container text-center">
+        
+        <div class="wrapper">
+            <div class="jumbotron jumbotron-fluid bg-white">
+                <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                    <h1>Historial de Compras y Reservas</h1>
+                </div>
+            </div>
+            {% if errors %}
+            <div class="alert alert-danger" style="text-align: initial;">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>Error: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <div class="card">
+                <div class="card-header">
+                    Mostrando {{ page.start_index }} - {{ page.end_index }} de {{ page.paginator.count }} resultados
+                </div>
+                <div class="card-body">
+                    {% for compra in page %}
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-start"><h4><span class="badge badge-secondary">Código: {{ compra.id }}{{ compra.vuelo.codigo }}</span></h4></div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h6>Fecha de Reserva:</h6>
+                                        <i class="fa-solid fa-calendar"></i> {{ compra.fecha }}
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h6>Estado</h6>
+                                        {% if compra.estado == 'sin_selec' %}
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-todo"><i class="fa-solid fa-couch"></i></span>
+                                                <h5><span class="badge badge-secondary badge-status">Seleccionar Asientos</span></h5>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-future"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-future"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <hr class="line-status">
+                                        <hr class="line-step step1">
+                                        {% endif %}
+                                        {% if compra.estado == 'Reservada' %}
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-calendar"></i></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-couch"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-todo"><i class="fa-solid fa-calendar"></i></span>
+                                                <h5><span class="badge badge-secondary badge-status">Pagar Tiquetes</span></h5>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-future"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <hr class="line-status">
+                                        <hr class="line-step step2">
+                                        {% endif %}
+                                        {% if compra.estado == 'Pagado' %}
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-couch"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-done"><i class="fa-solid fa-calendar"></i></span>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <span class="status-icon status-todo"><i class="fa-solid fa-calendar"></i></span>
+                                                <h5><span class="badge badge-secondary badge-status">Check-in</span></h5>
+                                            </div>
+                                        </div>
+                                        <hr class="line-status">
+                                        <hr class="line-step step3">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <br>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6>Asientos: </h6>
+                                        <div class="">
+                                            <h6 class="badge badge-light">Primera Clase: {{ compra.asientos_primera }}</h6>
+                                            <h6 class="badge badge-light"> Clase Económica: {{ compra.asientos_economica }}</h6>
+                                        </div>
+                                        <div class="">
+                                        {% for ticket in tickets %}
+                                            {% if ticket.Compraid == compra %}
+                                                <h6 class="badge badge-warning">{{ ticket.asiento.code }}</h6>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 d-flex flex-column justify-content-center align-items-center">
+                                        <div class="d-flex justify-content-center">
+                                            {% load humanize %}
+                                            <h5>Precio: {{ compra.precio|intcomma }}</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <h6>Vuelo:</h6>
+                                            <h5><span class="badge badge-secondary">{{ compra.vuelo.codigo }}</span></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 d-flex justify-content-end align-items-end">
+                                        {% if compra.estado == 'sin_selec' %}
+                                            <a class="btn btn-secondary btn-block btn-options" href="{% url 'seleccionar_asiento' compra.id %}" role="button">Seleccionar Asientos</a>
+                                            <form method="POST" action="{% url 'cancelar_compra' compra.id %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-danger btn-block btn-options" type="submit">Cancelar</button>
+                                            </form>
+                                        {% endif %}
+                                        {% if compra.estado == 'Reservada' %}
+                                            <a class="btn btn-warning btn-block btn-options" href="{% url 'pagar_compra' compra.id %}" role="button">Pagar</a>
+                                            <form method="POST" action="{% url 'cancelar_compra' compra.id %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-danger btn-block btn-options" type="submit">Cancelar</button>
+                                            </form>
+                                        {% endif %}
+                                        {% if compra.estado == 'Pagado' %}
+                                            <a class="btn btn-success btn-block btn-options disabled" href="#" role="button">Pagado</a>
+                                            <!-- <form method="POST" action="{% url 'cancelar_compra' compra.id %}">
+                                                {% csrf_token %}
+                                                <button class="btn btn-danger btn-block btn-options" type="submit">Reembolsar</button>
+                                            </form> -->
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    {% if page.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a></li>
+                                    {% endif %}
+                                    <li class="page-item"><a class="page-link" href="#">Página {{ page.number }} de {{ page.paginator.num_pages }}</a></li>
+                                    {% if page.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}"><span aria-hidden="true">&raquo;</span></a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>  
+                        </div>
+                    </div>
+                </div>
+            </div>              
+        </div>
+    </div>
+{% endblock %}

@@ -32,10 +32,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cities_light',
     'crispy_forms',
     'crispy_bootstrap5',
     'todo',
     'widget_tweaks',
+    'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
