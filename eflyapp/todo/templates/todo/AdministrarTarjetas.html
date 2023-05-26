@@ -3,9 +3,12 @@
 {% block content %}
 
 {% for tarjeta in tarjetas %}
+<div class="tarjeta">
+  <h1>Saldo actual: {{ cliente.saldo }}</h1>
+</div>
   <div class="tarjeta">
     <p>Número de tarjeta: {{ tarjeta.numero }}</p>
-    <p>Saldo actual: {{ cliente.saldo }}</p>
+    
     
   </div>
 {% endfor %}

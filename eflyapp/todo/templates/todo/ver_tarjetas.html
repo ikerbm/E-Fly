@@ -1,0 +1,37 @@
+{% extends 'todo/layout.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="jumbotron jumbotron-fluid bg-white p-1">
+      <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+          <h2>Tarjetas Disponibles</h2>
+          <p>Saldo Actual: {{ cliente.saldo }}</p>
+      </div>
+  </div>
+  <table class="table" style="width: 50%; font-size: 11px;">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Número de tarjeta</th>
+        <th>Fecha de Vencimiento</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for tarjeta in tarjetas %}
+        <tr>
+          <td scope="row">{{ tarjeta.nombre}}</td>
+          <td>{{ tarjeta.numero }}</td>
+          <td>{{ tarjeta.vencimiento}}</td>
+          
+            {% if not user.username == 'root' %}
+            <a href="{% url 'tarjeta_delete'%}">Eliminar</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

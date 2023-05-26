@@ -7,7 +7,11 @@
         <div class="wrapper">
             <div class="jumbotron jumbotron-fluid bg-white">
                 <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
-                    <h1>Vuelos Disponibles</h1>
+                    {% if request.user.tipoUsuario == 'admin' %}
+                        <h1>Crear Vuelo</h1>
+                    {%else%}
+                        <h1>Vuelos Disponibles</h1>
+                    {%endif%}    
                 </div>
             </div>
             {% if errors %}
