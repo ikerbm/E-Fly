@@ -14,7 +14,7 @@ class Address(models.Model):
 #Pruebas
 
 class CustomUser(AbstractUser):
-    DNI=models.IntegerField(primary_key=True, default=0)
+    DNI=models.IntegerField(primary_key=True, default=0, validators=[MaxValueValidator(9999999999)])
     saldo=models.IntegerField(default=0)
     fechaNaci=models.DateField(null=True)
     lugarNaci= models.ForeignKey('cities_light.City', on_delete=models.SET_NULL, null=True, blank=True)
