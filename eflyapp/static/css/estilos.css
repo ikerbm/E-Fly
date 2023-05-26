@@ -268,3 +268,6 @@ a.disabled {
 .seat-selected {
   background: #007bff;
 }
+.btn-options{
+  margin: 10px;
+}

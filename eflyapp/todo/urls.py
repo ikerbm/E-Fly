@@ -20,7 +20,9 @@ urlpatterns=[
     path('vuelo/<int:vuelo_id>/promo/', views.promo_vuelo, name='promo_vuelo'),
     path('vuelo/<int:vuelo_id>/comprar/', views.comprar_vuelo, name='comprar_vuelo'),
     path('compra/<int:compra_id>/asiento/', views.seleccionar_asiento, name='seleccionar_asiento'),
-    path('compra/', views.seleccionar_asiento, name='seleccionar_asiento'),
+    path('compra/', views.ver_compras, name='ver_compras'),
+    path('compra/<int:compra_id>/delete/', views.cancelar_compra, name='cancelar_compra'),
+    path('compra/<int:compra_id>/pagar/', views.pagar_compra, name='pagar_compra'),
     #path('crearvuelo/', views.crearvuelo, name='crearvuelo')
     path("AddSaldo/<int:DNI>", views.AddSaldo, name='AddSaldo'),
 ]

@@ -335,9 +335,70 @@ def seleccionar_asiento(request, compra_id):
 
             compra.estado = 'Reservada'
             compra.save()
-            #return redirect('historial_compras', compra_id=compra.id)
+            return redirect('ver_compras')
 
     else:
         form = SeatSelectionForm(vuelo)
 
     return render(request, 'todo/seleccionar_asiento.html', {'filas_asientos':  filas_asientos,'form': form,'compra': compra, 'vuelo': vuelo, 'seats':seats, 'filas': vuelo.filas, 'asientos_fila': vuelo.asientos_fila})
+
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'cliente')
+def ver_compras(request):
+    compras = Compra.objects.filter(user_id=request.user.DNI)
+    tickets = Ticket.objects.filter(Compraid__user=request.user)
+
+    # Configura el paginador con 10 elementos por página
+    paginator = Paginator(compras, 10)
+
+    # Obtiene el número de página de la consulta GET, si no se proporciona, usa el valor 1
+    page_number = request.GET.get('page', 1)
+
+    # Obtiene el objeto Page correspondiente a la página solicitada
+    page = paginator.get_page(page_number)
+
+    return render(request, 'todo/ver_compras.html', {'page': page, 'tickets': tickets})
+
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'cliente')
+def cancelar_compra(request, compra_id):
+    compra = get_object_or_404(Compra, id=compra_id)
+    tickets = Ticket.objects.filter(Compraid=compra)
+
+    # Cambiar el estado de las Seats relacionadas a los Tickets
+    seat_codes = [ticket.asiento.code for ticket in tickets]
+    seats_to_update = Seat.objects.filter(vuelo=compra.vuelo, code__in=seat_codes)
+    seats_to_update.update(estado='disponible')
+    
+    if request.method == 'POST':
+        compra.delete()
+        return redirect('ver_compras')  # Reemplaza 'nombre_de_tu_ruta' con el nombre de la ruta a la que deseas redirigir después de borrar el vuelo
+    
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'cliente')
+def pagar_compra(request, compra_id):
+    compra = get_object_or_404(Compra, id=compra_id)
+    
+    if request.method == 'POST':
+        form = SeatSelectionForm(vuelo, request.POST)
+        if form.is_valid():
+            for seat in vuelo.seat_set.all():
+                if (form.cleaned_data[f'seat_{seat.code}']): 
+                    seat.estado = 'ocupado'
+                    if(asientos_primera > 0):
+                        clase = 'primera'
+                        asientos_primera -= 1
+                    elif(asientos_economica > 0):
+                        clase = 'economica'
+                        asientos_economica -= 1
+
+                    ticket = Ticket(Compraid=compra,Vueloid=vuelo,asiento=seat,clase=clase)
+                    ticket.save()
+
+                seat.save()
+
+            compra.estado = 'Reservada'
+            compra.save()
+            return redirect('ver_compras')
+
+    return render(request, 'todo/pagar_compra.html', {'compra': compra,})
