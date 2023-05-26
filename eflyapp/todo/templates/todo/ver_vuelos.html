@@ -101,8 +101,14 @@
                                             <a class="btn btn-primary btn-sm" href="{% url 'promo_vuelo' vuelo.id %}" role="button"><i class="fa-solid fa-percent"></i></a>
                                         </div>
                                         {% else %}
-                                        <a class="btn btn-warning btn-block" href="#" role="button">Comprar</a>
-                                        <a class="btn btn-secondary btn-block" href="#" role="button">Reservar</a>
+                                            {% if request.user.tipoUsuario == 'cliente' %}
+                                            <a class="btn btn-warning btn-block" href="{% url 'comprar_vuelo' vuelo.id %}" role="button">Comprar</a>
+                                            <a class="btn btn-secondary btn-block" href="{% url 'comprar_vuelo' vuelo.id %}" role="button">Reservar</a>
+                                            {% else %}
+                                            <a class="btn btn-warning btn-block disabled" href="#" role="button">Comprar</a>
+                                            <a class="btn btn-secondary btn-block disabled" href="#" role="button">Reservar</a>
+                                            <span>Para comprar o reservar debes estar registrado.</span>
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                 </div>

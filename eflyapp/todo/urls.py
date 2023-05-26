@@ -18,6 +18,9 @@ urlpatterns=[
     path('vuelo/<int:vuelo_id>/delete/', views.borrar_vuelo, name='borrar_vuelo'),
     path('vuelo/<int:vuelo_id>/edit/', views.edit_vuelo, name='edit_vuelo'),
     path('vuelo/<int:vuelo_id>/promo/', views.promo_vuelo, name='promo_vuelo'),
+    path('vuelo/<int:vuelo_id>/comprar/', views.comprar_vuelo, name='comprar_vuelo'),
+    path('compra/<int:compra_id>/asiento/', views.seleccionar_asiento, name='seleccionar_asiento'),
+    path('compra/', views.seleccionar_asiento, name='seleccionar_asiento'),
     #path('crearvuelo/', views.crearvuelo, name='crearvuelo')
     path("AddSaldo/<int:DNI>", views.AddSaldo, name='AddSaldo'),
 ]

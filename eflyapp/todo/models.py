@@ -50,6 +50,8 @@ class Vuelo(models.Model):
     codigo = models.CharField(unique=True, null=True, max_length=10)
     origen = models.CharField(max_length=100, choices=CIUDADES_PERMITIDAS)
     destino = models.CharField(max_length=100, choices=CIUDADES_PERMITIDAS)
+    filas=models.IntegerField(default=0)
+    asientos_fila=models.IntegerField(default=0)
     precioPrimera=models.IntegerField()
     precioEconomica=models.IntegerField()
     precioPrimeraDesc=models.IntegerField(null=True, validators=[MinValueValidator(0)])
@@ -79,9 +81,14 @@ class Vuelo(models.Model):
         super(Vuelo, self).save(*args, **kwargs)
 
 class Compra(models.Model):
+    vuelo=models.ForeignKey(Vuelo,on_delete=models.CASCADE, null=True)
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     #falta la llave foranea
+    asientos_economica=models.IntegerField(default=10)
+    asientos_primera=models.IntegerField(default=10)
     precio=models.IntegerField(default=10)
     fecha=models.DateField(auto_now=True)
+    estado=models.CharField(null=True,max_length=16, default='sin_selec')
 
 class Mensaje(models.Model):
     #noticiaid
@@ -103,16 +110,20 @@ class Tarjeta(models.Model):
     cvv=models.CharField(null=False,max_length=3)
     vencimiento=models.DateField()
 
+class Seat(models.Model):
+    vuelo=models.ForeignKey(Vuelo,on_delete=models.CASCADE, null=True)
+    code=models.CharField(null=False,max_length=4)
+    estado=models.CharField(null=False,max_length=20)
+
 class Ticket(models.Model):
     Compraid=models.ForeignKey(Compra,on_delete=models.CASCADE,related_name="compraid")
     Vueloid=models.ForeignKey(Vuelo,on_delete=models.CASCADE,related_name="vueloid")
-    nombrePasajero=models.CharField(max_length=50,null=False)
-    emailPasajero=models.EmailField(null=False)
-    edadPasajero=models.IntegerField(null=False)
-    asiento=models.CharField(null=False,max_length=4)
+    nombrePasajero=models.CharField(max_length=50,null=True)
+    emailPasajero=models.EmailField(null=True)
+    edadPasajero=models.IntegerField(null=True)
+    asiento=models.ForeignKey(Seat,on_delete=models.CASCADE, null=True)
     clase=models.CharField(choices=ClaseVuelo,max_length=20)
     EstadoCheckIn=models.CharField(default='No Realizado',max_length=15)
-
 
 
 # Create your models here.

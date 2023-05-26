@@ -252,3 +252,19 @@ body {
 .jumbotron {
   padding: 1rem 2rem;
 }
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.seat-available:hover {
+  color: #007bff;
+}
+.seat-occupied, .seat-occupied:hover {
+  color: #dc3545;
+}
+
+.seat-selected {
+  background: #007bff;
+}

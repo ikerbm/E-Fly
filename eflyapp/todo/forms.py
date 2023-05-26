@@ -134,11 +134,13 @@ class CreateVueloForm(forms.ModelForm):
 
     class Meta:
         model = Vuelo
-        fields = ['codigo', 'origen', 'destino', 'precioPrimera', 'precioEconomica', 'fechaSalida', 'horaSalida', 'minutoSalida', 'fechaLlegada', 'horaLlegada', 'minutoLlegada']
+        fields = ['codigo', 'origen', 'destino', 'filas', 'asientos_fila', 'precioPrimera', 'precioEconomica', 'fechaSalida', 'horaSalida', 'minutoSalida', 'fechaLlegada', 'horaLlegada', 'minutoLlegada']
         widgets = {
             'codigo': forms.TextInput(attrs={'class': 'form-control'}),
             'origen': forms.Select(attrs={'class': 'form-control'}),
             'destino': forms.Select(attrs={'class': 'form-control'}),
+            'filas': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'asientos_fila': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
             'precioPrimera': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
             'precioEconomica': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
             'fechaSalida': forms.TextInput(attrs={'class': 'form-control'}),
@@ -164,7 +166,7 @@ class CreateVueloForm(forms.ModelForm):
 class EditVueloForm(forms.ModelForm):
     class Meta:
         model = Vuelo
-        fields = ['origen', 'destino', 'precioPrimera', 'precioEconomica', 'fechaSalida', 'horaSalida', 'minutoSalida', 'fechaLlegada', 'horaLlegada', 'minutoLlegada']
+        fields = ['origen', 'destino',  'precioPrimera', 'precioEconomica', 'fechaSalida', 'horaSalida', 'minutoSalida', 'fechaLlegada', 'horaLlegada', 'minutoLlegada']
         widgets = {
             'origen': forms.Select(attrs={'class': 'form-control'}),
             'destino': forms.Select(attrs={'class': 'form-control'}),
@@ -211,3 +213,14 @@ class AddSaldoForm(forms.ModelForm):
         widgets = {
             'saldo': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+class CompraForm(forms.Form):
+    asientos_economica = forms.IntegerField()
+    asientos_primera = forms.IntegerField()
+
+class SeatSelectionForm(forms.Form):
+    def __init__(self, vuelo, *args, **kwargs):
+        super(SeatSelectionForm, self).__init__(*args, **kwargs)
+        seats = Seat.objects.filter(vuelo=vuelo)
+        for seat in seats:
+            self.fields[f'seat_{seat.code}'] = forms.BooleanField(required=False, initial=True)

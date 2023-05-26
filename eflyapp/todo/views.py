@@ -159,6 +159,16 @@ def crear_vuelo(request):
         form = CreateVueloForm(request.POST)
         if form.is_valid():
             vuelo = form.save()
+            filas = form.cleaned_data['filas']
+            asientos_fila = form.cleaned_data['asientos_fila']
+            print("entrando al for")
+            for i in range(filas):
+                for j in range(asientos_fila):
+                    code = str(i % filas +1)+ chr(ord('A') + j % asientos_fila) 
+                    print(code)
+                    seat = Seat(vuelo=vuelo, estado = 'disponible', code = code)
+                    seat.save()
+
             return redirect('ver_vuelos')
         else:
             errors = form.errors.as_data()
@@ -230,6 +240,7 @@ def promo_vuelo(request, vuelo_id):
         form = PromoVueloForm(request.POST, instance=vuelo)
         if form.is_valid():
             form.save()
+
             return redirect('ver_vuelos')  # Redirige a la página deseada después de editar el vuelo
     else:
         form = PromoVueloForm(instance=vuelo)
@@ -265,3 +276,68 @@ def AddSaldo(request, DNI):
     }
     return render(request, 'todo/AddSaldo.html', context)
 
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'cliente')
+def comprar_vuelo(request, vuelo_id):
+    vuelo = Vuelo.objects.get(id=vuelo_id)
+
+    if request.method == 'POST':
+        form = CompraForm(request.POST)
+        if form.is_valid():
+            asientos_economica = form.cleaned_data['asientos_economica']
+            asientos_primera = form.cleaned_data['asientos_primera']
+            
+            precio = (asientos_primera * vuelo.precioPrimera) + (asientos_economica * vuelo.precioEconomica)
+            usuario = request.user
+
+            compra = Compra(vuelo=vuelo, precio = precio, user_id = usuario.DNI, asientos_economica = asientos_economica, asientos_primera = asientos_primera)
+            compra.save()
+
+            return redirect('seleccionar_asiento', compra_id=compra.id)
+
+    else:
+        form = CompraForm(initial={'vuelo_id': vuelo_id})
+
+    return render(request, 'todo/comprar_vuelo.html', {'form': form, 'vuelo': vuelo})
+
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'cliente')
+def seleccionar_asiento(request, compra_id):
+    compra = Compra.objects.get(id=compra_id)
+    vuelo = Vuelo.objects.get(id=compra.vuelo_id)
+    seats = Seat.objects.filter(vuelo=vuelo)
+    filas_asientos = [[] for _ in range(vuelo.filas)]
+    asientos_primera = compra.asientos_primera
+    asientos_economica = compra.asientos_economica
+
+    for seat in seats:
+        codigo = seat.code
+        numero_fila = int(codigo[:-1]) - 1  # Obtener el número de fila restando 1
+        filas_asientos[numero_fila].append(seat)
+
+    if request.method == 'POST':
+        form = SeatSelectionForm(vuelo, request.POST)
+        if form.is_valid():
+            for seat in vuelo.seat_set.all():
+                if (form.cleaned_data[f'seat_{seat.code}']): 
+                    seat.estado = 'ocupado'
+                    if(asientos_primera > 0):
+                        clase = 'primera'
+                        asientos_primera -= 1
+                    elif(asientos_economica > 0):
+                        clase = 'economica'
+                        asientos_economica -= 1
+
+                    ticket = Ticket(Compraid=compra,Vueloid=vuelo,asiento=seat,clase=clase)
+                    ticket.save()
+
+                seat.save()
+
+            compra.estado = 'Reservada'
+            compra.save()
+            #return redirect('historial_compras', compra_id=compra.id)
+
+    else:
+        form = SeatSelectionForm(vuelo)
+
+    return render(request, 'todo/seleccionar_asiento.html', {'filas_asientos':  filas_asientos,'form': form,'compra': compra, 'vuelo': vuelo, 'seats':seats, 'filas': vuelo.filas, 'asientos_fila': vuelo.asientos_fila})
