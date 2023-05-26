@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import logout,authenticate,login,update_session_auth_hash
 
 from django.core.paginator import Paginator
@@ -21,10 +22,10 @@ def home(request):
         #El root esta de finido como is_staff en la base de datos
         #Pagina de inicio para el root
         if (request.user.is_staff): 
-            return render(request,'todo/homeroot.html')
+            return render(request,'todo/home.html')
         #Pagina de inicio para el administrador
         elif (request.user.tipoUsuario == 'admin'): 
-            return render(request,'todo/homeadministrador.html')
+            return render(request,'todo/home.html')
         else:
         #Pagina de inicio para el usuario normal
             return render(request,'todo/home.html')
@@ -54,7 +55,7 @@ def register(request):
     return render(request, 'todo/userRegister.html', context)
 
 @login_required
-def ChangePassword(request):
+def ChangePassword(request,DNI):
     if request.method == 'POST':
         form = ChangePasswordForm(request.user,request.POST)
         
@@ -65,7 +66,7 @@ def ChangePassword(request):
     else:
         form = ChangePasswordForm(request.user)
 
-    context = {'form': form}     
+    context = {'form': form, 'DNI': DNI}      
     return render(request, 'todo/changePassword.html', context)
 
 @login_required
@@ -402,3 +403,15 @@ def pay_compra(request, compra_id):
 
 
     return redirect('ver_compras')
+def administrarcompras(request,DNI):
+    cliente = CustomUser.objects.get(DNI=DNI)
+    context = {
+        'cliente': cliente,
+    }
+    return render(request,'todo/administrarcompras.html',context)
+
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'admin')
+def administrarvuelos(request):
+
+    return render(request,'todo/administrarvuelos.html')

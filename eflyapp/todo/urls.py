@@ -1,11 +1,9 @@
 from django.urls import path
 from . import views
 urlpatterns=[
-    path("",views.home,name="home"),
-    path("administrador/",views.home,name="homeadministrador"),
-    path("root/",views.home,name="homeroot"),
+    path("",views.ver_vuelos,name="home"),
     path('register/', views.register, name='register'),
-    path('ChangePassword/', views.ChangePassword, name='ChangePassword'),
+    path('ChangePassword/<int:DNI>/', views.ChangePassword, name='changePassword'),
     path("Edit/<int:DNI>", views.Edit, name='Edit'),
     path('logout/',views.exit,name='exit'),
     path('create_admin/', views.create_admin, name='create_admin'),
@@ -14,6 +12,7 @@ urlpatterns=[
     path("AdministrarTarjetas/<int:DNI>",views.AdministrarTarjetas,name="AdministrarTarjetas"),
     path("AddCard/<int:DNI>", views.AddCard, name='AddCard'),
     path('vuelo/create', views.crear_vuelo, name='crear_vuelo'),
+    path('AdministrarVuelos/', views.administrarvuelos, name='administrarvuelos'),
     path('vuelo/', views.ver_vuelos, name='ver_vuelos'),
     path('vuelo/<int:vuelo_id>/delete/', views.borrar_vuelo, name='borrar_vuelo'),
     path('vuelo/<int:vuelo_id>/edit/', views.edit_vuelo, name='edit_vuelo'),
@@ -25,5 +24,6 @@ urlpatterns=[
     path('compra/<int:compra_id>/pagar/', views.pagar_compra, name='pagar_compra'),
     path('compra/<int:compra_id>/pay/', views.pay_compra, name='pay_compra'),
     #path('crearvuelo/', views.crearvuelo, name='crearvuelo')
-    path("AddSaldo/<int:DNI>", views.AddSaldo, name='AddSaldo'),
+    path("AdministrarTarjetas/<int:DNI>/AddSaldo/", views.AddSaldo, name='AddSaldo'),
+    path("administrarcompras/<int:DNI>",views.administrarcompras,name="administrarcompras"),
 ]

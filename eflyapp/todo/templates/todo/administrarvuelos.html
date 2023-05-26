@@ -1,0 +1,10 @@
+{% extends 'todo/layout.html' %}
+
+{% block content %}
+
+<div class="contenido">
+  <!-- Botón para agregar tarjeta -->
+    <a href="{% url 'crear_vuelo'%}" class="btn btn-outline-dark" style="border-width: 3px; border-color: black; padding: 15px; margin-right: 20px;"><h2>CREAR VUELOS</h2></a>
+    <a href="{% url 'ver_vuelos' %}" class="btn btn-outline-dark" style="border-width: 3px; border-color: black; padding: 15px; margin-right: 20px;"><h2>VER VUELOS</h2></a>
+    <!-- Botón para recargar saldo -->
+{% endblock content %}

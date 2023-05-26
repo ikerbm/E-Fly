@@ -1,38 +1,39 @@
 {% extends 'todo/layout.html' %}
 
 {% block content %}
-<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
-			<h1>Recargar Saldo</h1>
-		</div>
-		
-		<div class="container" style="text-align: center;">
-			<p>Saldo actual: {{ cliente.saldo }}</p>
-			
-			<h3>Tarjetas disponibles:</h3>
-			
-			{% if tarjetas %}
-				<form method="POST">
-					{% csrf_token %}
-					
-					<label for="tarjeta">Seleccionar tarjeta:</label>
-					
-					<select name="tarjeta" id="tarjeta">
-						{% for tarjeta in tarjetas %}
-							<option value="{{ tarjeta.id }}">{{ tarjeta.numero }}</option>
-						{% endfor %}
-					</select>
-					
-					{{ form.as_p }}
-					
-					<button type="submit" class="btn btn-primary">Recargar</button>
-				</form>
-			{% else %}
-				<p>No tienes tarjetas enlazadas a tu cuenta. Por favor, agrega una tarjeta antes de recargar el saldo.</p>
-				<a href="{% url 'agregar_tarjeta' %}" class="btn btn-warning">Agregar Tarjeta</a>
-			{% endif %}
-		</div>
-	</div>
+<div class="container">
+  <h1>Recargar Saldo</h1>
+
+  <p>Saldo actual: {{ cliente.saldo }}</p>
+
+  <h3>Tarjetas disponibles:</h3>
 </div>
+
+{% if tarjetas %}
+<div class="container">
+  <form method="POST">
+    {% csrf_token %}
+
+    
+
+    <label for="tarjeta">Seleccionar tarjeta:</label>
+
+    <select name="tarjeta" id="tarjeta">
+
+      {% for tarjeta in tarjetas %}
+        <option value="{{ tarjeta.id }}">{{ tarjeta.numero }}</option>
+      {% endfor %}
+    </select>
+
+    {{ form.as_p }}
+    
+    <button type="submit">Recargar</button>
+  </form>
+</div>
+{% else %}
+<div class="container">
+  <p>No tienes tarjetas enlazadas a tu cuenta. Por favor, agrega una tarjeta antes de recargar el saldo.</p>
+  <a href="{% url 'AddCard' DNI%}">Agregar Tarjeta</a>
+</div>
+{% endif %}
 {% endblock content %}

@@ -1,247 +1,317 @@
-{% extends 'todo/layout.html' %}
+<!doctype html>
+<html lang="en">
 
-{% block content %}
+<style>
+.btnsuperior{
+	display: flex;
+	justify-content: center;
+}
+.interface {
+	display: flex;
+	flex: 30%;
+	padding: 20px;
+	margin: 1rem;
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+.contenido {
+	display: flex;
+	padding: 1rem;
+	margin: 1rem;
+	flex-grow: 1;
+	flex-shrink: 1;
+	flex:70%; 
+	align-items: flex-start;
+}
+.btn-size {
+	width: 200px;
+	margin: 0 5px;
+}
+</style>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	
+<!-- E-Fly CSS -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/cf924c4f2c.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+<!-- Bootstrap Datepicker -->
+<script src="{% static 'bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap-datepicker/css/bootstrap-datepicker.css' %}">
+</head>
+
+<!-- Fondo de la pagina -->
+<div id="Principal"></div>
+
+<body style="background: url('/static/img/bg-plane.jpg') no-repeat center center fixed; background-size: auto;background-repeat: inherit;">
 
 {%load crispy_forms_tags %}
-<style>
+	<style>
 
-* {
-	box-sizing: border-box;
-}
-.header-blue {
-	display: none;
-}
-body {
-	background: #f6f5f7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	font-family: 'Montserrat', sans-serif;
-	height: 100vh;
-	margin: -20px 0 50px;
-}
+	* {
+		box-sizing: border-box;
+	}
+	.header-blue {
+		display: none;
+	}
+	body {
+		background: #f6f5f7;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		font-family: 'Montserrat', sans-serif;
+		height: 100vh;
+		margin: -20px 0 50px;
+	}
 
-h1 {
-	font-weight: bold;
-	margin: 0;
-}
+	h1 {
+		font-weight: bold;
+		margin: 0;
+	}
 
-h2 {
-	text-align: center;
-}
+	h2 {
+		text-align: center;
+	}
 
-p {
-	font-size: 14px;
-	font-weight: 100;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
-}
+	p {
+		font-size: 14px;
+		font-weight: 100;
+		line-height: 20px;
+		letter-spacing: 0.5px;
+		margin: 20px 0 30px;
+	}
 
-span {
-	font-size: 12px;
-}
+	span {
+		font-size: 12px;
+	}
 
-a {
-	color: #333;
-	font-size: 14px;
-	text-decoration: none;
-	margin: 15px 0;
-}
+	a {
+		color: #333;
+		font-size: 14px;
+		text-decoration: none;
+		margin: 15px 0;
+	}
 
-button {
-	border-radius: 20px;
-	border: 1px solid #fec107;
-	background-color: #fec107;
-	color: #FFFFFF;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 45px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	transition: transform 80ms ease-in;
-}
+	button {
+		border-radius: 20px;
+		border: 1px solid #fec107;
+		background-color: #fec107;
+		color: #FFFFFF;
+		font-size: 12px;
+		font-weight: bold;
+		padding: 12px 45px;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		transition: transform 80ms ease-in;
+	}
 
-button:active {
-	transform: scale(0.95);
-}
+	button:active {
+		transform: scale(0.95);
+	}
 
-button:focus {
-	outline: none;
-}
+	button:focus {
+		outline: none;
+	}
 
-button.ghost {
-	background-color: transparent;
-	border-color: #FFFFFF;
-}
+	button.ghost {
+		background-color: transparent;
+		border-color: #FFFFFF;
+	}
 
-form {
-	background-color: #FFFFFF;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding: 0 50px;
-	height: 100%;
-	text-align: center;
-}
+	form {
+		background-color: #FFFFFF;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		padding: 0 50px;
+		height: 100%;
+		text-align: center;
+	}
 
-input {
-	background-color: #eee;
-	border: none;
-	padding: 12px 15px;
-	margin: 8px 0;
-	width: 100%;
-}
+	input {
+		background-color: #eee;
+		border: none;
+		padding: 12px 15px;
+		margin: 8px 0;
+		width: 100%;
+	}
 
-.container {
-	background-color: #fff;
-	border-radius: 10px;
-  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-			0 10px 10px rgba(0,0,0,0.22);
-	position: relative;
-	overflow: hidden;
-	width: 768px;
-	max-width: 100%;
-	min-height: 480px;
-}
+	.container {
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+				0 10px 10px rgba(0,0,0,0.22);
+		position: relative;
+		overflow: hidden;
+		width: 768px;
+		max-width: 100%;
+    	min-height: 625px;
 
-.form-container {
-	position: absolute;
-	top: 0;
-	height: 100%;
-	transition: all 0.6s ease-in-out;
-}
+	}
 
-.sign-in-container {
-	left: 0;
-	width: 50%;
-	z-index: 2;
-}
+	.form-container {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		transition: all 0.6s ease-in-out;
+	}
 
-.container.right-panel-active .sign-in-container {
-	transform: translateX(100%);
-}
+	.sign-in-container {
+		left: 0;
+		width: 50%;
+		z-index: 2;
+	}
 
-.sign-up-container {
-	left: 0;
-	width: 50%;
-	opacity: 0;
-	z-index: 1;
-}
+	.container.right-panel-active .sign-in-container {
+		transform: translateX(100%);
+	}
 
-.container.right-panel-active .sign-up-container {
-	transform: translateX(100%);
-	opacity: 1;
-	z-index: 5;
-	animation: show 0.6s;
-}
-
-@keyframes show {
-	0%, 49.99% {
+	.sign-up-container {
+		left: 0;
+		width: 50%;
 		opacity: 0;
 		z-index: 1;
 	}
-	
-	50%, 100% {
+
+	.container.right-panel-active .sign-up-container {
+		transform: translateX(100%);
 		opacity: 1;
 		z-index: 5;
+		animation: show 0.6s;
 	}
-}
 
-.overlay-container {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: 50%;
-	height: 100%;
-	overflow: hidden;
-	transition: transform 0.6s ease-in-out;
-	z-index: 100;
-}
+	@keyframes show {
+		0%, 49.99% {
+			opacity: 0;
+			z-index: 1;
+		}
+		
+		50%, 100% {
+			opacity: 1;
+			z-index: 5;
+		}
+	}
 
-.container.right-panel-active .overlay-container{
-	transform: translateX(-100%);
-}
+	.overlay-container {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		width: 50%;
+		height: 100%;
+		overflow: hidden;
+		transition: transform 0.6s ease-in-out;
+		z-index: 100;
+	}
 
-.overlay {
-	background: #FFD658;
-	background: -webkit-linear-gradient(to right, #fec107, #FFD658);
-	background: linear-gradient(to right, #fec107, #FFD658);
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: 0 0;
-	color: #FFFFFF;
-	position: relative;
-	left: -100%;
-	height: 100%;
-	width: 200%;
-  	transform: translateX(0);
-	transition: transform 0.6s ease-in-out;
-}
+	.container.right-panel-active .overlay-container{
+		transform: translateX(-100%);
+	}
 
-.container.right-panel-active .overlay {
-  	transform: translateX(50%);
-}
+	.overlay {
+		background: #FFD658;
+		background: -webkit-linear-gradient(to right, #fec107, #FFD658);
+		background: linear-gradient(to right, #fec107, #FFD658);
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: 0 0;
+		color: #FFFFFF;
+		position: relative;
+		left: -100%;
+		height: 100%;
+		width: 200%;
+		transform: translateX(0);
+		transition: transform 0.6s ease-in-out;
+	}
 
-.overlay-panel {
-	position: absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding: 0 40px;
-	text-align: center;
-	top: 0;
-	height: 100%;
-	width: 50%;
-	transform: translateX(0);
-	transition: transform 0.6s ease-in-out;
-}
+	.container.right-panel-active .overlay {
+		transform: translateX(50%);
+	}
 
-.overlay-left {
-	transform: translateX(-20%);
-}
+	.overlay-panel {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		padding: 0 40px;
+		text-align: center;
+		top: 0;
+		height: 100%;
+		width: 50%;
+		transform: translateX(0);
+		transition: transform 0.6s ease-in-out;
+	}
 
-.container.right-panel-active .overlay-left {
-	transform: translateX(0);
-}
+	.overlay-left {
+		transform: translateX(-20%);
+	}
 
-.overlay-right {
-	right: 0;
-	transform: translateX(0);
-}
+	.container.right-panel-active .overlay-left {
+		transform: translateX(0);
+	}
 
-.container.right-panel-active .overlay-right {
-	transform: translateX(20%);
-}
+	.overlay-right {
+		right: 10px;
+		transform: translateX(0);
+	}
 
-.main-container{
-	background: none;
-    box-shadow: none;
-}
-</style>
-<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<form method="POST" action="">
-			{% csrf_token %}
-			<h1>Bienvenido a <br> E-FLY</h1>
-			{{form | crispy}}
-			<!-- <input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" /> -->
-			<a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
-			<button>Iniciar Sesión</button>
-		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-right">
-				<h1>¿Aún no estás registrado?</h1>
-				<p>Registrate ahora, reserva y compra tiquetes de vuelos al mejor precio con E-Fly</p>
-				<a class="ghost" href="{% url 'register' %}">Registrarse</a>
+	.container.right-panel-active .overlay-right {
+		transform: translateX(20%);
+	}
+
+	.main-container{
+		background: none;
+		box-shadow: none;
+		width: 62%;
+	}
+
+	</style>
+	<div class="container" id="container">
+		<div class="form-container sign-in-container">
+			<form method="POST" action="">
+				{% csrf_token %}
+				<h1>Bienvenido a <br> E-FLY</h1>
+				{{form | crispy}}
+				<!-- <input type="email" placeholder="Email" />
+				<input type="password" placeholder="Password" /> -->
+				<a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+				<button>Iniciar Sesión</button>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-right">
+					<h1>¿Aún no estás registrado?</h1>
+					<p>Registrate ahora, reserva y compra tiquetes de vuelos al mejor precio con E-Fly</p>
+					<a class="ghost" href="{% url 'register' %}">Registrarse</a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-{% endblock %}
+
+	
+
+	<!-- Optional JavaScript; choose one of the two! -->
+
+	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+	<!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+	-->
+  </body>
