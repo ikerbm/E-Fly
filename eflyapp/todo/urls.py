@@ -26,4 +26,5 @@ urlpatterns=[
     #path('crearvuelo/', views.crearvuelo, name='crearvuelo')
     path("AdministrarTarjetas/<int:DNI>/AddSaldo/", views.AddSaldo, name='AddSaldo'),
     path("administrarcompras/<int:DNI>",views.administrarcompras,name="administrarcompras"),
+    path("Noticias/",views.Noticias,name="Noticias"),
 ]

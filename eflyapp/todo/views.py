@@ -428,3 +428,37 @@ def administrarcompras(request,DNI):
 def administrarvuelos(request):
 
     return render(request,'todo/administrarvuelos.html')
+
+
+@login_required
+@user_passes_test(lambda u: u.tipoUsuario == 'cliente')
+def Noticias(request):
+    vuelos = Vuelo.objects.all()
+
+    filtro_form = FiltroVuelosForm(request.GET)
+
+    destino = request.GET.get('destino')
+    origen = request.GET.get('origen')
+    fecha_salida = request.GET.get('fecha_salida')
+
+    if destino:
+        vuelos = vuelos.filter(destino=destino)
+    if origen:
+        vuelos = vuelos.filter(origen=origen)
+    if fecha_salida:
+        vuelos = vuelos.filter(fechaSalida=fecha_salida)
+
+    # Configura el paginador con 10 elementos por página
+    paginator = Paginator(vuelos, 10)
+
+    # Obtiene el número de página de la consulta GET, si no se proporciona, usa el valor 1
+    page_number = request.GET.get('page', 1)
+
+    # Obtiene el objeto Page correspondiente a la página solicitada
+    page = paginator.get_page(page_number)
+
+    if(request.user.username == 'root'):
+        return redirect('user_list')
+
+    return render(request, 'todo/Noticias.html', {'page': page, 'filtro_form': filtro_form})
+    

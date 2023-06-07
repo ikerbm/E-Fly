@@ -1,0 +1,96 @@
+{% extends 'todo/layout.html' %}
+
+{% block content %}
+<div class="container text-center">
+    
+    <div class="wrapper">
+        <div class="jumbotron jumbotron-fluid bg-white">
+
+            <div class="p-3 mb-2 bg-warning text-dark" style="text-align: center;">
+                <h1>Noticias</h1>  
+                
+            </div>
+            
+        </div>
+        <a class="btn btn-warning btn-block" href="#" role="button">Enviar Mensaje</a>
+        
+        {% if errors %}
+        <div class="alert alert-danger" style="text-align: initial;">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                    <li>Error: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        <br>
+        <div class="card">
+            <div class="card-header">
+                Mostrando {{ page.start_index }} - {{ page.end_index }} de {{ page.paginator.count }} resultados
+            </div>
+            <div class="card-body">
+                {% for vuelo in page %}
+                    <div class="card" style="width: 42rem;">
+                        <div class="card-body">
+                            <h5 class="card-title"><span class="badge badge-secondary">{{ vuelo.codigo }}</span> {{ vuelo.origen }} - {{ vuelo.destino }}</h5>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h6>Salida</h6>
+                                    <i class="fa-solid fa-plane-departure"></i> {{ vuelo.fechaSalida }} {{ vuelo.horaSalida }}:{{ vuelo.minutoSalida }}
+                                </div>
+                                <div class="col-sm-4">
+                                    <h6>Llegada</h6>
+                                    <i class="fa-solid fa-plane-arrival"></i> {{ vuelo.fechaLlegada }} {{ vuelo.horaLlegada }}:{{ vuelo.minutoLlegada }}
+                                </div>
+                                
+                            </div>
+                            <br>
+                            <div class="row">
+                                {% load humanize %}
+                                <div class="col-sm-4">
+                                    <h6>Primera Clase</h6>
+                                    {% if vuelo.precioPrimeraDesc %}
+                                        <h6><s class="text-secondary">$ {{ vuelo.precioPrimera|intcomma }}</s></h6>
+                                        <h5>$ {{ vuelo.precioPrimeraDesc|intcomma }}</h5>
+                                    {% else %}
+                                    <h6>$ {{ vuelo.precioPrimera|intcomma }}</h6>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4">
+                                    <h6>Económica</h6>
+                                    {% if vuelo.precioEconomicaDesc %}
+                                        <h6><s class="text-secondary">$ {{ vuelo.precioEconomica|intcomma }}</s></h6>
+                                        <h5>$ {{ vuelo.precioEconomicaDesc|intcomma }}</h5>
+                                    {% else %}
+                                    <h6>$ {{ vuelo.precioEconomica|intcomma }}</h6>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                {% endfor %}
+                <div class="row">
+                <div class="col">
+                    <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {% if page.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a></li>
+                                {% endif %}
+                                <li class="page-item"><a class="page-link" href="#">Página {{ page.number }} de {{ page.paginator.num_pages }}</a></li>
+                                {% if page.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}"><span aria-hidden="true">&raquo;</span></a></li>
+                                {% endif %}
+                            </ul>
+                    </nav>  
+                </div>
+                </div>
+                
+            </div>
+        </div>              
+    </div>
+</div>
+{% endblock %}
