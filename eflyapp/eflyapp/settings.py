@@ -82,18 +82,16 @@ WSGI_APPLICATION = 'eflyapp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+# mysql://root:@containers-us-west-58.railway.app:6094/railway
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-        },
-        'NAME': 'e-fly',
+        #'OPTIONS': {'sql_mode': 'traditional',},
+        'NAME': 'railway',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '',
+        'PASSWORD': 'rlXxetFC0tKwu9i81lKw',
+        'HOST': 'containers-us-west-58.railway.app',
+        'PORT': '6094',
     }
 }
 
