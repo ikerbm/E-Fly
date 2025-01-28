@@ -47,7 +47,8 @@ class CreateUsuarioForm(UserCreationForm):
         model = User
         fields = ['username','first_name','last_name','password1','password2','email',
                   'DNI','fechaNaci',
-                  'lugarNaci','dirFact','sexo','tipoUsuario'] 
+                  'lugarNaci',
+                  'dirFact','sexo','tipoUsuario'] 
         
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
@@ -81,7 +82,8 @@ class EditForm(forms.ModelForm):
     class Meta:
         model=CustomUser
         fields=['username','first_name','last_name',
-                'lugarNaci','dirFact','sexo']
+                'lugarNaci',
+                'dirFact','sexo']
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),

@@ -88,11 +88,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         #'OPTIONS': {'sql_mode': 'traditional',},
-        'NAME': 'railway',
+        'NAME': 'e-fly',
         'USER': 'root',
-        'PASSWORD': 'eVud583yit6I6ilgl4ZU',
-        'HOST': 'containers-us-west-83.railway.app',
-        'PORT': '6634',
+        #'PASSWORD': 'eVud583yit6I6ilgl4ZU',
+        'PASSWORD': '',
+        #'HOST': 'containers-us-west-83.railway.app',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
